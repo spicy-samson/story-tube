@@ -48,6 +48,8 @@ Done when:
 
 ## M2 - Metadata Pipeline
 
+Detailed plan: [m2-plan.md](./m2-plan.md)
+
 Deliverables:
 
 - [ ] YouTube URL parser
