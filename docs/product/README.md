@@ -59,9 +59,13 @@ Could have:
 
 | Template | Feel | Use Case |
 |---|---|---|
-| Minimal | Clean, typography-led, calm | Tutorials, talks, sermons, study videos |
-| Cinematic | Big thumbnail, dark contrast, dramatic | Boxing, film, anime, music, podcasts |
-| Creator Card | Promo-forward with handle/link emphasis | Creators sharing their own videos |
+| Minimal / Centered Media Card | Blurred dark background, centered rounded media card, clean title panel | General v1 default |
+| Full-Bleed Editorial | Big dimmed thumbnail background, uppercase title, strong YouTube footer | Music, boxing, film, podcasts |
+| Blue Poster | Solid editorial color, serif title, framed thumbnail | Music, commentary, curated recommendations |
+| Clean Text Poster | Light background, bold text, metadata list | Tutorials, lectures, sermons, study videos |
+| Progress Card | Full-bleed image, title lower third, progress bar | Music/video share vibe |
+| Image-Forward Full Bleed | Full thumbnail background, top title, bottom attribution | Strong artwork and visual-first videos |
+| Floating Glass Card | Blurred background with translucent card overlay | General creator-friendly shares |
 
 ## User Flow
 
