@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">WatchCard maskable app icon</title>
+  <rect width="512" height="512" fill="#0f1115"/>
+  <rect x="104" y="56" width="304" height="400" rx="48" fill="#f6f4ef"/>
+  <rect x="136" y="92" width="240" height="328" rx="32" fill="#151820"/>
+  <path d="M214 188v136l116-68-116-68Z" fill="#f04b32"/>
+  <rect x="176" y="350" width="160" height="18" rx="9" fill="#f6f4ef"/>
+</svg>

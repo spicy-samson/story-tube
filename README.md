@@ -6,7 +6,23 @@ Working name only: avoid using YouTube in the final product name because platfor
 
 ## Project Status
 
-Planning phase. Build direction is PWA-first, web-first, mobile-first.
+M1 scaffold is in progress/completed: Nuxt PWA shell, Cloudflare Pages build output, and install manifest are in place. Build direction remains PWA-first, web-first, mobile-first.
+
+## Commands
+
+```sh
+npm run dev
+npm run build
+npm run preview
+npm run deploy
+```
+
+Cloudflare Pages defaults:
+
+```txt
+Build command: npm run build
+Build output directory: dist
+```
 
 ## Core Flow
 

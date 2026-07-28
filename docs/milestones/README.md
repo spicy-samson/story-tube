@@ -34,11 +34,11 @@ Done when:
 
 Deliverables:
 
-- [ ] App framework scaffolded
-- [ ] Mobile-first home/workspace screen
-- [ ] PWA manifest
-- [ ] App icons placeholder strategy
-- [ ] Basic styling system
+- [x] App framework scaffolded
+- [x] Mobile-first home/workspace screen
+- [x] PWA manifest
+- [x] App icons placeholder strategy
+- [x] Basic styling system
 
 Done when:
 

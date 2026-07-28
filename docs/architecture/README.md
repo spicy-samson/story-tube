@@ -37,10 +37,10 @@ User pastes link
 
 | Concern | Candidate | Notes |
 |---|---|---|
-| Framework | Next.js or Nuxt | Choose based on the rest of the codebase once scaffolded |
-| Styling | Tailwind CSS | Fast template iteration |
+| Framework | Nuxt | Better fit for an interactive PWA with future Cloudflare Pages server routes |
+| Styling | Plain CSS for M1; Tailwind can be added later | Keeps scaffold light while template work is still forming |
 | Export | `html-to-image`, canvas, or server screenshot | Validate on mobile before committing |
-| API | Cloudflare Worker + Hono | Add only if direct browser fetch is insufficient |
+| API | Nuxt server routes on Cloudflare Pages first; standalone Worker/Hono only if needed | Keeps future metadata API close to the app |
 | Metadata | YouTube oEmbed and/or YouTube Data API | oEmbed can simplify v1; Data API gives richer data |
 | Deployment | Cloudflare Pages or Vercel | Keep hosting cheap and simple |
 
@@ -63,4 +63,4 @@ User pastes link
 
 ## Implementation Bias
 
-Start with no backend if possible. Add a Worker when a real constraint appears: API keys, cross-origin export issues, caching, or quota control.
+Start with no custom backend if possible. Add Nuxt server routes or a Worker when a real constraint appears: API keys, cross-origin export issues, caching, or quota control.
