@@ -11,7 +11,7 @@ This file is the build map for the PWA-first version.
 | M2 | Metadata Pipeline | YouTube URLs parse and resolve into usable metadata |
 | M3 | Story Preview | One high-quality 9:16 template renders in the browser |
 | M4 | PNG Export | User can download a 1080x1920 image |
-| M5 | Template Set | Three templates and a template picker are polished |
+| M5 | Template Set | Seven screenshot-inspired templates and a live picker are polished |
 | M6 | Mobile QA | Works on phone-sized viewports and PWA install path is verified |
 | M7 | Demo Ship | Deployed version and short demo are ready |
 
@@ -65,13 +65,15 @@ Done when:
 
 ## M3 - Story Preview
 
+Detailed plan: [m3-plan.md](./m3-plan.md)
+
 Deliverables:
 
-- [ ] 9:16 preview surface
-- [ ] First polished template
-- [ ] Thumbnail background treatment
-- [ ] Title and channel typography
-- [ ] "Watch on YouTube" or source attribution
+- [x] 9:16 preview surface
+- [x] First polished template
+- [x] Thumbnail background treatment
+- [x] Title and channel typography
+- [x] "Watch on YouTube" or source attribution
 
 Done when:
 
@@ -92,17 +94,24 @@ Done when:
 
 ## M5 - Template Set
 
+Detailed plan: [m5-plan.md](./m5-plan.md)
+
 Deliverables:
 
-- [ ] Minimal template
-- [ ] Cinematic template
-- [ ] Creator card template
-- [ ] Template picker
+- [x] Centered media template
+- [x] Full-bleed editorial template
+- [x] Blue poster template
+- [x] Progress template
+- [x] Clean text poster template
+- [x] Image-forward full-bleed template
+- [x] Floating glass template
+- [x] Live template picker
+- [x] Tailwind styling migration
 - [ ] Template-specific accent controls if simple
 
 Done when:
 
-- The user can make three meaningfully different story cards from the same link.
+- The user can make seven meaningfully different story cards from the same link.
 
 ## M6 - Mobile QA
 
