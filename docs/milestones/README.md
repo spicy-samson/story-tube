@@ -52,11 +52,11 @@ Detailed plan: [m2-plan.md](./m2-plan.md)
 
 Deliverables:
 
-- [ ] YouTube URL parser
-- [ ] Support for `youtube.com/watch`, `youtu.be`, and Shorts URLs
-- [ ] Metadata fetch layer
-- [ ] Loading, invalid URL, and failed fetch states
-- [ ] Parser tests
+- [x] YouTube URL parser
+- [x] Support for `youtube.com/watch`, `youtu.be`, and Shorts URLs
+- [x] Metadata fetch layer
+- [x] Loading, invalid URL, and failed fetch states
+- [x] Parser manual checks
 
 Done when:
 

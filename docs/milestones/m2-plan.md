@@ -10,19 +10,38 @@ GET /api/youtube/metadata?url=<youtube-url>
 
 The frontend will call this endpoint after the user submits a link. The server will parse and validate the URL, fetch metadata, normalize the response, and return a stable shape for the app UI.
 
+## Implementation Status
+
+Status: implemented.
+
+The backend lives in Nuxt's `server/` directory and is bundled into the Cloudflare Pages worker output by Nitro. M2 does not use a separate standalone Cloudflare Worker.
+
+Implemented endpoint:
+
+```txt
+GET /api/youtube/metadata?url=<youtube-url>
+```
+
+Implemented shared files:
+
+```txt
+shared/utils/youtube-url.ts
+shared/types/youtube-metadata.ts
+```
+
 ## Key Changes
 
-- Add a shared URL parsing utility.
-- Support `youtube.com/watch?v=...`, `youtu.be/...`, and `youtube.com/shorts/...`.
-- Support common extra params like `?si=`, `&t=`, and `&list=`.
-- Reject non-YouTube URLs and malformed video IDs.
-- Add Nuxt backend endpoint at `server/api/youtube/metadata.get.ts`.
-- Use YouTube oEmbed first because it does not require an API key.
-- Add optional YouTube Data API support when `YOUTUBE_API_KEY` exists.
-- Enable the M1 URL input and Generate button.
-- Show loading, invalid URL, and failed fetch states.
-- Populate the preview with returned title, channel, thumbnail, and canonical URL.
-- Keep template/export functionality scoped to later milestones.
+- [x] Add a shared URL parsing utility.
+- [x] Support `youtube.com/watch?v=...`, `youtu.be/...`, and `youtube.com/shorts/...`.
+- [x] Support common extra params like `?si=`, `&t=`, and `&list=`.
+- [x] Reject non-YouTube URLs and malformed video IDs.
+- [x] Add Nuxt backend endpoint at `server/api/youtube/metadata.get.ts`.
+- [x] Use YouTube oEmbed first because it does not require an API key.
+- [ ] Add optional YouTube Data API support when `YOUTUBE_API_KEY` exists.
+- [x] Enable the M1 URL input and Generate button.
+- [x] Show loading, invalid URL, and failed fetch states.
+- [x] Populate the preview with returned title, channel, thumbnail, and canonical URL.
+- [x] Keep template/export functionality scoped to later milestones.
 
 ## API Contract
 
@@ -49,12 +68,12 @@ Successful response:
 
 Error responses:
 
-| Status | Case |
-|---|---|
-| `400` | Missing URL |
-| `400` | Invalid YouTube URL |
-| `404` | Private, deleted, unavailable, or unembeddable video |
-| `502` | Metadata provider failure |
+| Status | Case                                                 |
+| ------ | ---------------------------------------------------- |
+| `400`  | Missing URL                                          |
+| `400`  | Invalid YouTube URL                                  |
+| `404`  | Private, deleted, unavailable, or unembeddable video |
+| `502`  | Metadata provider failure                            |
 
 ## Metadata Strategy
 
@@ -77,7 +96,7 @@ YOUTUBE_API_KEY exists
   -> include duration when available
 ```
 
-M2 must work without a YouTube API key. The key only improves metadata later.
+M2 works without a YouTube API key. The key only improves metadata later and is not wired yet.
 
 ## Frontend Behavior
 
@@ -115,28 +134,34 @@ Build output directory: dist
 
 Parser tests:
 
-- Normal watch URL.
-- Short `youtu.be` URL.
-- Shorts URL.
-- URL with timestamp/tracking params.
-- Invalid domain.
-- Missing or malformed video ID.
+- [x] Normal watch URL.
+- [x] Short `youtu.be` URL.
+- [x] Shorts URL.
+- [x] URL with timestamp/tracking params.
+- [x] Invalid domain.
+- [x] Missing or malformed video ID.
 
 Endpoint checks:
 
-- Missing `url` returns `400`.
-- Invalid URL returns `400`.
-- Valid public video returns normalized metadata.
-- Unavailable provider returns a clean error response.
+- [x] Missing `url` returns `400`.
+- [x] Invalid URL returns `400`.
+- [x] Valid public video returns normalized metadata.
+- [x] Unavailable provider returns a clean error response.
 
 App smoke test:
 
-- Run `npm run build`.
-- Run the dev server.
-- Paste a valid YouTube URL.
-- Confirm title, channel, thumbnail, and canonical URL populate the preview.
-- Confirm invalid URL shows a friendly error.
-- Confirm existing PWA shell still works.
+- [x] Run `npm run build`.
+- [x] Run the dev server.
+- [x] Paste a valid YouTube URL.
+- [x] Confirm title, channel, thumbnail, and canonical URL populate the preview.
+- [x] Confirm invalid URL shows a friendly error.
+- [x] Confirm existing PWA shell still works.
+
+## Known Limitations
+
+- `duration` is absent until YouTube Data API support is wired.
+- Template selection and PNG export remain disabled until M3/M4.
+- The current implementation uses oEmbed metadata only.
 
 ## Assumptions
 
