@@ -12,7 +12,7 @@
     <div class="relative z-10 mt-auto pb-8">
       <p class="mb-5 text-[10px] font-bold uppercase tracking-[0.28em] text-white/65">{{ channel }}</p>
       <span class="mb-5 block h-1 w-12 bg-white" />
-      <h2 class="line-clamp-6 break-words text-[clamp(1.65rem,7.2vw,2.3rem)] font-black uppercase leading-[0.96]">{{ title }}</h2>
+      <h2 class="whitespace-normal break-words text-[clamp(1.15rem,5.2vw,1.75rem)] font-black uppercase leading-[1.05] [overflow-wrap:anywhere]">{{ title }}</h2>
     </div>
 
     <footer class="relative z-10 flex items-center justify-between border-t border-white/20 pt-5">

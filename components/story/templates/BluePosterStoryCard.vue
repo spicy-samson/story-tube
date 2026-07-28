@@ -2,9 +2,9 @@
   <article class="flex h-full w-full flex-col overflow-hidden rounded-[1.3rem] bg-[#416f9f] px-7 py-8 text-white">
     <p class="text-[10px] font-bold uppercase tracking-[0.3em] text-white/75">● &nbsp; Watch now</p>
 
-    <h2 class="mt-8 line-clamp-5 break-words font-serif text-[clamp(1.65rem,7vw,2.25rem)] font-black italic leading-[1.04]">
-      {{ title }}
-    </h2>
+<h2 class="mt-7 whitespace-normal break-words font-serif text-[clamp(1.05rem,4.8vw,1.55rem)] font-black italic leading-[1.08] [overflow-wrap:anywhere]">
+  {{ title }}
+</h2>
 
     <p class="mt-5 line-clamp-2 font-serif text-sm font-bold italic text-white/80">{{ channel }}</p>
 
