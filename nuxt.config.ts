@@ -1,6 +1,10 @@
 export default defineNuxtConfig({
   compatibilityDate: "2026-07-28",
   css: ["~/assets/css/main.css"],
+  modules: ["@nuxtjs/tailwindcss"],
+  tailwindcss: {
+    cssPath: "~/assets/css/main.css",
+  },
   devtools: { enabled: false },
   nitro: {
     preset: "cloudflare_pages",
