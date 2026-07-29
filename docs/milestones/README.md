@@ -81,12 +81,16 @@ Done when:
 
 ## M4 - PNG Export
 
+Detailed plan: [m4-plan.md](./m4-plan.md)
+
 Deliverables:
 
-- [ ] 1080x1920 export pipeline
-- [ ] Download button
-- [ ] Export loading state
-- [ ] Fallback behavior for unsupported browsers
+- [x] 1080x1920 export pipeline
+- [x] Download button
+- [x] Export loading state
+- [x] Fallback behavior for unsupported browsers
+- [ ] Cross-browser and mobile export QA
+- [ ] Copy/share canonical video link (planned only)
 
 Done when:
 

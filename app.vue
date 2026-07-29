@@ -81,18 +81,33 @@
         </div>
 
         <div class="mt-auto grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto]" aria-label="Export actions">
-          <button type="button" class="min-h-13 rounded-lg bg-[#f04b32] px-5 font-extrabold text-white disabled:opacity-45" disabled>
-            Export 1080x1920 PNG
+          <button
+            type="button"
+            class="min-h-13 rounded-lg bg-[#f04b32] px-5 font-extrabold text-white transition hover:bg-[#ff5b40] focus:outline-none focus:ring-2 focus:ring-[#ff8a72] disabled:opacity-45"
+            :disabled="!metadata || pending || isExporting"
+            @click="downloadStory"
+          >
+            {{ isExporting ? 'Rendering HD PNG...' : 'Download 1080x1920 PNG' }}
           </button>
           <button type="button" class="min-h-13 rounded-lg border border-white/15 bg-white/[0.06] px-5 font-extrabold text-white disabled:opacity-45" disabled>
             Copy link
           </button>
+          <p
+            v-if="exportMessage"
+            class="text-xs leading-5 sm:col-span-2"
+            :class="exportStatus === 'error' ? 'text-[#ffb6a7]' : 'text-[#b9f6cf]'"
+            role="status"
+            aria-live="polite"
+          >
+            {{ exportMessage }}
+          </p>
         </div>
       </div>
 
       <div class="grid min-h-[34rem] min-w-0 place-items-center rounded-lg border border-white/10 bg-[#101218]/85 p-3 shadow-2xl backdrop-blur-2xl sm:p-4">
         <StoryPreview
-          :metadata="metadata"
+          ref="storyPreview"
+          :metadata="previewMetadata"
           :is-loading="pending"
           :error-message="errorMessage"
           :template-id="selectedTemplate"
@@ -155,6 +170,16 @@ const videoUrl = ref('')
 const metadata = ref<YoutubeMetadata | null>(null)
 const errorMessage = ref('')
 const selectedTemplate = ref<StoryTemplateId>('centered')
+const storyPreview = useTemplateRef<{
+  getExportElement: () => HTMLElement | null
+}>('storyPreview')
+const {
+  exportPng,
+  isExporting,
+  message: exportMessage,
+  resetExportStatus,
+  status: exportStatus
+} = useStoryExport()
 
 const selectedTemplateName = computed(() =>
   templates.find(template => template.id === selectedTemplate.value)?.name ?? 'Centered'
@@ -165,7 +190,16 @@ const statusMessage = computed(() => {
   if (pending.value) return 'Fetching YouTube metadata...'
   if (errorMessage.value) return errorMessage.value
   if (metadata.value) return `Loaded: ${metadata.value.channelName}`
-  return 'The templates work now. PNG export arrives in M4.'
+  return 'Load a video to create and download an HD story.'
+})
+
+const previewMetadata = computed<YoutubeMetadata | null>(() => {
+  if (!metadata.value) return null
+
+  return {
+    ...metadata.value,
+    thumbnailUrl: `/api/youtube/thumbnail?videoId=${encodeURIComponent(metadata.value.videoId)}`
+  }
 })
 
 const { pending, execute } = useLazyFetch<YoutubeMetadata>('/api/youtube/metadata', {
@@ -191,6 +225,14 @@ const { pending, execute } = useLazyFetch<YoutubeMetadata>('/api/youtube/metadat
 async function fetchMetadata() {
   if (!trimmedVideoUrl.value || pending.value) return
   errorMessage.value = ''
+  resetExportStatus()
   await execute()
 }
+
+async function downloadStory() {
+  if (!metadata.value) return
+  await exportPng(storyPreview.value?.getExportElement() ?? null, metadata.value.title)
+}
+
+watch(selectedTemplate, resetExportStatus)
 </script>

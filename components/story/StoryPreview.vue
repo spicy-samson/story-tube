@@ -1,5 +1,8 @@
 <template>
-  <div class="aspect-[9/16] w-full max-w-96 min-w-0 overflow-hidden rounded-[1.8rem] border-[0.5rem] border-[#050506] bg-[#050506] shadow-[0_32px_70px_rgba(0,0,0,0.42)]">
+  <div
+    ref="exportElement"
+    class="aspect-[9/16] w-full max-w-96 min-w-0 overflow-hidden rounded-[1.8rem] border-[0.5rem] border-[#050506] bg-[#050506] shadow-[0_32px_70px_rgba(0,0,0,0.42)]"
+  >
     <Transition
       mode="out-in"
       enter-active-class="transition duration-300 ease-out"
@@ -50,4 +53,9 @@ const templateComponents: Record<StoryTemplateId, Component> = {
 }
 
 const activeComponent = computed(() => templateComponents[props.templateId])
+const exportElement = useTemplateRef<HTMLElement>('exportElement')
+
+defineExpose({
+  getExportElement: () => exportElement.value
+})
 </script>
