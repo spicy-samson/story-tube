@@ -26,18 +26,11 @@ Loaded story preview
   -> trigger browser download
 ```
 
-## Link Feature - Plan Only
+## Link Feature - Moved to M6
 
 A PNG cannot contain a clickable hyperlink. The exported artwork can show a URL or QR code, but story platforms will still treat it as pixels.
 
-The next link-sharing increment should:
-
-- Enable the existing `Copy link` button beside the download button.
-- Copy `metadata.canonicalUrl`, not the originally pasted URL with tracking parameters.
-- Show a short copied/error confirmation.
-- Add Web Share API support on compatible phones so the PNG and canonical URL can be shared together.
-- Consider an optional QR code inside templates only after the basic copy/share flow is polished.
-- Keep visible URLs and QR codes opt-in so they do not clutter every design.
+The implemented copy, QR, and Web Share workflow is documented in [m6-plan.md](./m6-plan.md).
 
 ## Validation
 

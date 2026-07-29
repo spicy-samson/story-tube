@@ -2,14 +2,14 @@
 
 ## Summary
 
-Build a real template system from the seven supplied story-card references. The same normalized M2 metadata should render through every design, and switching templates should be instant and client-side.
+Build a real template system from the supplied story-card references. The same normalized M2 metadata should render through every design, and switching templates should be instant and client-side.
 
 Status: implemented and expanded after M4.
 
 ## Implementation
 
 - [x] Add a typed `StoryTemplateId` contract.
-- [x] Replace the placeholder picker with seven working controls.
+- [x] Replace the placeholder picker with ten working controls.
 - [x] Route the active choice through `StoryPreview.vue`.
 - [x] Keep every template locked to a responsive 9:16 surface.
 - [x] Preserve empty, loading, error, and loaded metadata states.
@@ -46,14 +46,14 @@ components/story/
   templates/
     CenteredStoryCard.vue
     EditorialStoryCard.vue
-    BluePosterStoryCard.vue
+    PosterStoryCard.vue
     ProgressStoryCard.vue
     CleanPosterStoryCard.vue
     FullBleedStoryCard.vue
     GlassStoryCard.vue
     ChromaticStoryCard.vue
     SplitStoryCard.vue
-    SignalStoryCard.vue
+    LiquidStoryCard.vue
 ```
 
 Shared template state lives in:
@@ -65,7 +65,7 @@ composables/useStoryCardContent.ts
 
 ## Acceptance Checks
 
-- [x] All seven picker buttons switch the active component.
+- [x] All ten picker buttons switch the active component.
 - [x] A real public YouTube video renders its title, channel, and thumbnail.
 - [x] Long titles remain contained through template-specific line clamping.
 - [x] Desktop viewport has no horizontal overflow.
