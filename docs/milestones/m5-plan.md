@@ -4,7 +4,7 @@
 
 Build a real template system from the seven supplied story-card references. The same normalized M2 metadata should render through every design, and switching templates should be instant and client-side.
 
-Status: implemented ahead of M4.
+Status: implemented and expanded after M4.
 
 ## Implementation
 
@@ -15,6 +15,9 @@ Status: implemented ahead of M4.
 - [x] Preserve empty, loading, error, and loaded metadata states.
 - [x] Migrate the application and story components to Tailwind utilities.
 - [x] Keep a minimal Tailwind base stylesheet only for global browser defaults.
+- [x] Expand the set from seven to ten templates.
+- [x] Derive reusable background and accent colors from the loaded thumbnail.
+- [x] Keep adaptive colors compatible with the HD PNG export.
 
 ## Template Set
 
@@ -27,6 +30,11 @@ Status: implemented ahead of M4.
 | Clean Poster | Light type-first poster with numbered metadata lines |
 | Full Bleed | Image-forward composition with title at the top |
 | Glass | Floating translucent media card over a blurred background |
+| Chromatic | Thumbnail-matched editorial poster with a tilted media frame |
+| Split | Image-first upper panel with a color-matched type panel |
+| Signal | Graphic broadcast layout with a strong adaptive accent stripe |
+
+`Blue Poster`, `Chromatic`, `Split`, and `Signal` use the thumbnail palette directly. The palette sampler runs in the browser against the same-origin thumbnail proxy and falls back to a neutral blue-gold colorway while metadata is empty or unavailable.
 
 ## Component Shape
 
@@ -43,6 +51,9 @@ components/story/
     CleanPosterStoryCard.vue
     FullBleedStoryCard.vue
     GlassStoryCard.vue
+    ChromaticStoryCard.vue
+    SplitStoryCard.vue
+    SignalStoryCard.vue
 ```
 
 Shared template state lives in:
@@ -61,6 +72,7 @@ composables/useStoryCardContent.ts
 - [x] Phone viewport has no horizontal overflow.
 - [x] Cloudflare Pages production build passes.
 - [x] M2 metadata route remains bundled in the Pages worker.
+- [x] Thumbnail-derived palette remains visible in exported PNGs.
 
 ## Known Non-Goals
 
