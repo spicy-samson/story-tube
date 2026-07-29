@@ -13,7 +13,7 @@
       </div>
     </div>
 
-    <footer class="relative z-10 border-t border-white/10 pt-5">
+    <footer class="flex relative justify-end z-10 border-t border-white/10 pt-5">
       <StoryYoutubeBrand class="text-xl" />
     </footer>
   </article>

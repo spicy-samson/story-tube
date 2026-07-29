@@ -25,9 +25,9 @@
       </div>
     </div>
 
-    <footer class="relative z-10 mt-auto flex items-end justify-between">
-      <span class="max-w-24 text-[9px] font-black uppercase leading-4 tracking-[0.28em] text-[var(--story-muted)]">Tap to watch</span>
-      <StoryYoutubeBrand class="text-xl" />
+    <footer class="relative z-10 mt-auto flex items-end justify-end">
+
+      <StoryYoutubeBrand class="text-xl position" />
     </footer>
   </article>
 </template>

@@ -127,6 +127,7 @@ async function sampleThumbnail(source: string) {
 
 export function useThumbnailPalette(thumbnailUrl: Ref<string | null>) {
   const palette = ref<StoryPalette>({ ...DEFAULT_PALETTE })
+  const isSampling = ref(false)
   let requestId = 0
 
   watch(thumbnailUrl, async (source) => {
@@ -134,18 +135,26 @@ export function useThumbnailPalette(thumbnailUrl: Ref<string | null>) {
 
     if (!source || !import.meta.client) {
       palette.value = { ...DEFAULT_PALETTE }
+      isSampling.value = false
       return
     }
+
+    isSampling.value = true
 
     try {
       const sampledPalette = await sampleThumbnail(source)
       if (currentRequest === requestId) palette.value = sampledPalette
     } catch {
       if (currentRequest === requestId) palette.value = { ...DEFAULT_PALETTE }
+    } finally {
+      if (currentRequest === requestId) isSampling.value = false
     }
   }, { immediate: true })
 
-  return { palette: readonly(palette) }
+  return {
+    isSampling: readonly(isSampling),
+    palette: readonly(palette)
+  }
 }
 
 export function storyPaletteStyle(palette: StoryPalette): CSSProperties {

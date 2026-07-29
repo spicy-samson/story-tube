@@ -16,7 +16,7 @@
 
     <header class="relative z-10 flex items-center justify-between">
       <div class="rounded-full border border-white/35 bg-white/15 px-4 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.34)] backdrop-blur-md">
-        <p class="text-[9px] font-black uppercase tracking-[0.26em] text-white/90">Watch now</p>
+
       </div>
       <span class="grid h-11 w-11 place-items-center rounded-full border border-white/35 bg-white/20 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.38)] backdrop-blur-md">
         <StoryPlayButton size="sm" />
@@ -41,8 +41,8 @@
       </div>
     </div>
 
-    <footer class="relative z-10 mt-auto flex items-end justify-between">
-      <span class="text-[9px] font-black uppercase tracking-[0.28em] text-white/58">Tap to watch</span>
+    <footer class="relative z-10 mt-auto flex items-end justify-end">
+
       <div class="rounded-full border border-white/25 bg-white/14 px-4 py-2 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.3)] backdrop-blur-md">
         <StoryYoutubeBrand class="text-lg" />
       </div>

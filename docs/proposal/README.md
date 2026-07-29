@@ -145,8 +145,9 @@ Export
 | M3 - First Template | One polished 9:16 story card preview | Day 3 |
 | M4 - Export | Generate and download 1080x1920 PNG | Day 4 |
 | M5 - Template Set | Three templates, template picker, responsive polish | Day 5 |
-| M6 - Mobile QA | Test on phone viewport, installability, download flow | Day 6 |
-| M7 - Demo Ship | Deploy, README update, record/post demo | Day 7 |
+| M6 - Story Link Sharing | Routed creation/share workspaces, clean/QR outputs, canonical link copy, native share handoff | Day 6 |
+| M7 - Mobile QA | Test phone viewport, installability, download/share flow | Day 7 |
+| M8 - Demo Ship | Deploy, README update, record/post demo | Day 8 |
 
 ## 9. Future Roadmap
 
