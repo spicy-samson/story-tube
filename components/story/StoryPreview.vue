@@ -1,31 +1,39 @@
 <template>
   <div
     ref="exportElement"
-    class="aspect-[9/16] w-full max-w-96 min-w-0 overflow-hidden rounded-[1.8rem] border-[0.5rem] border-[#050506] bg-[#050506] shadow-[0_32px_70px_rgba(0,0,0,0.42)]"
+    class="aspect-[9/16] w-full max-w-96 min-w-0 overflow-hidden rounded-[1.8rem] bg-[#050506] shadow-[0_32px_70px_rgba(0,0,0,0.42)] ring-[0.5rem] ring-[#050506]"
   >
-    <Transition
-      mode="out-in"
-      enter-active-class="transition duration-300 ease-out"
-      enter-from-class="scale-[0.985] opacity-0"
-      enter-to-class="scale-100 opacity-100"
-      leave-active-class="transition duration-150 ease-in"
-      leave-from-class="opacity-100"
-      leave-to-class="opacity-0"
-    >
-      <component
-        :is="activeComponent"
-        :key="templateId"
-        :metadata="metadata"
-        :is-loading="isLoading"
-        :error-message="errorMessage"
-        :palette="palette"
+    <div class="relative h-full w-full overflow-hidden">
+      <Transition
+        mode="out-in"
+        enter-active-class="transition duration-300 ease-out"
+        enter-from-class="scale-[0.985] opacity-0"
+        enter-to-class="scale-100 opacity-100"
+        leave-active-class="transition duration-150 ease-in"
+        leave-from-class="opacity-100"
+        leave-to-class="opacity-0"
+      >
+        <component
+          :is="activeComponent"
+          :key="templateId"
+          :metadata="metadata"
+          :is-loading="isLoading"
+          :error-message="errorMessage"
+          :palette="palette"
+        />
+      </Transition>
+      <StoryQrSticker
+        v-if="shareVariant === 'qr' && qrCodeDataUrl"
+        :data-url="qrCodeDataUrl"
+        :position="qrPosition"
       />
-    </Transition>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { Component } from 'vue'
+import type { QrPosition, StoryShareVariant } from '~/shared/types/story-share'
 import type { StoryTemplateId } from '~/shared/types/story-template'
 import type { YoutubeMetadata } from '~/shared/types/youtube-metadata'
 import ChromaticStoryCard from './templates/ChromaticStoryCard.vue'
@@ -44,7 +52,14 @@ const props = defineProps<{
   isLoading: boolean
   errorMessage: string
   templateId: StoryTemplateId
+  shareVariant?: StoryShareVariant
+  qrPosition?: QrPosition
+  qrCodeDataUrl?: string
 }>()
+
+const shareVariant = computed(() => props.shareVariant ?? 'clean')
+const qrPosition = computed(() => props.qrPosition ?? 'bottom-left')
+const qrCodeDataUrl = computed(() => props.qrCodeDataUrl ?? '')
 
 const templateComponents: Record<StoryTemplateId, Component> = {
   centered: CenteredStoryCard,
@@ -61,10 +76,25 @@ const templateComponents: Record<StoryTemplateId, Component> = {
 
 const activeComponent = computed(() => templateComponents[props.templateId])
 const thumbnailUrl = computed(() => props.metadata?.thumbnailUrl ?? null)
-const { palette } = useThumbnailPalette(thumbnailUrl)
+const { isSampling, palette } = useThumbnailPalette(thumbnailUrl)
 const exportElement = useTemplateRef<HTMLElement>('exportElement')
 
+async function waitForPalette() {
+  if (isSampling.value) {
+    await new Promise<void>((resolve) => {
+      const stop = watch(isSampling, (sampling) => {
+        if (sampling) return
+        stop()
+        resolve()
+      })
+    })
+  }
+
+  await nextTick()
+}
+
 defineExpose({
-  getExportElement: () => exportElement.value
+  getExportElement: () => exportElement.value,
+  waitForPalette
 })
 </script>
