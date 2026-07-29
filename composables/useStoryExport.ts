@@ -1,18 +1,21 @@
 import { toBlob } from 'html-to-image'
+import type { StoryExportAsset, StoryShareVariant } from '~/shared/types/story-share'
 
 const EXPORT_WIDTH = 1080
 const EXPORT_HEIGHT = 1920
 
-type StoryExportStatus = 'idle' | 'rendering' | 'success' | 'error'
+type StoryExportStatus = 'idle' | 'rendering' | 'sharing' | 'success' | 'error'
+type ShareResult = 'shared' | 'cancelled' | 'downloaded' | 'failed'
 
-function makeFilename(title: string) {
+function makeFilename(title: string, variant: StoryShareVariant) {
   const slug = title
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '')
     .slice(0, 72)
+  const suffix = variant === 'qr' ? '-qr' : ''
 
-  return `${slug || 'youtube-story'}-1080x1920.png`
+  return `${slug || 'youtube-story'}${suffix}-1080x1920.png`
 }
 
 async function waitForImages(element: HTMLElement) {
@@ -77,17 +80,28 @@ function waitForPaint() {
 export function useStoryExport() {
   const status = ref<StoryExportStatus>('idle')
   const message = ref('')
-
   const isExporting = computed(() => status.value === 'rendering')
 
-  async function exportPng(element: HTMLElement | null, title: string) {
-    if (!import.meta.client || !element || isExporting.value) return
+  function supportsNativeFileShare() {
+    if (!import.meta.client || !navigator.share || !navigator.canShare) return false
+
+    try {
+      const probe = new File(['story'], 'story.png', { type: 'image/png' })
+      return navigator.canShare({ files: [probe] })
+    } catch {
+      return false
+    }
+  }
+
+  async function renderPng(
+    element: HTMLElement | null,
+    title: string,
+    variant: StoryShareVariant
+  ): Promise<StoryExportAsset | null> {
+    if (!import.meta.client || !element) return null
 
     status.value = 'rendering'
-    message.value = 'Rendering your HD story...'
-    const downloadLink = document.createElement('a')
-    const supportsDownload = 'download' in downloadLink
-    const fallbackWindow = supportsDownload ? null : window.open('', '_blank')
+    message.value = `Preparing your ${variant === 'qr' ? 'QR' : 'clean'} story...`
     let exportWrapper: HTMLElement | null = null
 
     try {
@@ -108,32 +122,75 @@ export function useStoryExport() {
 
       if (!blob) throw new Error('The browser could not create the PNG.')
 
-      const objectUrl = URL.createObjectURL(blob)
-
-      if (supportsDownload) {
-        downloadLink.href = objectUrl
-        downloadLink.download = makeFilename(title)
-        downloadLink.style.display = 'none'
-        document.body.appendChild(downloadLink)
-        downloadLink.click()
-        downloadLink.remove()
-        message.value = 'Your 1080 x 1920 PNG has been downloaded.'
-      } else if (fallbackWindow) {
-        fallbackWindow.location.href = objectUrl
-        message.value = 'The PNG opened in a new tab. Save it from there.'
-      } else {
-        throw new Error('The browser blocked the PNG download window.')
+      const filename = makeFilename(title, variant)
+      const file = new File([blob], filename, { type: 'image/png' })
+      const asset: StoryExportAsset = {
+        blob,
+        file,
+        filename,
+        height: EXPORT_HEIGHT,
+        variant,
+        width: EXPORT_WIDTH
       }
 
-      window.setTimeout(() => URL.revokeObjectURL(objectUrl), 30_000)
       status.value = 'success'
+      message.value = `${variant === 'qr' ? 'QR' : 'Clean'} story ready in HD.`
+      return asset
     } catch (error) {
-      fallbackWindow?.close()
       console.error('Story export failed:', error)
       status.value = 'error'
-      message.value = 'Export failed. Try another browser or reload the video and try again.'
+      message.value = 'Export failed. Reload the video and try again.'
+      return null
     } finally {
       exportWrapper?.remove()
+    }
+  }
+
+  function downloadAsset(asset: StoryExportAsset) {
+    const objectUrl = URL.createObjectURL(asset.blob)
+    const downloadLink = document.createElement('a')
+
+    downloadLink.href = objectUrl
+    downloadLink.download = asset.filename
+    downloadLink.style.display = 'none'
+    document.body.appendChild(downloadLink)
+    downloadLink.click()
+    downloadLink.remove()
+    window.setTimeout(() => URL.revokeObjectURL(objectUrl), 30_000)
+
+    status.value = 'success'
+    message.value = `${asset.variant === 'qr' ? 'QR' : 'Clean'} story downloaded.`
+  }
+
+  async function shareAsset(asset: StoryExportAsset): Promise<ShareResult> {
+    if (!supportsNativeFileShare()) {
+      downloadAsset(asset)
+      message.value = 'Native image sharing is unavailable here, so the PNG was downloaded.'
+      return 'downloaded'
+    }
+
+    status.value = 'sharing'
+    message.value = 'Opening your share sheet...'
+
+    try {
+      await navigator.share({
+        files: [asset.file],
+        title: 'YouTube Story'
+      })
+      status.value = 'success'
+      message.value = 'Story sent to the share sheet.'
+      return 'shared'
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        status.value = 'success'
+        message.value = 'Sharing canceled. Your image is still ready.'
+        return 'cancelled'
+      }
+
+      console.error('Native story sharing failed:', error)
+      status.value = 'error'
+      message.value = 'Could not open the share sheet. Download the PNG instead.'
+      return 'failed'
     }
   }
 
@@ -143,10 +200,13 @@ export function useStoryExport() {
   }
 
   return {
-    exportPng,
+    downloadAsset,
     isExporting,
     message,
+    renderPng,
     resetExportStatus,
-    status
+    shareAsset,
+    status,
+    supportsNativeFileShare
   }
 }
