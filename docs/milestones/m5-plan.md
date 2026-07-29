@@ -32,9 +32,9 @@ Status: implemented and expanded after M4.
 | Glass | Floating translucent media card over a blurred background |
 | Chromatic | Thumbnail-matched editorial poster with a tilted media frame |
 | Split | Image-first upper panel with a color-matched type panel |
-| Signal | Graphic broadcast layout with a strong adaptive accent stripe |
+| Liquid | Glassmorphic story card with thumbnail-matched color flow |
 
-`Blue Poster`, `Chromatic`, `Split`, and `Signal` use the thumbnail palette directly. The palette sampler runs in the browser against the same-origin thumbnail proxy and falls back to a neutral blue-gold colorway while metadata is empty or unavailable.
+`Blue Poster`, `Chromatic`, `Split`, and `Liquid` use the thumbnail palette directly. The palette sampler runs in the browser against the same-origin thumbnail proxy and falls back to a neutral blue-gold colorway while metadata is empty or unavailable.
 
 ## Component Shape
 
