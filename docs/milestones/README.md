@@ -11,9 +11,10 @@ This file is the build map for the PWA-first version.
 | M2 | Metadata Pipeline | YouTube URLs parse and resolve into usable metadata |
 | M3 | Story Preview | One high-quality 9:16 template renders in the browser |
 | M4 | PNG Export | User can download a 1080x1920 image |
-| M5 | Template Set | Seven screenshot-inspired templates and a live picker are polished |
-| M6 | Mobile QA | Works on phone-sized viewports and PWA install path is verified |
-| M7 | Demo Ship | Deployed version and short demo are ready |
+| M5 | Template Set | Ten screenshot-inspired templates and a live picker are polished |
+| M6 | Story Link Sharing | Clean and QR stories can be shared with the canonical YouTube link ready |
+| M7 | Mobile QA | Works on phone-sized viewports and PWA install path is verified |
+| M8 | Demo Ship | Deployed version and short demo are ready |
 
 ## M0 - Planning
 
@@ -90,7 +91,7 @@ Deliverables:
 - [x] Export loading state
 - [x] Fallback behavior for unsupported browsers
 - [ ] Cross-browser and mobile export QA
-- [ ] Copy/share canonical video link (planned only)
+- [x] Link-sharing scope moved to [M6](./m6-plan.md)
 
 Done when:
 
@@ -109,15 +110,37 @@ Deliverables:
 - [x] Clean text poster template
 - [x] Image-forward full-bleed template
 - [x] Floating glass template
+- [x] Thumbnail-matched chromatic template
+- [x] Split image and type template
+- [x] Liquid glass template
 - [x] Live template picker
 - [x] Tailwind styling migration
 - [ ] Template-specific accent controls if simple
 
 Done when:
 
-- The user can make seven meaningfully different story cards from the same link.
+- The user can make ten meaningfully different story cards from the same link.
 
-## M6 - Mobile QA
+## M6 - Story Link Sharing
+
+Detailed plan: [m6-plan.md](./m6-plan.md)
+
+Deliverables:
+
+- [x] Ready to Share modal
+- [x] Clean and QR story variants
+- [x] Canonical YouTube URL copy action
+- [x] Selectable URL fallback
+- [x] Four-position QR sticker
+- [x] Native file sharing where supported
+- [x] PNG download fallback
+- [ ] Deployed mobile share-sheet QA
+
+Done when:
+
+- A creator can share or download the story and paste the copied URL into Instagram's Link Sticker.
+
+## M7 - Mobile QA
 
 Deliverables:
 
@@ -126,12 +149,15 @@ Deliverables:
 - [ ] Touch interaction QA
 - [ ] PWA install check
 - [ ] Download flow check
+- [ ] Native share-sheet check
+- [ ] Clipboard and Link Sticker handoff check
+- [ ] QR scan check
 
 Done when:
 
 - The app feels designed for a phone browser.
 
-## M7 - Demo Ship
+## M8 - Demo Ship
 
 Deliverables:
 
