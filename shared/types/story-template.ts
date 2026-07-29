@@ -22,5 +22,5 @@ export interface StoryTemplateOption {
   id: StoryTemplateId
   name: string
   description: string
-  swatchClass: string
+  swatchBackground: string
 }
