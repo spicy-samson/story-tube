@@ -3,7 +3,7 @@
     class="flex h-full w-full flex-col overflow-hidden rounded-[1.3rem] bg-[var(--story-bg-alt)] px-7 py-8 text-[var(--story-fg)]"
     :style="storyPaletteStyle(palette)"
   >
-    <p class="text-[10px] font-bold uppercase tracking-[0.3em] text-white/75">● &nbsp; Watch now</p>
+
 
 <h2 class="mt-7 whitespace-normal break-words font-serif text-[clamp(1.05rem,4.8vw,1.55rem)] font-black italic leading-[1.08] [overflow-wrap:anywhere]">
   {{ title }}
@@ -16,8 +16,8 @@
       <div v-else class="grid h-full place-items-center"><StoryPlayButton /></div>
     </div>
 
-    <footer class="mt-auto flex items-end justify-between border-t border-white/20 pt-6">
-      <span class="text-[9px] font-bold uppercase tracking-[0.3em] text-white/50">Tap to watch</span>
+    <footer class="mt-auto flex items-end justify-end border-t border-white/20 pt-6">
+
       <StoryYoutubeBrand class="text-lg" />
     </footer>
   </article>

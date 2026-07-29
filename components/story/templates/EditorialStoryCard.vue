@@ -15,8 +15,8 @@
       <h2 class="whitespace-normal break-words text-[clamp(1.15rem,5.2vw,1.75rem)] font-black uppercase leading-[1.05] [overflow-wrap:anywhere]">{{ title }}</h2>
     </div>
 
-    <footer class="relative z-10 flex items-center justify-between border-t border-white/20 pt-5">
-      <span class="text-[9px] font-bold uppercase tracking-[0.3em] text-white/45">Watch now</span>
+    <footer class="relative z-10 flex items-center justify-end border-t border-white/20 pt-5">
+
       <StoryYoutubeBrand class="text-lg" />
     </footer>
   </article>

@@ -15,8 +15,8 @@
       <p><strong class="mr-3 text-black">02</strong> Watch on YouTube</p>
     </div>
 
-    <footer class="mt-auto flex items-center justify-between border-t-2 border-[#1b1b1b] pt-7">
-      <span class="text-[9px] font-black uppercase tracking-[0.3em] text-black/50">Link below</span>
+    <footer class="mt-auto flex items-center justify-end border-t-2 border-[#1b1b1b] pt-7">
+
       <StoryYoutubeBrand tone="dark" class="text-xl" />
     </footer>
   </article>
