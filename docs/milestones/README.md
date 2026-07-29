@@ -12,7 +12,7 @@ This file is the build map for the PWA-first version.
 | M3 | Story Preview | One high-quality 9:16 template renders in the browser |
 | M4 | PNG Export | User can download a 1080x1920 image |
 | M5 | Template Set | Ten screenshot-inspired templates and a live picker are polished |
-| M6 | Story Link Sharing | Clean and QR stories can be shared with the canonical YouTube link ready |
+| M6 | Story Link Sharing | Routed creation and sharing workspaces produce clean or QR stories with the canonical YouTube link ready |
 | M7 | Mobile QA | Works on phone-sized viewports and PWA install path is verified |
 | M8 | Demo Ship | Deployed version and short demo are ready |
 
@@ -127,7 +127,10 @@ Detailed plan: [m6-plan.md](./m6-plan.md)
 
 Deliverables:
 
-- [x] Ready to Share modal
+- [x] Creation workspace at `/`
+- [x] Refreshable sharing workspace at `/share/:videoId`
+- [x] URL-restored template, variant, and QR position
+- [x] Back to Edit Story flow with restored video and template
 - [x] Clean and QR story variants
 - [x] Canonical YouTube URL copy action
 - [x] Selectable URL fallback
@@ -138,7 +141,8 @@ Deliverables:
 
 Done when:
 
-- A creator can share or download the story and paste the copied URL into Instagram's Link Sticker.
+- A creator can refresh or directly open the share workspace without losing the selected output settings.
+- A creator can share or download the story and paste the copied YouTube URL into Instagram's Link Sticker.
 
 ## M7 - Mobile QA
 
