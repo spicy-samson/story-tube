@@ -24,8 +24,9 @@
 </template>
 
 <script setup lang="ts">
+import type { StoryPalette } from '~/shared/types/story-template'
 import type { YoutubeMetadata } from '~/shared/types/youtube-metadata'
 
-const props = defineProps<{ metadata: YoutubeMetadata | null; isLoading: boolean; errorMessage: string }>()
+const props = defineProps<{ metadata: YoutubeMetadata | null; isLoading: boolean; errorMessage: string; palette: StoryPalette }>()
 const { eyebrow, title, channel } = useStoryCardContent(props)
 </script>
