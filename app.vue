@@ -80,33 +80,23 @@
           </div>
         </div>
 
-        <div class="mt-auto grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto]" aria-label="Export actions">
+        <div class="mt-auto grid gap-2" aria-label="Story sharing actions">
           <button
             type="button"
             class="min-h-13 rounded-lg bg-[#f04b32] px-5 font-extrabold text-white transition hover:bg-[#ff5b40] focus:outline-none focus:ring-2 focus:ring-[#ff8a72] disabled:opacity-45"
-            :disabled="!metadata || pending || isExporting"
-            @click="downloadStory"
+            :disabled="!metadata || pending || shareOpen"
+            @click="openShareStudio"
           >
-            {{ isExporting ? 'Rendering HD PNG...' : 'Download 1080x1920 PNG' }}
+            Share Story
           </button>
-          <button type="button" class="min-h-13 rounded-lg border border-white/15 bg-white/[0.06] px-5 font-extrabold text-white disabled:opacity-45" disabled>
-            Copy link
-          </button>
-          <p
-            v-if="exportMessage"
-            class="text-xs leading-5 sm:col-span-2"
-            :class="exportStatus === 'error' ? 'text-[#ffb6a7]' : 'text-[#b9f6cf]'"
-            role="status"
-            aria-live="polite"
-          >
-            {{ exportMessage }}
+          <p class="text-xs leading-5 text-[#a9a096]">
+            Get a clean or QR story, then paste the copied link into Instagram's Link Sticker.
           </p>
         </div>
       </div>
 
       <div class="grid min-h-[34rem] min-w-0 place-items-center rounded-lg border border-white/10 bg-[#101218]/85 p-3 shadow-2xl backdrop-blur-2xl sm:p-4">
         <StoryPreview
-          ref="storyPreview"
           :metadata="previewMetadata"
           :is-loading="pending"
           :error-message="errorMessage"
@@ -114,10 +104,36 @@
         />
       </div>
     </section>
+
+    <StoryShareModal
+      v-if="metadata"
+      ref="shareModal"
+      :asset="preparedAsset"
+      :canonical-url="metadata.canonicalUrl"
+      :copy-failed="copyFailed"
+      :copy-message="copyMessage"
+      :is-busy="isPreparingAsset"
+      :metadata="previewMetadata ?? metadata"
+      :open="shareOpen"
+      :qr-code-data-url="qrCodeDataUrl"
+      :qr-position="qrPosition"
+      :status="modalStatus"
+      :status-message="modalStatusMessage"
+      :supports-native-share="supportsNativeShare"
+      :template-id="selectedTemplate"
+      :variant="shareVariant"
+      @close="closeShareStudio"
+      @copy-link="copyCanonicalLink"
+      @download="downloadPreparedStory"
+      @share="sharePreparedStory"
+      @update:qr-position="setQrPosition"
+      @update:variant="setShareVariant"
+    />
   </main>
 </template>
 
 <script setup lang="ts">
+import type { QrPosition, StoryExportAsset, StoryShareVariant } from './shared/types/story-share'
 import type { StoryTemplateId, StoryTemplateOption } from './shared/types/story-template'
 import type { YoutubeMetadata } from './shared/types/youtube-metadata'
 
@@ -188,27 +204,55 @@ const videoUrl = ref('')
 const metadata = ref<YoutubeMetadata | null>(null)
 const errorMessage = ref('')
 const selectedTemplate = ref<StoryTemplateId>('centered')
-const storyPreview = useTemplateRef<{
+const shareModal = useTemplateRef<{
   getExportElement: () => HTMLElement | null
-}>('storyPreview')
+  waitForPalette: () => Promise<void>
+}>('shareModal')
+const shareOpen = ref(false)
+const shareVariant = ref<StoryShareVariant>('clean')
+const qrPosition = ref<QrPosition>('bottom-left')
+const preparedAsset = ref<StoryExportAsset | null>(null)
+const copyMessage = ref('')
+const copyFailed = ref(false)
+const supportsNativeShare = ref(false)
+let preparationId = 0
 const {
-  exportPng,
+  downloadAsset,
   isExporting,
   message: exportMessage,
+  renderPng,
   resetExportStatus,
+  shareAsset,
+  supportsNativeFileShare,
   status: exportStatus
 } = useStoryExport()
+const {
+  dataUrl: qrCodeDataUrl,
+  error: qrCodeError,
+  generate: generateQrCode,
+  isGenerating: isGeneratingQrCode,
+  reset: resetQrCode
+} = useStoryQrCode()
 
 const selectedTemplateName = computed(() =>
   templates.find(template => template.id === selectedTemplate.value)?.name ?? 'Centered'
 )
 const trimmedVideoUrl = computed(() => videoUrl.value.trim())
 const isGenerateDisabled = computed(() => pending.value || !trimmedVideoUrl.value)
+const isPreparingAsset = computed(() =>
+  isExporting.value || isGeneratingQrCode.value || exportStatus.value === 'sharing'
+)
+const modalStatus = computed(() =>
+  shareVariant.value === 'qr' && qrCodeError.value ? 'error' : exportStatus.value
+)
+const modalStatusMessage = computed(() =>
+  shareVariant.value === 'qr' && qrCodeError.value ? qrCodeError.value : exportMessage.value
+)
 const statusMessage = computed(() => {
   if (pending.value) return 'Fetching YouTube metadata...'
   if (errorMessage.value) return errorMessage.value
   if (metadata.value) return `Loaded: ${metadata.value.channelName}`
-  return 'Load a video to create and download an HD story.'
+  return 'Load a video to create and share an HD story.'
 })
 
 const previewMetadata = computed<YoutubeMetadata | null>(() => {
@@ -243,14 +287,99 @@ const { pending, execute } = useLazyFetch<YoutubeMetadata>('/api/youtube/metadat
 async function fetchMetadata() {
   if (!trimmedVideoUrl.value || pending.value) return
   errorMessage.value = ''
+  closeShareStudio()
+  resetQrCode()
   resetExportStatus()
   await execute()
 }
 
-async function downloadStory() {
+async function copyCanonicalLink() {
   if (!metadata.value) return
-  await exportPng(storyPreview.value?.getExportElement() ?? null, metadata.value.title)
+
+  try {
+    await navigator.clipboard.writeText(metadata.value.canonicalUrl)
+    copyFailed.value = false
+    copyMessage.value = "YouTube link copied. Paste it into Instagram's Link Sticker."
+  } catch (error) {
+    console.error('Clipboard copy failed:', error)
+    copyFailed.value = true
+    copyMessage.value = 'Automatic copy was blocked. Select and copy the URL below.'
+  }
 }
 
-watch(selectedTemplate, resetExportStatus)
+async function prepareShareAsset() {
+  if (!shareOpen.value || !metadata.value) return
+
+  const currentPreparation = ++preparationId
+  preparedAsset.value = null
+  resetExportStatus()
+
+  if (shareVariant.value === 'qr' && !qrCodeDataUrl.value) {
+    await generateQrCode(metadata.value.canonicalUrl)
+    if (!qrCodeDataUrl.value) return
+  }
+
+  await nextTick()
+  await shareModal.value?.waitForPalette()
+  if (currentPreparation !== preparationId || !shareOpen.value) return
+
+  const asset = await renderPng(
+    shareModal.value?.getExportElement() ?? null,
+    metadata.value.title,
+    shareVariant.value
+  )
+
+  if (currentPreparation === preparationId) preparedAsset.value = asset
+}
+
+async function openShareStudio() {
+  if (!metadata.value) return
+
+  shareVariant.value = 'clean'
+  qrPosition.value = 'bottom-left'
+  preparedAsset.value = null
+  copyMessage.value = ''
+  copyFailed.value = false
+  shareOpen.value = true
+  await copyCanonicalLink()
+  await nextTick()
+  await prepareShareAsset()
+}
+
+function closeShareStudio() {
+  preparationId += 1
+  shareOpen.value = false
+  preparedAsset.value = null
+}
+
+function setShareVariant(value: StoryShareVariant) {
+  if (shareVariant.value === value) return
+  shareVariant.value = value
+  void prepareShareAsset()
+}
+
+function setQrPosition(value: QrPosition) {
+  if (qrPosition.value === value) return
+  qrPosition.value = value
+  if (shareVariant.value === 'qr') void prepareShareAsset()
+}
+
+function downloadPreparedStory() {
+  if (!preparedAsset.value) return
+  downloadAsset(preparedAsset.value)
+}
+
+async function sharePreparedStory() {
+  if (!preparedAsset.value) return
+  await shareAsset(preparedAsset.value)
+}
+
+onMounted(() => {
+  supportsNativeShare.value = supportsNativeFileShare()
+})
+
+watch(selectedTemplate, () => {
+  resetExportStatus()
+  if (shareOpen.value) void prepareShareAsset()
+})
 </script>
