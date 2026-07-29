@@ -18,6 +18,7 @@
         :metadata="metadata"
         :is-loading="isLoading"
         :error-message="errorMessage"
+        :palette="palette"
       />
     </Transition>
   </div>
@@ -27,13 +28,16 @@
 import type { Component } from 'vue'
 import type { StoryTemplateId } from '~/shared/types/story-template'
 import type { YoutubeMetadata } from '~/shared/types/youtube-metadata'
-import BluePosterStoryCard from './templates/BluePosterStoryCard.vue'
+import ChromaticStoryCard from './templates/ChromaticStoryCard.vue'
+import PosterStoryCard from './templates/PosterStoryCard.vue'
 import CleanPosterStoryCard from './templates/CleanPosterStoryCard.vue'
 import EditorialStoryCard from './templates/EditorialStoryCard.vue'
 import FullBleedStoryCard from './templates/FullBleedStoryCard.vue'
 import GlassStoryCard from './templates/GlassStoryCard.vue'
 import CenteredStoryCard from './templates/CenteredStoryCard.vue'
 import ProgressStoryCard from './templates/ProgressStoryCard.vue'
+import SignalStoryCard from './templates/LiquidStoryCard.vue'
+import SplitStoryCard from './templates/SplitStoryCard.vue'
 
 const props = defineProps<{
   metadata: YoutubeMetadata | null
@@ -45,14 +49,19 @@ const props = defineProps<{
 const templateComponents: Record<StoryTemplateId, Component> = {
   centered: CenteredStoryCard,
   editorial: EditorialStoryCard,
-  'blue-poster': BluePosterStoryCard,
+  'poster': PosterStoryCard,
   progress: ProgressStoryCard,
   'clean-poster': CleanPosterStoryCard,
   'full-bleed': FullBleedStoryCard,
-  glass: GlassStoryCard
+  glass: GlassStoryCard,
+  chromatic: ChromaticStoryCard,
+  split: SplitStoryCard,
+  liquid: SignalStoryCard
 }
 
 const activeComponent = computed(() => templateComponents[props.templateId])
+const thumbnailUrl = computed(() => props.metadata?.thumbnailUrl ?? null)
+const { palette } = useThumbnailPalette(thumbnailUrl)
 const exportElement = useTemplateRef<HTMLElement>('exportElement')
 
 defineExpose({

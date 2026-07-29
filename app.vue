@@ -52,7 +52,7 @@
           <div class="flex flex-wrap items-end justify-between gap-2">
             <div>
               <h2 class="text-sm font-extrabold">Choose a template</h2>
-              <p class="mt-1 text-xs text-[#a9a096]">Seven live designs from your references</p>
+              <p class="mt-1 text-xs text-[#a9a096]">Ten live designs, including thumbnail-matched colorways</p>
             </div>
             <span class="text-xs font-bold text-[#ff8067]">{{ selectedTemplateName }}</span>
           </div>
@@ -135,8 +135,8 @@ const templates: StoryTemplateOption[] = [
     swatchClass: 'bg-[linear-gradient(135deg,#262626_0%,#050505_70%)]'
   },
   {
-    id: 'blue-poster',
-    name: 'Blue poster',
+    id: 'poster',
+    name: 'Poster',
     description: 'Serif editorial',
     swatchClass: 'bg-[#416f9f]'
   },
@@ -163,6 +163,24 @@ const templates: StoryTemplateOption[] = [
     name: 'Glass',
     description: 'Floating card',
     swatchClass: 'bg-[linear-gradient(135deg,#080909_0%,#322927_100%)]'
+  },
+  {
+    id: 'chromatic',
+    name: 'Chromatic',
+    description: 'Color-matched poster',
+    swatchClass: 'bg-[linear-gradient(135deg,#19364b_0%,#dc7b67_100%)]'
+  },
+  {
+    id: 'split',
+    name: 'Split',
+    description: 'Image & type',
+    swatchClass: 'bg-[linear-gradient(180deg,#b35d48_0%,#b35d48_50%,#17232c_50%,#17232c_100%)]'
+  },
+  {
+    id: 'liquid',
+    name: 'Liquid',
+    description: 'Glass color flow',
+    swatchClass: 'bg-[linear-gradient(135deg,#f8fafc_0%,#76a7c8_36%,#17232c_100%)]'
   }
 ]
 
