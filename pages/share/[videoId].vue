@@ -25,14 +25,14 @@
 
   <main
     v-else
-    class="grid min-h-screen place-items-center bg-[linear-gradient(135deg,#111318_0%,#171719_46%,#101722_100%)] px-4 py-8 text-white"
+    class="grid min-h-screen place-items-center bg-[var(--app-canvas)] px-4 pb-8 pt-16 text-[var(--app-text)] transition-colors"
   >
-    <section class="w-full max-w-lg rounded-lg border border-white/10 bg-[#101218]/90 p-6 text-center shadow-2xl sm:p-10">
-      <p class="text-xs font-black uppercase text-[#ff6b4a]">Story studio</p>
-      <h1 class="mt-3 break-words text-3xl font-black sm:text-4xl">
+    <section class="w-full max-w-lg rounded-lg border border-[var(--app-border)] bg-[var(--app-surface)] p-6 text-center sm:p-10">
+      <p class="text-sm font-semibold text-[var(--app-accent)]">Story Tube</p>
+      <h1 class="mt-3 break-words text-2xl font-bold sm:text-3xl">
         {{ invalidVideoId ? 'This story link is not valid.' : errorMessage ? 'We could not load this video.' : 'Preparing your story...' }}
       </h1>
-      <p class="mx-auto mt-3 max-w-md text-sm leading-6 text-white/60" role="status" aria-live="polite">
+      <p class="mx-auto mt-3 max-w-md text-sm leading-6 text-[var(--app-muted)]" role="status" aria-live="polite">
         {{ invalidVideoId
           ? 'The share URL needs a valid 11-character YouTube video ID.'
           : errorMessage || 'Loading the video metadata and story design.' }}
@@ -40,7 +40,7 @@
       <NuxtLink
         v-if="invalidVideoId || errorMessage"
         to="/"
-        class="mt-6 inline-grid min-h-12 place-items-center rounded-lg bg-[#f04b32] px-6 font-extrabold text-white transition hover:bg-[#ff5b40] focus:outline-none focus:ring-2 focus:ring-[#ff8a72]"
+        class="mt-6 inline-grid min-h-12 place-items-center rounded-lg bg-[var(--app-accent)] px-6 font-semibold text-[var(--app-accent-text)] transition hover:bg-[var(--app-accent-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--app-accent)]"
       >
         Start over
       </NuxtLink>

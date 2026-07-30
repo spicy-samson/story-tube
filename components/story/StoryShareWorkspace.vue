@@ -1,10 +1,10 @@
 <template>
-  <main class="min-h-screen bg-[#ececea] px-3 py-4 text-[#171717] sm:px-6 sm:py-6">
+  <main class="min-h-screen bg-[var(--app-canvas)] px-3 pb-4 pt-16 text-[var(--app-text)] transition-colors sm:px-6 sm:pb-6">
     <section
-      class="mx-auto grid min-h-[calc(100dvh-2rem)] w-full max-w-7xl overflow-hidden rounded-lg bg-[#f5f5f2] shadow-2xl sm:min-h-[calc(100dvh-3rem)] lg:grid-cols-[minmax(22rem,1fr)_minmax(22rem,0.72fr)]"
+      class="mx-auto grid min-h-[calc(100dvh-5rem)] w-full max-w-7xl overflow-hidden rounded-lg border border-[var(--app-border)] bg-[var(--app-surface)] sm:min-h-[calc(100dvh-5.5rem)] lg:grid-cols-[minmax(22rem,1fr)_minmax(22rem,0.72fr)]"
       aria-labelledby="share-page-title"
     >
-      <div class="grid min-h-0 place-items-center border-b border-black/10 bg-white p-5 lg:border-b-0 lg:border-r lg:p-8">
+      <div class="grid min-h-0 place-items-center border-b border-[var(--app-border)] bg-[var(--app-surface-raised)] p-5 lg:border-b-0 lg:border-r lg:p-8">
         <StoryPreview
           ref="sharePreview"
           :metadata="metadata"
@@ -21,27 +21,29 @@
       <div class="flex min-w-0 flex-col p-5 sm:p-8">
         <div class="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <p class="text-xs font-black uppercase text-[#e3482e]">Story studio</p>
-            <h1 id="share-page-title" class="mt-2 text-3xl font-black">Ready to share</h1>
-            <p class="mt-1 text-sm text-black/55">High-resolution 1080 x 1920 PNG</p>
+            <p class="text-sm font-semibold text-[var(--app-accent)]">Story Tube</p>
+            <h1 id="share-page-title" class="mt-2 text-2xl font-bold">Ready to share</h1>
+            <p class="mt-1 text-sm text-[var(--app-muted)]">High-resolution 1080 x 1920 PNG</p>
           </div>
           <NuxtLink
             :to="editTo"
-            class="rounded-md px-2 py-1 text-sm font-black text-black/55 transition hover:text-black focus:outline-none focus:ring-2 focus:ring-[#e3482e]"
+            class="rounded-md px-2 py-1 text-sm font-semibold text-[var(--app-muted)] transition hover:text-[var(--app-text)] focus:outline-none focus:ring-2 focus:ring-[var(--app-accent)]"
           >
             Back to edit
           </NuxtLink>
         </div>
 
-        <div class="mt-7 border-y border-black/10 py-5">
-          <p class="text-xs font-black uppercase text-black/45">Choose your copy</p>
-          <div class="mt-3 grid grid-cols-2 rounded-lg bg-black/[0.06] p-1">
+        <div class="mt-7 border-y border-[var(--app-border)] py-5">
+          <p class="text-xs font-semibold text-[var(--app-muted)]">Choose your copy</p>
+          <div class="mt-3 grid grid-cols-2 rounded-lg bg-[var(--app-surface-raised)] p-1">
             <button
               v-for="option in variantOptions"
               :key="option.value"
               type="button"
-              class="min-h-11 rounded-md px-3 text-sm font-extrabold transition focus:outline-none focus:ring-2 focus:ring-[#e3482e]"
-              :class="variant === option.value ? 'bg-white text-black shadow-sm' : 'text-black/50 hover:text-black'"
+              class="min-h-11 rounded-md px-3 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-[var(--app-accent)]"
+              :class="variant === option.value
+                ? 'bg-[var(--app-surface)] text-[var(--app-text)] shadow-sm'
+                : 'text-[var(--app-muted)] hover:text-[var(--app-text)]'"
               :aria-pressed="variant === option.value"
               @click="emit('update:variant', option.value)"
             >
@@ -49,14 +51,14 @@
             </button>
           </div>
 
-          <label v-if="variant === 'qr'" for="qr-position" class="mt-4 block text-xs font-black uppercase text-black/45">
+          <label v-if="variant === 'qr'" for="qr-position" class="mt-4 block text-xs font-semibold text-[var(--app-muted)]">
             QR position
           </label>
           <select
             v-if="variant === 'qr'"
             id="qr-position"
             :value="qrPosition"
-            class="mt-2 min-h-11 w-full rounded-lg border border-black/15 bg-white px-3 text-sm font-bold outline-none focus:border-[#e3482e] focus:ring-2 focus:ring-[#e3482e]/20"
+            class="mt-2 min-h-11 w-full rounded-lg border border-[var(--app-border)] bg-[var(--app-canvas)] px-3 text-sm font-medium text-[var(--app-text)] outline-none focus:border-[var(--app-accent)] focus:ring-2 focus:ring-[var(--app-accent)]/20"
             @change="emitQrPosition"
           >
             <option v-for="position in qrPositions" :key="position.value" :value="position.value">
@@ -67,10 +69,10 @@
 
         <div class="py-5">
           <div class="flex items-center justify-between gap-3">
-            <label for="canonical-url" class="text-xs font-black uppercase text-black/45">YouTube link</label>
+            <label for="canonical-url" class="text-xs font-semibold text-[var(--app-muted)]">YouTube link</label>
             <button
               type="button"
-              class="text-sm font-black text-[#d83d26] hover:text-[#a92d1c] focus:outline-none focus:ring-2 focus:ring-[#e3482e]"
+              class="text-sm font-semibold text-[var(--app-accent)] hover:text-[var(--app-accent-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--app-accent)]"
               @click="emit('copy-link')"
             >
               Copy link
@@ -80,20 +82,20 @@
             id="canonical-url"
             :value="canonicalUrl"
             readonly
-            class="mt-2 min-h-11 w-full rounded-lg border border-black/15 bg-white px-3 text-sm text-black/65 outline-none focus:border-[#e3482e] focus:ring-2 focus:ring-[#e3482e]/20"
+            class="mt-2 min-h-11 w-full rounded-lg border border-[var(--app-border)] bg-[var(--app-canvas)] px-3 text-sm text-[var(--app-muted)] outline-none focus:border-[var(--app-accent)] focus:ring-2 focus:ring-[var(--app-accent)]/20"
             @focus="selectInput"
           >
-          <p v-if="copyMessage" class="mt-2 text-xs font-bold" :class="copyFailed ? 'text-[#b12e21]' : 'text-[#217246]'">
+          <p v-if="copyMessage" class="mt-2 text-xs font-semibold" :class="copyFailed ? 'text-[var(--app-error)]' : 'text-[var(--app-success)]'">
             {{ copyMessage }}
           </p>
         </div>
 
-        <div class="border-t border-black/10 pt-5">
-          <p class="text-xs font-black uppercase text-black/45">How to post</p>
-          <ol class="mt-3 grid gap-2 text-sm leading-5 text-black/60">
-            <li><strong class="text-black">1.</strong> Share or download your chosen story copy.</li>
-            <li><strong class="text-black">2.</strong> Add the image to Instagram Stories.</li>
-            <li><strong class="text-black">3.</strong> Add a Link Sticker and paste the copied YouTube URL.</li>
+        <div class="border-t border-[var(--app-border)] pt-5">
+          <p class="text-xs font-semibold text-[var(--app-muted)]">How to post</p>
+          <ol class="mt-3 grid gap-2 text-sm leading-5 text-[var(--app-muted)]">
+            <li><strong class="font-semibold text-[var(--app-text)]">1.</strong> Share or download your chosen story copy.</li>
+            <li><strong class="font-semibold text-[var(--app-text)]">2.</strong> Add the image to Instagram Stories.</li>
+            <li><strong class="font-semibold text-[var(--app-text)]">3.</strong> Add a Link Sticker and paste the copied YouTube URL.</li>
           </ol>
         </div>
 
@@ -101,7 +103,7 @@
           <button
             v-if="supportsNativeShare"
             type="button"
-            class="min-h-13 rounded-lg bg-[#111] px-5 font-extrabold text-white transition hover:bg-[#292929] focus:outline-none focus:ring-2 focus:ring-[#e3482e] disabled:opacity-45"
+            class="min-h-13 rounded-lg bg-[var(--app-accent)] px-5 font-semibold text-[var(--app-accent-text)] transition hover:bg-[var(--app-accent-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--app-accent)] disabled:opacity-45"
             :disabled="!assetReady || isBusy"
             @click="emit('share')"
           >
@@ -109,7 +111,7 @@
           </button>
           <button
             type="button"
-            class="min-h-13 rounded-lg border border-black/20 bg-white px-5 font-extrabold text-black transition hover:bg-black/[0.04] focus:outline-none focus:ring-2 focus:ring-[#e3482e] disabled:opacity-45"
+            class="min-h-13 rounded-lg border border-[var(--app-border)] bg-[var(--app-surface)] px-5 font-semibold text-[var(--app-text)] transition hover:bg-[var(--app-surface-raised)] focus:outline-none focus:ring-2 focus:ring-[var(--app-accent)] disabled:opacity-45"
             :class="{ 'sm:col-span-2': !supportsNativeShare }"
             :disabled="!assetReady || isBusy"
             @click="emit('download')"
@@ -119,8 +121,8 @@
         </div>
 
         <p
-          class="min-h-5 pt-3 text-xs font-bold"
-          :class="status === 'error' ? 'text-[#b12e21]' : 'text-[#217246]'"
+          class="min-h-5 pt-3 text-xs font-semibold"
+          :class="status === 'error' ? 'text-[var(--app-error)]' : 'text-[var(--app-success)]'"
           role="status"
           aria-live="polite"
         >
