@@ -146,8 +146,14 @@ Done when:
 
 ## M7 - Mobile QA
 
+Detailed plan: [m7-plan.md](./m7-plan.md)
+
 Deliverables:
 
+- [x] Mobile generated-story carousel
+- [x] Swipe, arrow, keyboard, and direct template controls
+- [x] Desktop-only visual template grid
+- [x] Auto-scroll to generated mobile result
 - [ ] Desktop viewport QA
 - [ ] Mobile viewport QA
 - [ ] Touch interaction QA

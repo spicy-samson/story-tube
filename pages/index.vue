@@ -48,7 +48,7 @@
           </p>
         </form>
 
-        <div class="grid gap-3" aria-label="Story template picker">
+        <div class="hidden gap-3 lg:grid" aria-label="Story template picker">
           <div class="flex flex-wrap items-end justify-between gap-2">
             <div>
               <h2 class="text-sm font-extrabold">Choose a template</h2>
@@ -80,7 +80,7 @@
           </div>
         </div>
 
-        <div class="mt-auto grid gap-2" aria-label="Story sharing actions">
+        <div class="mt-auto hidden gap-2 lg:grid" aria-label="Story sharing actions">
           <button
             type="button"
             class="min-h-13 rounded-lg bg-[#f04b32] px-5 font-extrabold text-white transition hover:bg-[#ff5b40] focus:outline-none focus:ring-2 focus:ring-[#ff8a72] disabled:opacity-45"
@@ -95,13 +95,34 @@
         </div>
       </div>
 
-      <div class="grid min-h-[34rem] min-w-0 place-items-center rounded-lg border border-white/10 bg-[#101218]/85 p-3 shadow-2xl backdrop-blur-2xl sm:p-4">
-        <StoryPreview
+      <div
+        ref="mobileResultSection"
+        class="grid min-h-[34rem] min-w-0 content-center gap-5 rounded-lg border border-white/10 bg-[#101218]/85 p-3 shadow-2xl backdrop-blur-2xl sm:p-4"
+      >
+        <StoryTemplateCarousel
+          v-model="selectedTemplate"
           :metadata="previewMetadata"
           :is-loading="pending"
           :error-message="errorMessage"
-          :template-id="selectedTemplate"
         />
+
+        <div
+          v-if="metadata"
+          class="grid gap-2 lg:hidden"
+          aria-label="Story sharing actions"
+        >
+          <button
+            type="button"
+            class="min-h-13 rounded-lg bg-[#f04b32] px-5 font-extrabold text-white transition hover:bg-[#ff5b40] focus:outline-none focus:ring-2 focus:ring-[#ff8a72] disabled:opacity-45"
+            :disabled="pending"
+            @click="openSharePage"
+          >
+            Share Story
+          </button>
+          <p class="text-center text-xs leading-5 text-[#a9a096]">
+            {{ selectedTemplateName }} is ready to share.
+          </p>
+        </div>
       </div>
     </section>
   </main>
@@ -118,6 +139,7 @@ import {
 
 const route = useRoute()
 const router = useRouter()
+const mobileResultSection = useTemplateRef<HTMLElement>('mobileResultSection')
 const restoredVideoId = parseRouteVideoId(route.query.video)
 const videoUrl = ref(restoredVideoId ? makeCanonicalYoutubeUrl(restoredVideoId) : '')
 const selectedTemplate = ref<StoryTemplateId>(parseStoryTemplate(route.query.template))
@@ -153,13 +175,27 @@ async function syncEditRoute() {
 
 async function fetchMetadata() {
   const loadedMetadata = await load()
-  if (loadedMetadata) await syncEditRoute()
+  if (!loadedMetadata) return
+
+  await syncEditRoute()
+  await scrollToStoryOnMobile()
+}
+
+async function scrollToStoryOnMobile() {
+  if (!import.meta.client || !window.matchMedia('(max-width: 1023px)').matches) return
+
+  await nextTick()
+  mobileResultSection.value?.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
+  })
 }
 
 async function openSharePage() {
   if (!metadata.value) return
 
   try {
+    console.log('triggered');
     await navigator.clipboard.writeText(metadata.value.canonicalUrl)
   } catch (error) {
     console.info('Clipboard copy was unavailable before navigation:', error)
@@ -189,5 +225,8 @@ watch(() => [route.query.video, route.query.template], async () => {
   await load()
 })
 
-if (restoredVideoId) await load()
+if (restoredVideoId) {
+  const restoredMetadata = await load()
+  if (restoredMetadata) void scrollToStoryOnMobile()
+}
 </script>
