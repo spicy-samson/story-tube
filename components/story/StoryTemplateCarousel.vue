@@ -1,7 +1,7 @@
 <template>
   <div class="grid w-full min-w-0 gap-4">
     <div
-      class="grid touch-pan-y place-items-center rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-[#ff8067] lg:touch-auto"
+      class="grid touch-pan-y place-items-center rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-[var(--app-accent)] lg:touch-auto"
       role="region"
       :aria-label="carouselLabel"
       tabindex="0"
@@ -27,7 +27,7 @@
       <div class="grid grid-cols-[3rem_minmax(0,1fr)_3rem] items-center gap-3">
         <button
           type="button"
-          class="grid size-12 place-items-center rounded-full border border-white/15 bg-white/[0.06] text-white transition hover:border-white/35 hover:bg-white/[0.1] focus:outline-none focus:ring-2 focus:ring-[#ff8067]"
+          class="grid size-12 place-items-center rounded-full border border-[var(--app-border)] bg-[var(--app-surface)] text-[var(--app-text)] transition hover:bg-[var(--app-surface-raised)] focus:outline-none focus:ring-2 focus:ring-[var(--app-accent)]"
           aria-label="Previous story template"
           title="Previous template"
           @click="showPreviousTemplate"
@@ -36,15 +36,15 @@
         </button>
 
         <div class="min-w-0 text-center" aria-live="polite">
-          <p class="truncate text-sm font-extrabold text-white">{{ selectedTemplate.name }}</p>
-          <p class="mt-0.5 text-xs text-white/50">
+          <p class="truncate text-sm font-semibold text-[var(--app-text)]">{{ selectedTemplate.name }}</p>
+          <p class="mt-0.5 text-xs text-[var(--app-muted)]">
             {{ selectedTemplateIndex + 1 }} / {{ STORY_TEMPLATES.length }}
           </p>
         </div>
 
         <button
           type="button"
-          class="grid size-12 place-items-center rounded-full border border-white/15 bg-white/[0.06] text-white transition hover:border-white/35 hover:bg-white/[0.1] focus:outline-none focus:ring-2 focus:ring-[#ff8067]"
+          class="grid size-12 place-items-center rounded-full border border-[var(--app-border)] bg-[var(--app-surface)] text-[var(--app-text)] transition hover:bg-[var(--app-surface-raised)] focus:outline-none focus:ring-2 focus:ring-[var(--app-accent)]"
           aria-label="Next story template"
           title="Next template"
           @click="showNextTemplate"
@@ -58,7 +58,7 @@
           v-for="(template, index) in STORY_TEMPLATES"
           :key="template.id"
           type="button"
-          class="group grid min-h-8 place-items-center rounded-sm focus:outline-none focus:ring-2 focus:ring-[#ff8067]"
+          class="group grid min-h-8 place-items-center rounded-sm focus:outline-none focus:ring-2 focus:ring-[var(--app-accent)]"
           :aria-label="`Choose ${template.name} template`"
           :aria-current="index === selectedTemplateIndex ? 'true' : undefined"
           @click="selectTemplate(index)"
@@ -66,8 +66,8 @@
           <span
             class="h-1.5 w-full rounded-full transition"
             :class="index === selectedTemplateIndex
-              ? 'bg-[#ff6b4a]'
-              : 'bg-white/15 group-hover:bg-white/35'"
+              ? 'bg-[var(--app-accent)]'
+              : 'bg-[var(--app-border)] group-hover:bg-[var(--app-muted)]'"
             aria-hidden="true"
           />
         </button>
