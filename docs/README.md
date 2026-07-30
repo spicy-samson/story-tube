@@ -12,6 +12,7 @@ This folder holds planning docs for YouTube Story Maker. The repo follows a fold
 | [architecture](./architecture/README.md) | PWA stack, system shape, data flow, export strategy, and technical risks |
 | [decisions](./decisions/README.md) | Decision records made during planning and implementation |
 | [learning](./learning/README.md) | Runtime explanations for implemented features and code ownership |
+| [superpowers](./superpowers/README.md) | Approved feature and redesign specifications |
 
 ## Documentation Rule
 
