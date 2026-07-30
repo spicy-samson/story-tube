@@ -3,18 +3,55 @@
 @tailwind utilities;
 
 @layer base {
+  :root,
+  :root[data-theme='light'] {
+    --app-canvas: #f6f7f8;
+    --app-surface: #ffffff;
+    --app-surface-raised: #f0f2f4;
+    --app-text: #17191c;
+    --app-muted: #676d75;
+    --app-border: #dfe2e6;
+    --app-accent: #2563eb;
+    --app-accent-hover: #1d4ed8;
+    --app-accent-text: #ffffff;
+    --app-success: #177245;
+    --app-error: #b42318;
+  }
+
+  :root[data-theme='dark'] {
+    --app-canvas: #111315;
+    --app-surface: #191c1f;
+    --app-surface-raised: #22262a;
+    --app-text: #f3f4f5;
+    --app-muted: #a7adb5;
+    --app-border: #343a40;
+    --app-accent: #60a5fa;
+    --app-accent-hover: #93c5fd;
+    --app-accent-text: #0b1220;
+    --app-success: #55c58a;
+    --app-error: #ff8a80;
+  }
+
   :root {
-    color-scheme: dark;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
   }
 
   html {
-    @apply min-h-full bg-[#0f1115];
+    min-height: 100%;
+    background: var(--app-canvas);
   }
 
   body {
-    @apply m-0 min-h-screen overflow-x-hidden bg-[#0f1115] font-sans text-[#f6f4ef] antialiased;
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+    background: var(--app-canvas);
+    color: var(--app-text);
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 150ms ease, color 150ms ease;
   }
 
   button:disabled,
