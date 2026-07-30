@@ -11,7 +11,7 @@
     </section>
 
     <section class="relative flex min-h-0 flex-col px-6 pb-7 pt-6">
-      <span class="absolute right-6 top-0 h-2 w-20 -translate-y-1/2 bg-[var(--story-accent)]" />
+
       <p class="line-clamp-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--story-muted)]">{{ channel }}</p>
 <h2 class="mt-7 whitespace-normal break-words font-serif text-[clamp(1.05rem,4.8vw,1.55rem)] font-black italic leading-[1.08] [overflow-wrap:anywhere]">
   {{ title }}
