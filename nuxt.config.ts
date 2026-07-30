@@ -1,3 +1,20 @@
+const themeScript = `(() => {
+  let stored = null
+
+  try {
+    stored = localStorage.getItem('story-tube-theme')
+  } catch {}
+
+  const prefersDark = typeof matchMedia === 'function'
+    && matchMedia('(prefers-color-scheme: dark)').matches
+  const theme = stored === 'light' || stored === 'dark'
+    ? stored
+    : prefersDark ? 'dark' : 'light'
+
+  document.documentElement.dataset.theme = theme
+  document.documentElement.style.colorScheme = theme
+})()`
+
 export default defineNuxtConfig({
   compatibilityDate: "2026-07-28",
   css: ["~/assets/css/main.css"],
@@ -27,7 +44,11 @@ export default defineNuxtConfig({
           name: "viewport",
           content: "width=device-width, initial-scale=1, viewport-fit=cover",
         },
-        { name: "theme-color", content: "#0f1115" },
+        {
+          id: "theme-color",
+          name: "theme-color",
+          content: "#f6f7f8",
+        },
         { name: "apple-mobile-web-app-capable", content: "yes" },
         {
           name: "apple-mobile-web-app-status-bar-style",
@@ -45,6 +66,12 @@ export default defineNuxtConfig({
         { rel: "manifest", href: "/manifest.webmanifest" },
         { rel: "icon", type: "image/svg+xml", href: "/icons/icon.svg" },
         { rel: "apple-touch-icon", href: "/icons/apple-touch-icon.svg" },
+      ],
+      script: [
+        {
+          innerHTML: themeScript,
+          tagPosition: "head",
+        },
       ],
     },
   },

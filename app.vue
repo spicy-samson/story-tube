@@ -1,3 +1,4 @@
 <template>
+  <AppThemeToggle />
   <NuxtPage />
 </template>
