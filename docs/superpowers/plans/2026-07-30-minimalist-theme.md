@@ -8,6 +8,8 @@
 
 **Tech Stack:** Nuxt 4, Vue 3, Tailwind CSS, native `localStorage`, native `matchMedia`, Node test runner, Lucide Vue icons.
 
+**Status:** Implemented on `m7-mobile-layout-refactor`. Automated theme tests, Nuxt type checking, and the Cloudflare Pages production build pass. The local Home and invalid Share responses include the pre-hydration theme bootstrap and expected routed content.
+
 ## Global Constraints
 
 - Follow the operating-system color preference on the first visit.
