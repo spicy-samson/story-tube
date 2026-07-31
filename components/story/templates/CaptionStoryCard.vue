@@ -7,7 +7,7 @@
       <p class="text-[9px] font-bold uppercase tracking-[0.18em]">Selected video</p>
     </header>
 
-    <div class="mx-auto mt-16 w-[88%] translate-x-3 border border-black/15 bg-[#d2d3cf] p-1">
+    <div class="mx-auto mt-28 w-[70%] border border-black/15 bg-[#d2d3cf] p-1">
       <div class="aspect-video overflow-hidden">
         <img
           v-if="metadata"
@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <section class="mx-auto mt-10 grid w-[88%] grid-cols-[5px_minmax(0,1fr)] gap-5">
+    <section class="mx-auto mt-10 grid w-[68%] grid-cols-[5px_minmax(0,1fr)] gap-5">
       <span class="bg-[var(--story-accent)]" aria-hidden="true" />
       <div class="py-1">
         <h2 class="line-clamp-5 whitespace-normal break-words text-[clamp(1.25rem,5.4vw,1.8rem)] font-bold leading-[1.07] [overflow-wrap:anywhere]">

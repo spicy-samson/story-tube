@@ -52,7 +52,7 @@
           <div class="flex flex-wrap items-end justify-between gap-2">
             <div>
               <h2 class="text-sm font-semibold">Choose a template</h2>
-              <p class="mt-1 text-xs text-[var(--app-muted)]">Ten live designs, including thumbnail-matched colorways</p>
+              <p class="mt-1 text-xs text-[var(--app-muted)]">Eight live designs, including thumbnail-matched colorways</p>
             </div>
             <span class="text-xs font-semibold text-[var(--app-accent)]">{{ selectedTemplateName }}</span>
           </div>

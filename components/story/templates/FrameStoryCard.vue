@@ -8,7 +8,7 @@
       <p class="text-[9px] font-bold uppercase tracking-[0.18em]">New on YouTube</p>
     </header>
 
-    <section class="my-auto">
+    <section class="mt-28">
       <div class="border-4 border-white bg-[#d8d8d2] p-1 shadow-[8px_9px_0_var(--story-accent)]">
         <div class="aspect-video overflow-hidden">
           <img
@@ -31,7 +31,7 @@
       </div>
     </section>
 
-    <StoryYoutubeBrand tone="dark" class="justify-center text-lg" />
+    <StoryYoutubeBrand tone="dark" class="mt-auto justify-center text-lg" />
   </article>
 </template>
 

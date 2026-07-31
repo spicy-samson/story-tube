@@ -8,14 +8,14 @@
       <span class="text-[9px] font-bold text-[var(--story-accent)]">01</span>
     </header>
 
-    <section class="mt-12">
-      <h2 class="line-clamp-5 whitespace-normal break-words text-[clamp(1.35rem,5.8vw,1.95rem)] font-bold leading-[1.05] [overflow-wrap:anywhere]">
+    <section class="mx-auto mt-10 w-[68%] text-center">
+      <h2 class="line-clamp-4 whitespace-normal break-words text-[clamp(1.15rem,5vw,1.65rem)] font-bold leading-[1.06] [overflow-wrap:anywhere]">
         {{ title }}
       </h2>
-      <p class="mt-4 line-clamp-2 text-sm font-medium text-black/55">{{ channel }}</p>
+      <p class="mt-3 line-clamp-2 text-xs font-medium text-black/55">{{ channel }}</p>
     </section>
 
-    <div class="mt-8 border border-black/15 bg-[#d8d8d2] p-1">
+    <div class="mx-auto mt-6 w-[72%] border border-black/15 bg-[#d8d8d2] p-1">
       <div class="aspect-video overflow-hidden">
         <img
           v-if="metadata"
@@ -27,9 +27,9 @@
       </div>
     </div>
 
-    <div class="mt-7 text-xs text-black/55">
-      <p class="border-t border-black/20 py-3"><strong class="mr-4 text-black">01</strong>New upload</p>
-      <p class="border-y border-black/20 py-3"><strong class="mr-4 text-black">02</strong>Watch on YouTube</p>
+    <div class="mx-auto mt-5 w-[58%] text-center text-[10px] text-black/55">
+      <p class="border-t border-black/20 py-2"><strong class="mr-3 text-black">01</strong>New upload</p>
+      <p class="border-y border-black/20 py-2"><strong class="mr-3 text-black">02</strong>Watch on YouTube</p>
     </div>
 
     <StoryYoutubeBrand tone="dark" class="mt-auto justify-center text-lg" />

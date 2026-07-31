@@ -7,15 +7,15 @@
       <p class="text-[9px] font-bold uppercase tracking-[0.18em] text-[var(--story-accent)]">Watch next</p>
     </header>
 
-    <section class="mt-16">
-      <h2 class="line-clamp-6 whitespace-normal break-words text-[clamp(1.55rem,6.4vw,2.2rem)] font-bold leading-[1.02] [overflow-wrap:anywhere]">
+    <section class="mx-auto mt-28 w-[72%] text-center">
+      <h2 class="line-clamp-5 whitespace-normal break-words text-[clamp(1.25rem,5.4vw,1.9rem)] font-bold leading-[1.04] [overflow-wrap:anywhere]">
         {{ title }}
       </h2>
-      <span class="mt-6 block h-1 w-12 bg-[var(--story-accent)]" aria-hidden="true" />
+      <span class="mx-auto mt-6 block h-1 w-12 bg-[var(--story-accent)]" aria-hidden="true" />
       <p class="mt-4 line-clamp-2 text-sm font-medium text-white/60">{{ channel }}</p>
     </section>
 
-    <div class="mt-auto border border-white/20 bg-[#242525] p-1">
+    <div class="mx-auto mt-10 w-[60%] border border-white/20 bg-[#242525] p-1">
       <div class="aspect-video overflow-hidden">
         <img
           v-if="metadata"
@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    <StoryYoutubeBrand class="mt-6 justify-center text-lg" />
+    <StoryYoutubeBrand class="mt-auto justify-center text-lg" />
   </article>
 </template>
 
