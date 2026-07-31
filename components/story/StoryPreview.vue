@@ -36,15 +36,13 @@ import type { Component } from 'vue'
 import type { QrPosition, StoryShareVariant } from '~/shared/types/story-share'
 import type { StoryTemplateId } from '~/shared/types/story-template'
 import type { YoutubeMetadata } from '~/shared/types/youtube-metadata'
+import BulletinStoryCard from './templates/BulletinStoryCard.vue'
+import CaptionStoryCard from './templates/CaptionStoryCard.vue'
 import ChromaticStoryCard from './templates/ChromaticStoryCard.vue'
-import PosterStoryCard from './templates/PosterStoryCard.vue'
-import CleanPosterStoryCard from './templates/CleanPosterStoryCard.vue'
-import EditorialStoryCard from './templates/EditorialStoryCard.vue'
-import FullBleedStoryCard from './templates/FullBleedStoryCard.vue'
-import GlassStoryCard from './templates/GlassStoryCard.vue'
-import CenteredStoryCard from './templates/CenteredStoryCard.vue'
-import ProgressStoryCard from './templates/ProgressStoryCard.vue'
-import SignalStoryCard from './templates/LiquidStoryCard.vue'
+import FrameStoryCard from './templates/FrameStoryCard.vue'
+import HeadlineStoryCard from './templates/HeadlineStoryCard.vue'
+import LiquidStoryCard from './templates/LiquidStoryCard.vue'
+import SpotlightStoryCard from './templates/SpotlightStoryCard.vue'
 import SplitStoryCard from './templates/SplitStoryCard.vue'
 
 const props = defineProps<{
@@ -62,16 +60,14 @@ const qrPosition = computed(() => props.qrPosition ?? 'bottom-left')
 const qrCodeDataUrl = computed(() => props.qrCodeDataUrl ?? '')
 
 const templateComponents: Record<StoryTemplateId, Component> = {
-  centered: CenteredStoryCard,
-  editorial: EditorialStoryCard,
-  'poster': PosterStoryCard,
-  progress: ProgressStoryCard,
-  'clean-poster': CleanPosterStoryCard,
-  'full-bleed': FullBleedStoryCard,
-  glass: GlassStoryCard,
+  frame: FrameStoryCard,
+  headline: HeadlineStoryCard,
+  spotlight: SpotlightStoryCard,
+  bulletin: BulletinStoryCard,
+  caption: CaptionStoryCard,
   chromatic: ChromaticStoryCard,
   split: SplitStoryCard,
-  liquid: SignalStoryCard
+  liquid: LiquidStoryCard
 }
 
 const activeComponent = computed(() => templateComponents[props.templateId])

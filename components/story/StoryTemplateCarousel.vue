@@ -53,7 +53,7 @@
         </button>
       </div>
 
-      <div class="grid grid-cols-10 gap-1.5 px-1" aria-label="Choose a story template">
+      <div class="grid grid-cols-8 gap-1.5 px-1" aria-label="Choose a story template">
         <button
           v-for="(template, index) in STORY_TEMPLATES"
           :key="template.id"

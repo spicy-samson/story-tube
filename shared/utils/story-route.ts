@@ -1,9 +1,10 @@
 import { STORY_TEMPLATES } from '../config/story-templates'
 import type { QrPosition, StoryShareVariant } from '../types/story-share'
 import type { StoryTemplateId } from '../types/story-template'
+import { resolveStoryTemplateRouteValue } from './story-template-route.js'
 
 const YOUTUBE_VIDEO_ID_PATTERN = /^[a-zA-Z0-9_-]{11}$/
-const STORY_TEMPLATE_IDS = new Set(STORY_TEMPLATES.map(template => template.id))
+const STORY_TEMPLATE_IDS = STORY_TEMPLATES.map(template => template.id)
 const STORY_SHARE_VARIANTS = new Set<StoryShareVariant>(['clean', 'qr'])
 const QR_POSITIONS = new Set<QrPosition>([
   'top-left',
@@ -30,11 +31,7 @@ export function parseRouteVideoId(value: unknown): string | null {
 }
 
 export function parseStoryTemplate(value: unknown): StoryTemplateId {
-  const candidate = firstRouteValue(value)
-
-  return candidate && STORY_TEMPLATE_IDS.has(candidate as StoryTemplateId)
-    ? candidate as StoryTemplateId
-    : 'centered'
+  return resolveStoryTemplateRouteValue(value, STORY_TEMPLATE_IDS) as StoryTemplateId
 }
 
 export function parseStoryShareVariant(value: unknown): StoryShareVariant {

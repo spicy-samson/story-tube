@@ -2,46 +2,34 @@ import type { StoryTemplateOption } from '../types/story-template'
 
 export const STORY_TEMPLATES: StoryTemplateOption[] = [
   {
-    id: 'centered',
-    name: 'Centered',
-    description: 'Media card',
-    swatchBackground: 'linear-gradient(135deg, #050505 0%, #201b1a 100%)'
-  },
-  {
-    id: 'editorial',
-    name: 'Editorial',
-    description: 'Bold & dark',
-    swatchBackground: 'linear-gradient(135deg, #444444 0%, #050505 78%)'
-  },
-  {
-    id: 'poster',
-    name: 'Poster',
-    description: 'Serif editorial',
-    swatchBackground: '#416f9f'
-  },
-  {
-    id: 'progress',
-    name: 'Progress',
-    description: 'Player inspired',
-    swatchBackground: 'linear-gradient(180deg, #6b554b 0%, #080808 100%)'
-  },
-  {
-    id: 'clean-poster',
-    name: 'Clean',
-    description: 'Type first',
+    id: 'frame',
+    name: 'Frame',
+    description: 'Balanced default',
     swatchBackground: '#f2f2ef'
   },
   {
-    id: 'full-bleed',
-    name: 'Full bleed',
-    description: 'Image forward',
-    swatchBackground: 'linear-gradient(90deg, #030303 0%, #795e50 100%)'
+    id: 'headline',
+    name: 'Headline',
+    description: 'Type first',
+    swatchBackground: '#111111'
   },
   {
-    id: 'glass',
-    name: 'Glass',
-    description: 'Floating card',
-    swatchBackground: 'linear-gradient(135deg, #080909 0%, #66504b 100%)'
+    id: 'spotlight',
+    name: 'Spotlight',
+    description: 'Image forward',
+    swatchBackground: '#31506b'
+  },
+  {
+    id: 'bulletin',
+    name: 'Bulletin',
+    description: 'Upload notice',
+    swatchBackground: '#e8e8e4'
+  },
+  {
+    id: 'caption',
+    name: 'Caption',
+    description: 'Compact editorial',
+    swatchBackground: '#d9dbd6'
   },
   {
     id: 'chromatic',

@@ -152,7 +152,7 @@ const {
   previewMetadata
 } = useYoutubeMetadata(trimmedVideoUrl)
 const selectedTemplateName = computed(() =>
-  STORY_TEMPLATES.find(template => template.id === selectedTemplate.value)?.name ?? 'Centered'
+  STORY_TEMPLATES.find(template => template.id === selectedTemplate.value)?.name ?? 'Frame'
 )
 const isGenerateDisabled = computed(() => pending.value || !trimmedVideoUrl.value)
 const statusMessage = computed(() => {
