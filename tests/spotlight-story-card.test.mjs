@@ -34,6 +34,7 @@ test('places the Spotlight drag handle outside the exported canvas', () => {
   const canvasEnd = storyPreviewSource.indexOf('</div>\n    <SpotlightDragHandle')
 
   assert.notEqual(canvasEnd, -1)
+  assert.match(storyPreviewSource, /import SpotlightDragHandle from '\.\/SpotlightDragHandle\.vue'/)
   assert.match(storyPreviewSource, /templateId === 'spotlight' && metadata/)
   assert.match(storyPreviewSource, /@update:model-value="emit\('update:spotlightX', \$event\)"/)
 })
