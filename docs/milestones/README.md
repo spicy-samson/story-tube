@@ -169,11 +169,16 @@ Done when:
 
 ## M8 - Demo Ship
 
+Detailed plan: [m8-plan.md](./m8-plan.md)
+
 Deliverables:
 
-- [ ] Production deployment
+- [x] Edge caching for successful YouTube metadata responses
+- [x] Metadata endpoint production hardening
+- [ ] Cloudflare Web Analytics enabled in the Pages dashboard
+- [x] Production deployment at https://story-tube.pages.dev
 - [ ] Updated root README
-- [ ] Demo link
+- [x] Demo link: https://story-tube.pages.dev
 - [ ] Short demo script or clip checklist
 
 Done when:
