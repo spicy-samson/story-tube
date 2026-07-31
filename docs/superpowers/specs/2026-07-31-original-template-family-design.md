@@ -59,11 +59,13 @@ The sampled accent is used sparingly for a line, frame, index, or caption marker
 
 ### Spotlight
 
-- Thumbnail fills the story surface.
-- A neutral tonal overlay protects readability without changing the image palette.
+- Thumbnail fills the entire story surface with a left-biased `16% 50%` focal crop.
+- Artwork is rendered in monochrome with restrained contrast so Spotlight remains distinct from the color-led templates.
+- A neutral tonal overlay protects readability without replacing the full-bleed image treatment.
 - A small action label sits near the top safe margin.
 - Title and channel are anchored to the lower safe area.
 - No progress bar or simulated media-player chrome is used.
+- No image transition is used because PNG export must capture a deterministic frame.
 
 ### Bulletin
 

@@ -14,7 +14,7 @@ Detailed design: [Original Story Template Family Design](../superpowers/specs/20
 |---|---|
 | Frame | Balanced thumbnail, title, and channel default |
 | Headline | Typography-first story for strong titles |
-| Spotlight | Full-bleed image with quiet lower metadata |
+| Spotlight | Full-bleed monochrome image with quiet lower metadata |
 | Bulletin | Structured upload announcement |
 | Caption | Asymmetric image with compact editorial caption |
 | Chromatic | Existing thumbnail-matched poster |
@@ -33,6 +33,7 @@ Detailed design: [Original Story Template Family Design](../superpowers/specs/20
 - [x] Update the desktop picker and mobile carousel for eight templates.
 - [x] Preserve Home-to-Share and Share-to-Home template restoration.
 - [x] Preserve clean PNG, QR PNG, and native share behavior.
+- [ ] Give Spotlight a full-canvas monochrome thumbnail with a left-biased focal crop.
 
 ## Legacy URL Mapping
 
