@@ -25,9 +25,9 @@
 - Modify: `shared/utils/story-route.ts`
 - Test: `tests/spotlight-crop.test.mjs`
 
-- [ ] Add failing tests for default, clamp, route parsing, arrays, and malformed values.
-- [ ] Implement `clampSpotlightX(value)` and `parseSpotlightX(value)`.
-- [ ] Run the focused test and full test suite.
+- [x] Add failing tests for default, clamp, route parsing, arrays, and malformed values.
+- [x] Implement `clampSpotlightX(value)` and `parseSpotlightX(value)`.
+- [x] Run the focused test and full test suite.
 
 ### Task 2: Spotlight presentation and handle
 
@@ -37,10 +37,10 @@
 - Modify: `components/story/templates/SpotlightStoryCard.vue`
 - Test: `tests/spotlight-story-card.test.mjs`
 
-- [ ] Add failing source-contract tests for reactive object position and export-excluded control placement.
-- [ ] Pass `spotlightX` to Spotlight and emit clamped updates from Story Preview.
-- [ ] Implement pointer capture and keyboard arrow behavior in the upper-right handle.
-- [ ] Keep the handle outside Story Preview's first-child export canvas.
+- [x] Add failing source-contract tests for reactive object position and export-excluded control placement.
+- [x] Pass `spotlightX` to Spotlight and emit clamped updates from Story Preview.
+- [x] Implement pointer capture and keyboard arrow behavior in the upper-right handle.
+- [x] Keep the handle outside Story Preview's first-child export canvas.
 
 ### Task 3: Home and Share persistence
 
@@ -50,10 +50,10 @@
 - Modify: `pages/index.vue`
 - Modify: `pages/share/[videoId].vue`
 
-- [ ] Restore `spotlightX` from route query on both pages.
-- [ ] Keep Home route state synchronized and include crop during Share navigation.
-- [ ] Preserve crop in Back-to-Edit and normalized Share URLs.
-- [ ] Regenerate the prepared asset after crop updates on Share.
+- [x] Restore `spotlightX` from route query on both pages.
+- [x] Keep Home route state synchronized and include crop during Share navigation.
+- [x] Preserve crop in Back-to-Edit and normalized Share URLs.
+- [x] Regenerate the prepared asset after crop updates on Share.
 
 ### Task 4: Verification and documentation
 
@@ -61,7 +61,7 @@
 - Modify: `docs/milestones/m9-plan.md`
 - Modify: `docs/superpowers/plans/2026-08-01-spotlight-horizontal-drag.md`
 
-- [ ] Run `npm test`.
-- [ ] Run `npm run typecheck`.
-- [ ] Run `npm run build`.
-- [ ] Mark completed implementation and automated test items in M9.
+- [x] Run `npm test`.
+- [x] Run `npm run typecheck`.
+- [x] Run `npm run build`.
+- [x] Mark completed implementation and automated test items in M9.

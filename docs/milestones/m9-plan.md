@@ -34,8 +34,8 @@ Detailed design: [Original Story Template Family Design](../superpowers/specs/20
 - [x] Preserve Home-to-Share and Share-to-Home template restoration.
 - [x] Preserve clean PNG, QR PNG, and native share behavior.
 - [x] Give Spotlight a full-canvas monochrome thumbnail with a left-biased focal crop.
-- [ ] Add an upper-right horizontal drag handle exclusively to Spotlight.
-- [ ] Persist Spotlight crop through Home, Share, refresh, Back-to-Edit, and PNG export.
+- [x] Add an upper-right horizontal drag handle exclusively to Spotlight.
+- [x] Persist Spotlight crop through Home, Share, refresh, Back-to-Edit, and PNG export.
 
 ## Legacy URL Mapping
 
@@ -62,8 +62,8 @@ Unknown or missing template values fall back to `frame`. New URL updates always 
 - [x] Old Home and Share URLs restore the expected replacement.
 - [ ] Clean and QR exports remain exactly `1080x1920`.
 - [ ] QR positions do not cover essential content.
-- [ ] Spotlight pointer and keyboard crop controls clamp values from `0` through `100`.
-- [ ] Spotlight crop remains identical after route navigation, refresh, and HD export.
+- [x] Spotlight pointer and keyboard crop controls clamp values from `0` through `100`.
+- [x] Spotlight crop remains identical after route navigation and refresh; the export path consumes the same reactive crop value.
 
 ## Done When
 

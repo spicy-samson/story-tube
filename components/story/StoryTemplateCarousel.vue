@@ -16,6 +16,8 @@
         :is-loading="isLoading"
         :error-message="errorMessage"
         :template-id="modelValue"
+        :spotlight-x="spotlightX"
+        @update:spotlight-x="emit('update:spotlightX', $event)"
       />
     </div>
 
@@ -87,10 +89,12 @@ const props = defineProps<{
   metadata: YoutubeMetadata | null
   isLoading: boolean
   errorMessage: string
+  spotlightX: number
 }>()
 
 const emit = defineEmits<{
   'update:modelValue': [templateId: StoryTemplateId]
+  'update:spotlightX': [value: number]
 }>()
 
 const swipeStart = ref<{ x: number, y: number } | null>(null)

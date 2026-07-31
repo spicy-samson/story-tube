@@ -14,7 +14,9 @@
           :share-variant="variant"
           :qr-position="qrPosition"
           :qr-code-data-url="qrCodeDataUrl"
+          :spotlight-x="spotlightX"
           class="max-h-[76dvh] max-w-[25rem]"
+          @update:spotlight-x="emit('update:spotlightX', $event)"
         />
       </div>
 
@@ -150,6 +152,7 @@ const props = defineProps<{
   qrPosition: QrPosition
   status: string
   statusMessage: string
+  spotlightX: number
   supportsNativeShare: boolean
   templateId: StoryTemplateId
   variant: StoryShareVariant
@@ -160,6 +163,7 @@ const emit = defineEmits<{
   download: []
   share: []
   'update:qrPosition': [value: QrPosition]
+  'update:spotlightX': [value: number]
   'update:variant': [value: StoryShareVariant]
 }>()
 

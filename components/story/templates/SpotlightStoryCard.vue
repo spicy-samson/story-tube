@@ -7,11 +7,12 @@
       v-if="metadata"
       :src="metadata.thumbnailUrl"
       :alt="`${metadata.title} thumbnail`"
-      class="absolute inset-0 h-full w-full object-cover object-[16%_50%] grayscale contrast-[1.1]"
+      class="absolute inset-0 h-full w-full object-cover grayscale contrast-[1.1]"
+      :style="{ objectPosition: `${spotlightX}% 50%` }"
     >
     <div v-else class="absolute inset-0 grid place-items-center bg-[#252525]"><StoryPlayButton /></div>
     <div class="absolute inset-0 bg-black/35" />
-    <div class="absolute inset-x-0 bottom-0 h-[48%] bg-black/80" />
+    <div class="absolute inset-x-0 bottom-0 h-[48%]" />
 
     <header class="relative z-10 flex justify-center">
       <p class="bg-[#f3f3ef] px-3 py-2 text-[9px] font-bold uppercase tracking-[0.18em] text-[#171717]">
@@ -40,6 +41,7 @@ const props = defineProps<{
   isLoading: boolean
   errorMessage: string
   palette: StoryPalette
+  spotlightX: number
 }>()
 
 const { title, channel } = useStoryCardContent(props)
