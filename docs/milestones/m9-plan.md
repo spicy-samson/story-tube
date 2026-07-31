@@ -33,7 +33,7 @@ Detailed design: [Original Story Template Family Design](../superpowers/specs/20
 - [x] Update the desktop picker and mobile carousel for eight templates.
 - [x] Preserve Home-to-Share and Share-to-Home template restoration.
 - [x] Preserve clean PNG, QR PNG, and native share behavior.
-- [ ] Give Spotlight a full-canvas monochrome thumbnail with a left-biased focal crop.
+- [x] Give Spotlight a full-canvas monochrome thumbnail with a left-biased focal crop.
 
 ## Legacy URL Mapping
 

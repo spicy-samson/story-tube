@@ -7,7 +7,7 @@
       v-if="metadata"
       :src="metadata.thumbnailUrl"
       :alt="`${metadata.title} thumbnail`"
-      class="absolute inset-0 h-full w-full object-cover"
+      class="absolute inset-0 h-full w-full object-cover object-[16%_50%] grayscale contrast-[1.1]"
     >
     <div v-else class="absolute inset-0 grid place-items-center bg-[#252525]"><StoryPlayButton /></div>
     <div class="absolute inset-0 bg-black/35" />

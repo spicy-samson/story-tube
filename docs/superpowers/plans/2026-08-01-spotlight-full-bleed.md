@@ -27,26 +27,26 @@
 - Consumes: existing `YoutubeMetadata.thumbnailUrl`
 - Produces: unchanged `SpotlightStoryCard` props and full-canvas thumbnail presentation
 
-- [ ] **Step 1: Write a failing source-contract test**
+- [x] **Step 1: Write a failing source-contract test**
 
 Assert that Spotlight contains the full-size image classes, left-biased object position, grayscale filter, and contrast treatment.
 
-- [ ] **Step 2: Run the focused test and verify it fails**
+- [x] **Step 2: Run the focused test and verify it fails**
 
 Run: `node --test tests/spotlight-story-card.test.mjs`
 
 Expected: failure because Spotlight does not yet define the focal position or monochrome treatment.
 
-- [ ] **Step 3: Implement the minimal presentation change**
+- [x] **Step 3: Implement the minimal presentation change**
 
 Add `object-[16%_50%]`, `grayscale`, and `contrast-[1.1]` to the existing full-size thumbnail. Keep all surrounding layout unchanged.
 
-- [ ] **Step 4: Verify behavior and regression safety**
+- [x] **Step 4: Verify behavior and regression safety**
 
 Run: `npm test && npm run typecheck && npm run build`
 
 Expected: all tests, Nuxt type checking, and the Cloudflare Pages production build pass.
 
-- [ ] **Step 5: Complete the milestone checklist**
+- [x] **Step 5: Complete the milestone checklist**
 
 Mark the Spotlight treatment complete in `docs/milestones/m9-plan.md` after verification.
