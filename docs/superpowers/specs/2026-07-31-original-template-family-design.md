@@ -67,6 +67,20 @@ The sampled accent is used sparingly for a line, frame, index, or caption marker
 - No progress bar or simulated media-player chrome is used.
 - No image transition is used because PNG export must capture a deterministic frame.
 
+#### Horizontal crop control
+
+- Spotlight is the only draggable template.
+- A compact horizontal-drag handle appears in the preview's upper-right corner when Spotlight has loaded metadata.
+- The handle is outside the export canvas, so editing chrome never appears in PNG output.
+- Pointer movement changes only the thumbnail's horizontal `object-position`; vertical position remains fixed at `50%`.
+- The horizontal value is clamped to the inclusive `0` through `100` range and defaults to `16`.
+- Dragging follows the grabbed-image model: moving the pointer left reveals more of the image's right side, and moving right reveals more of its left side.
+- The handle captures the active pointer and supports Left/Right arrow keys in five-point increments.
+- The crop is stored as the validated `spotlightX` route query on Home and Share routes.
+- Home-to-Share, Share refresh, and Back-to-Edit preserve the same crop.
+- Crop changes on the Share route invalidate and regenerate the prepared PNG.
+- Mobile template swipe remains available outside the handle; dragging the handle never changes templates.
+
 ### Bulletin
 
 - Compact header contains an upload label and sampled-accent index.
