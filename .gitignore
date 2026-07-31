@@ -4,6 +4,7 @@
 .data
 dist
 .wrangler
+.superpowers/
 
 # Dependencies
 node_modules

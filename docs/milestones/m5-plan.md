@@ -1,5 +1,7 @@
 # M5 Plan - Template Set
 
+> Post-M9 note: this milestone records the original ten-template implementation. M9 retires the first seven reference-led components, replaces them with five original Story Tube designs, and keeps Chromatic, Split, and Liquid for an eight-template canonical catalog.
+
 ## Summary
 
 Build a real template system from the supplied story-card references. The same normalized M2 metadata should render through every design, and switching templates should be instant and client-side.

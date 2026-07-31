@@ -23,16 +23,16 @@ Detailed design: [Original Story Template Family Design](../superpowers/specs/20
 
 ## Implementation
 
-- [ ] Replace the canonical template IDs with the eight-template catalog.
-- [ ] Add route aliases for all seven retired IDs.
-- [ ] Make `Frame` the default template.
-- [ ] Build `Frame`, `Headline`, `Spotlight`, `Bulletin`, and `Caption` components.
-- [ ] Keep thumbnail-derived accents restrained and consistent.
-- [ ] Update `StoryPreview` to render exactly eight canonical components.
-- [ ] Remove the seven retired components after replacements are wired.
-- [ ] Update the desktop picker and mobile carousel for eight templates.
-- [ ] Preserve Home-to-Share and Share-to-Home template restoration.
-- [ ] Preserve clean PNG, QR PNG, and native share behavior.
+- [x] Replace the canonical template IDs with the eight-template catalog.
+- [x] Add route aliases for all seven retired IDs.
+- [x] Make `Frame` the default template.
+- [x] Build `Frame`, `Headline`, `Spotlight`, `Bulletin`, and `Caption` components.
+- [x] Keep thumbnail-derived accents restrained and consistent.
+- [x] Update `StoryPreview` to render exactly eight canonical components.
+- [x] Remove the seven retired components after replacements are wired.
+- [x] Update the desktop picker and mobile carousel for eight templates.
+- [x] Preserve Home-to-Share and Share-to-Home template restoration.
+- [x] Preserve clean PNG, QR PNG, and native share behavior.
 
 ## Legacy URL Mapping
 
@@ -50,13 +50,13 @@ Unknown or missing template values fall back to `frame`. New URL updates always 
 
 ## Test Plan
 
-- [ ] Automated tests cover canonical IDs, legacy aliases, arrays, and fallback behavior.
-- [ ] Type checking passes.
-- [ ] Cloudflare Pages production build passes.
-- [ ] Desktop picker exposes eight templates.
+- [x] Automated tests cover canonical IDs, legacy aliases, arrays, and fallback behavior.
+- [x] Type checking passes.
+- [x] Cloudflare Pages production build passes.
+- [x] Desktop picker exposes eight templates.
 - [ ] Mobile arrows, swipe, keyboard, and indicators cycle through eight templates.
 - [ ] Short and long titles remain contained in every template.
-- [ ] Old Home and Share URLs restore the expected replacement.
+- [x] Old Home and Share URLs restore the expected replacement.
 - [ ] Clean and QR exports remain exactly `1080x1920`.
 - [ ] QR positions do not cover essential content.
 
@@ -65,4 +65,3 @@ Unknown or missing template values fall back to `frame`. New URL updates always 
 - Story Tube has five new original core designs and three retained designs.
 - Old links still open a sensible replacement.
 - The full creation, routing, sharing, and export workflow works with all eight templates.
-
