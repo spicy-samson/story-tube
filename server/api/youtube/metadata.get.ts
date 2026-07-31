@@ -1,6 +1,18 @@
-import { createError, defineEventHandler, getQuery } from "h3"; //even without import statement this will not throw a compile time error sicne nuxt is nuxt
+import {
+  createError,
+  defineEventHandler,
+  getQuery,
+  getRequestURL,
+  setHeader,
+} from "h3";
 import type { YoutubeMetadata } from "../../../shared/types/youtube-metadata";
 import { parseYoutubeUrl } from "../../../shared/utils/youtube-url";
+import {
+  createYoutubeMetadataCacheKey,
+  getCloudflareDefaultCache,
+  METADATA_BROWSER_CACHE_CONTROL,
+  resolveYoutubeMetadata,
+} from "../../utils/youtube-metadata-cache.js";
 
 interface YoutubeOEmbedResponse {
   title?: string;
@@ -29,6 +41,32 @@ export default defineEventHandler(async (event): Promise<YoutubeMetadata> => {
     });
   }
 
+  const cache = getCloudflareDefaultCache();
+  const cacheKey = createYoutubeMetadataCacheKey(
+    getRequestURL(event).origin,
+    parsedUrl.videoId,
+  );
+  const executionContext = getCloudflareExecutionContext(event.context);
+  const { metadata, cacheStatus } = await resolveYoutubeMetadata({
+    cache,
+    key: cacheKey,
+    loadFresh: () => loadYoutubeMetadata(parsedUrl),
+    onCacheError: (operation, error) => {
+      logMetadataError(`cache_${operation}_failed`, error);
+    },
+    defer: executionContext
+      ? (promise) => executionContext.waitUntil(promise)
+      : undefined,
+  });
+
+  setMetadataResponseHeaders(event, cacheStatus);
+  logMetadataEvent(`cache_${cacheStatus.toLowerCase()}`);
+  return metadata;
+});
+
+async function loadYoutubeMetadata(
+  parsedUrl: NonNullable<ReturnType<typeof parseYoutubeUrl>>,
+): Promise<YoutubeMetadata> {
   const oEmbedUrl = new URL("https://www.youtube.com/oembed");
   oEmbedUrl.searchParams.set("url", parsedUrl.canonicalUrl);
   oEmbedUrl.searchParams.set("format", "json");
@@ -36,7 +74,9 @@ export default defineEventHandler(async (event): Promise<YoutubeMetadata> => {
   let metadata: YoutubeOEmbedResponse;
 
   try {
-    metadata = await $fetch<YoutubeOEmbedResponse>(oEmbedUrl.toString());
+    metadata = await $fetch<YoutubeOEmbedResponse>(oEmbedUrl.toString(), {
+      signal: AbortSignal.timeout(5_000),
+    });
   } catch (error: unknown) {
     const statusCode = getFetchStatusCode(error);
 
@@ -46,6 +86,7 @@ export default defineEventHandler(async (event): Promise<YoutubeMetadata> => {
       statusCode === 403 ||
       statusCode === 404
     ) {
+      logMetadataEvent("provider_unavailable", { providerStatus: statusCode });
       throw createError({
         statusCode: 404,
         statusMessage:
@@ -53,6 +94,7 @@ export default defineEventHandler(async (event): Promise<YoutubeMetadata> => {
       });
     }
 
+    logMetadataEvent("provider_failed", { providerStatus: statusCode ?? null });
     throw createError({
       statusCode: 502,
       statusMessage: "Could not fetch metadata from YouTube right now",
@@ -60,13 +102,14 @@ export default defineEventHandler(async (event): Promise<YoutubeMetadata> => {
   }
 
   if (!metadata.title || !metadata.author_name || !metadata.thumbnail_url) {
+    logMetadataEvent("provider_incomplete");
     throw createError({
       statusCode: 502,
       statusMessage: "YouTube returned incomplete metadata for this video",
     });
   }
 
-  return {
+  const normalizedMetadata: YoutubeMetadata = {
     videoId: parsedUrl.videoId,
     canonicalUrl: parsedUrl.canonicalUrl,
     title: metadata.title,
@@ -75,7 +118,48 @@ export default defineEventHandler(async (event): Promise<YoutubeMetadata> => {
     provider: "youtube",
     source: "oembed",
   };
-});
+  logMetadataEvent("provider_success");
+  return normalizedMetadata;
+}
+
+type MetadataCacheStatus = "HIT" | "MISS" | "BYPASS";
+
+function setMetadataResponseHeaders(
+  event: Parameters<typeof setHeader>[0],
+  cacheStatus: MetadataCacheStatus,
+) {
+  setHeader(event, "Cache-Control", METADATA_BROWSER_CACHE_CONTROL);
+  setHeader(event, "X-Story-Tube-Cache", cacheStatus);
+}
+
+function getCloudflareExecutionContext(context: unknown) {
+  if (typeof context !== "object" || context === null) {
+    return null;
+  }
+
+  const cloudflare = (context as {
+    cloudflare?: {
+      context?: { waitUntil(promise: Promise<unknown>): void };
+    };
+  }).cloudflare;
+
+  return cloudflare?.context ?? null;
+}
+
+function logMetadataEvent(
+  outcome: string,
+  details: Record<string, unknown> = {},
+) {
+  console.info({ event: "youtube_metadata", outcome, ...details });
+}
+
+function logMetadataError(outcome: string, error: unknown) {
+  console.error({
+    event: "youtube_metadata",
+    outcome,
+    error: error instanceof Error ? error.name : "UnknownError",
+  });
+}
 
 function getFetchStatusCode(error: unknown): number | undefined {
   if (typeof error !== "object" || error === null) {
