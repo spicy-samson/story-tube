@@ -13,12 +13,7 @@
     <div class="absolute inset-0 bg-[var(--story-bg)] opacity-55" aria-hidden="true" />
     <div class="absolute inset-0 bg-black/20" aria-hidden="true" />
 
-    <header class="relative z-10 mx-7 mt-8 flex items-center justify-between border-b border-white/30 pb-4">
-      <span class="text-[9px] font-bold uppercase tracking-[0.18em]">Chromatic study</span>
-      <span class="text-[9px] font-bold uppercase tracking-[0.14em] text-white/60">04 / 06</span>
-    </header>
-
-    <section class="relative z-10 mx-7 mt-24">
+    <section class="relative z-10 mx-7 mt-36">
       <div data-chromatic-artwork class="border border-white/60 bg-black/35 p-1.5 shadow-[0_18px_45px_rgba(0,0,0,0.22)]">
         <div class="aspect-video overflow-hidden">
           <img
@@ -40,8 +35,7 @@
       </div>
     </section>
 
-    <footer class="relative z-10 mx-7 mb-8 mt-auto flex items-center justify-between border-t border-white/25 pt-5">
-      <span class="text-[9px] font-bold uppercase tracking-[0.16em] text-white/55">Watch now</span>
+    <footer class="relative z-10 mx-7 mb-8 mt-auto flex justify-end">
       <StoryYoutubeBrand class="text-lg" />
     </footer>
   </article>

@@ -14,16 +14,7 @@
     <div class="absolute -left-24 top-20 h-56 w-[130%] -rotate-12 rounded-[3rem] bg-[var(--story-accent)] opacity-25 blur-2xl" />
     <div class="absolute -right-28 bottom-20 h-72 w-[125%] rotate-12 rounded-[4rem] bg-[var(--story-bg-alt)] opacity-70 blur-2xl" />
 
-    <header class="relative z-10 flex items-center justify-between">
-      <div class="rounded-full border border-white/35 bg-white/15 px-4 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.34)] backdrop-blur-md">
-
-      </div>
-      <span class="grid h-11 w-11 place-items-center rounded-full border border-white/35 bg-white/20 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.38)] backdrop-blur-md">
-        <StoryPlayButton size="sm" />
-      </span>
-    </header>
-
-    <div class="relative z-10 mt-8 overflow-hidden rounded-[2rem] border border-white/35 bg-white/12 p-2 shadow-[0_28px_80px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.38)] backdrop-blur-xl">
+    <div class="relative z-10 mt-20 overflow-hidden rounded-[2rem] border border-white/35 bg-white/12 p-2 shadow-[0_28px_80px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.38)] backdrop-blur-xl">
       <div class="aspect-video">
         <img v-if="metadata" :src="metadata.thumbnailUrl" :alt="`${metadata.title} thumbnail`" class="h-full w-full rounded-[1.45rem] object-cover">
         <div v-else class="grid h-full place-items-center rounded-[1.45rem] bg-white/10"><StoryPlayButton /></div>

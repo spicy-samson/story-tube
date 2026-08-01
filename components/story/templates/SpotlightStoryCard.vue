@@ -14,12 +14,6 @@
     <div class="absolute inset-0 bg-black/35" />
     <div class="absolute inset-x-0 bottom-0 h-[48%]" />
 
-    <header class="relative z-10 flex justify-center">
-      <p class="bg-[#f3f3ef] px-3 py-2 text-[9px] font-bold uppercase tracking-[0.18em] text-[#171717]">
-        Play video
-      </p>
-    </header>
-
     <section class="relative z-10 mb-[22%] mt-auto text-center">
       <h2 class="mx-auto line-clamp-5 max-w-[94%] whitespace-normal break-words text-[clamp(1.3rem,5.6vw,1.9rem)] font-bold leading-[1.06] [overflow-wrap:anywhere]">
         {{ title }}

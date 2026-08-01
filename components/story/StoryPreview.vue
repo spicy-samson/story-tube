@@ -1,7 +1,7 @@
 <template>
   <div
     ref="exportElement"
-    class="relative aspect-[9/16] w-full max-w-96 min-w-0 overflow-hidden rounded-[1.8rem] bg-[#050506] shadow-[0_32px_70px_rgba(0,0,0,0.42)] ring-[0.5rem] ring-[#050506]"
+    class="relative aspect-[9/16] w-full max-w-96 min-w-0 overflow-hidden rounded-[1.8rem] bg-[#050506] shadow-[0_32px_70px_rgba(0,0,0,0.42)]"
     data-story-preview
   >
     <div class="relative h-full w-full overflow-hidden">
