@@ -47,3 +47,11 @@ test('supports pointer capture and keyboard nudging on the horizontal handle', (
   assert.match(dragHandleSource, /@keydown\.left\.stop\.prevent="nudge\(-5\)"/)
   assert.match(dragHandleSource, /@keydown\.right\.stop\.prevent="nudge\(5\)"/)
 })
+
+test('uses a minimalist icon-only horizontal crop control', () => {
+  assert.match(dragHandleSource, /size-11/)
+  assert.match(dragHandleSource, /rounded-full/)
+  assert.match(dragHandleSource, /cursor-ew-resize/)
+  assert.match(dragHandleSource, /title="Reposition image"/)
+  assert.doesNotMatch(dragHandleSource, /<span>Drag<\/span>/)
+})

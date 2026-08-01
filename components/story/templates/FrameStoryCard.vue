@@ -1,15 +1,15 @@
 <template>
   <article
-    class="relative flex h-full w-full flex-col overflow-hidden rounded-[1.3rem] bg-[#f3f3ef] px-7 py-8 text-[#171717]"
+    class="relative flex h-full w-full flex-col overflow-hidden rounded-[1.3rem] bg-[#f7f7f3] px-7 py-8 text-[#171717]"
     :style="storyPaletteStyle(palette)"
   >
-    <header class="flex items-center justify-center gap-3 text-center">
+    <header class="flex items-center gap-3">
       <span class="h-1.5 w-1.5 bg-[var(--story-accent)]" aria-hidden="true" />
       <p class="text-[9px] font-bold uppercase tracking-[0.18em]">New on YouTube</p>
     </header>
 
-    <section class="mt-28">
-      <div class="border-4 border-white bg-[#d8d8d2] p-1 shadow-[8px_9px_0_var(--story-accent)]">
+    <section class="mx-auto mt-24 w-[82%]">
+      <div class="border border-black/20 bg-white p-1.5 shadow-[8px_8px_0_var(--story-accent)]">
         <div class="aspect-video overflow-hidden">
           <img
             v-if="metadata"
@@ -23,15 +23,21 @@
         </div>
       </div>
 
-      <div class="mx-auto mt-7 max-w-[92%] text-center">
-        <h2 class="line-clamp-5 whitespace-normal break-words text-[clamp(1.2rem,5.2vw,1.75rem)] font-bold leading-[1.08] [overflow-wrap:anywhere]">
-          {{ title }}
-        </h2>
-        <p class="mt-3 line-clamp-2 text-sm font-medium text-[#686864]">{{ channel }}</p>
+      <div class="mt-10 grid grid-cols-[4px_minmax(0,1fr)] gap-5">
+        <span class="bg-[var(--story-accent)]" aria-hidden="true" />
+        <div class="py-1 text-left">
+          <h2 class="whitespace-normal break-words text-[clamp(1.2rem,5.1vw,1.72rem)] font-bold leading-[1.07] [overflow-wrap:anywhere]">
+            {{ title }}
+          </h2>
+          <p class="mt-4 line-clamp-2 text-sm font-medium text-black/55">{{ channel }}</p>
+        </div>
       </div>
     </section>
 
-    <StoryYoutubeBrand tone="dark" class="mt-auto justify-center text-lg" />
+    <footer class="mt-auto flex items-center justify-between border-t border-black/15 pt-5">
+      <p class="text-[9px] font-bold uppercase tracking-[0.16em] text-black/45">Selected video</p>
+      <StoryYoutubeBrand tone="dark" class="text-lg" />
+    </footer>
   </article>
 </template>
 

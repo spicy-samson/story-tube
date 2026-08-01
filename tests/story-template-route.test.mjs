@@ -6,8 +6,6 @@ const canonicalIds = [
   'frame',
   'headline',
   'spotlight',
-  'bulletin',
-  'caption',
   'chromatic',
   'split',
   'liquid'
@@ -24,10 +22,12 @@ test('maps retired story template IDs to canonical replacements', () => {
     centered: 'frame',
     glass: 'frame',
     editorial: 'headline',
+    bulletin: 'headline',
+    caption: 'frame',
     progress: 'spotlight',
     'full-bleed': 'spotlight',
-    'clean-poster': 'bulletin',
-    poster: 'caption'
+    'clean-poster': 'headline',
+    poster: 'frame'
   }
 
   for (const [legacyId, canonicalId] of Object.entries(replacements)) {

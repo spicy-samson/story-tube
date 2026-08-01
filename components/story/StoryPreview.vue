@@ -45,8 +45,6 @@ import type { StoryTemplateId } from '~/shared/types/story-template'
 import type { YoutubeMetadata } from '~/shared/types/youtube-metadata'
 import { DEFAULT_SPOTLIGHT_X, clampSpotlightX } from '~/shared/utils/spotlight-crop.js'
 import SpotlightDragHandle from './SpotlightDragHandle.vue'
-import BulletinStoryCard from './templates/BulletinStoryCard.vue'
-import CaptionStoryCard from './templates/CaptionStoryCard.vue'
 import ChromaticStoryCard from './templates/ChromaticStoryCard.vue'
 import FrameStoryCard from './templates/FrameStoryCard.vue'
 import HeadlineStoryCard from './templates/HeadlineStoryCard.vue'
@@ -78,8 +76,6 @@ const templateComponents: Record<StoryTemplateId, Component> = {
   frame: FrameStoryCard,
   headline: HeadlineStoryCard,
   spotlight: SpotlightStoryCard,
-  bulletin: BulletinStoryCard,
-  caption: CaptionStoryCard,
   chromatic: ChromaticStoryCard,
   split: SplitStoryCard,
   liquid: LiquidStoryCard
