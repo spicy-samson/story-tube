@@ -1,13 +1,13 @@
 <template>
   <button
     type="button"
-    class="absolute right-3 top-3 z-[60] inline-flex min-h-11 touch-none select-none items-center gap-2 rounded-md border border-white/25 bg-black/70 px-3 text-xs font-semibold text-white shadow-sm backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-white"
+    class="absolute right-3 top-3 z-[60] grid size-11 cursor-ew-resize touch-none select-none place-items-center rounded-full border border-white/20 bg-black/45 text-white shadow-sm backdrop-blur-xl transition hover:bg-black/60 focus:outline-none focus:ring-2 focus:ring-white active:scale-95"
     :aria-label="`Reposition Spotlight image horizontally. Current position ${modelValue} percent.`"
     :aria-valuenow="modelValue"
     aria-valuemin="0"
     aria-valuemax="100"
     role="slider"
-    title="Drag image horizontally"
+    title="Reposition image"
     @pointerdown.stop.prevent="startDrag"
     @pointermove.stop.prevent="moveDrag"
     @pointerup.stop.prevent="finishDrag"
@@ -16,8 +16,7 @@
     @keydown.left.stop.prevent="nudge(-5)"
     @keydown.right.stop.prevent="nudge(5)"
   >
-    <MoveHorizontal :size="16" :stroke-width="2.25" aria-hidden="true" />
-    <span>Drag</span>
+    <MoveHorizontal :size="18" :stroke-width="2" aria-hidden="true" />
   </button>
 </template>
 
