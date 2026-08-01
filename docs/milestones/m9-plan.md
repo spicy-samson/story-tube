@@ -2,9 +2,9 @@
 
 ## Summary
 
-M9 replaces the first seven screenshot-inspired story templates with five original Story Tube layouts. `Chromatic`, `Split`, and `Liquid` remain, producing a focused catalog of eight templates.
+M9 replaces the first seven screenshot-inspired story templates with three consolidated Story Tube layouts. `Chromatic`, `Split`, and `Liquid` remain, producing a focused catalog of six templates.
 
-The five new templates share one restrained visual system: neutral surfaces, native sans-serif typography, consistent safe margins, and one accent sampled from the YouTube thumbnail.
+The three new templates share one restrained visual system: neutral surfaces, native sans-serif typography, consistent safe margins, and one accent sampled from the YouTube thumbnail.
 
 Detailed design: [Original Story Template Family Design](../superpowers/specs/2026-07-31-original-template-family-design.md)
 
@@ -12,30 +12,33 @@ Detailed design: [Original Story Template Family Design](../superpowers/specs/20
 
 | Template | Purpose |
 |---|---|
-| Frame | Balanced thumbnail, title, and channel default |
-| Headline | Typography-first story for strong titles |
+| Frame | White editorial frame and asymmetric caption |
+| Headline | Black glass headline and structured upload details |
 | Spotlight | Full-bleed monochrome image with quiet lower metadata |
-| Bulletin | Structured upload announcement |
-| Caption | Asymmetric image with compact editorial caption |
-| Chromatic | Existing thumbnail-matched poster |
+| Chromatic | Soft-focus thumbnail Gallery with palette-aware atmosphere |
 | Split | Existing image and type composition |
 | Liquid | Existing glass color-flow composition |
 
 ## Implementation
 
-- [x] Replace the canonical template IDs with the eight-template catalog.
-- [x] Add route aliases for all seven retired IDs.
+- [x] Replace the canonical template IDs with the six-template catalog.
+- [x] Add route aliases for all retired IDs.
 - [x] Make `Frame` the default template.
-- [x] Build `Frame`, `Headline`, `Spotlight`, `Bulletin`, and `Caption` components.
+- [x] Build the consolidated `Frame`, `Headline`, and `Spotlight` components.
 - [x] Keep thumbnail-derived accents restrained and consistent.
-- [x] Update `StoryPreview` to render exactly eight canonical components.
+- [x] Update `StoryPreview` to render exactly six canonical components.
 - [x] Remove the seven retired components after replacements are wired.
-- [x] Update the desktop picker and mobile carousel for eight templates.
+- [x] Update the desktop picker and mobile carousel for six templates.
 - [x] Preserve Home-to-Share and Share-to-Home template restoration.
 - [x] Preserve clean PNG, QR PNG, and native share behavior.
 - [x] Give Spotlight a full-canvas monochrome thumbnail with a left-biased focal crop.
 - [x] Add an upper-right horizontal drag handle exclusively to Spotlight.
 - [x] Persist Spotlight crop through Home, Share, refresh, Back-to-Edit, and PNG export.
+- [x] Consolidate Bulletin into Headline and Caption into Frame.
+- [x] Reduce the canonical picker and preview catalog from eight to six templates.
+- [x] Keep `bulletin` and `caption` URLs valid through route aliases.
+- [x] Replace Spotlight's labeled drag button with a minimalist icon-only crop control.
+- [x] Redesign Chromatic as a mature Gallery with a soft-focus thumbnail color wash.
 
 ## Legacy URL Mapping
 
@@ -44,10 +47,12 @@ Detailed design: [Original Story Template Family Design](../superpowers/specs/20
 | `centered` | `frame` |
 | `glass` | `frame` |
 | `editorial` | `headline` |
+| `bulletin` | `headline` |
+| `caption` | `frame` |
 | `progress` | `spotlight` |
 | `full-bleed` | `spotlight` |
-| `clean-poster` | `bulletin` |
-| `poster` | `caption` |
+| `clean-poster` | `headline` |
+| `poster` | `frame` |
 
 Unknown or missing template values fall back to `frame`. New URL updates always use canonical IDs.
 
@@ -56,8 +61,8 @@ Unknown or missing template values fall back to `frame`. New URL updates always 
 - [x] Automated tests cover canonical IDs, legacy aliases, arrays, and fallback behavior.
 - [x] Type checking passes.
 - [x] Cloudflare Pages production build passes.
-- [x] Desktop picker exposes eight templates.
-- [ ] Mobile arrows, swipe, keyboard, and indicators cycle through eight templates.
+- [x] Desktop picker exposes six templates.
+- [ ] Mobile arrows, swipe, keyboard, and indicators cycle through six templates.
 - [ ] Short and long titles remain contained in every template.
 - [x] Old Home and Share URLs restore the expected replacement.
 - [ ] Clean and QR exports remain exactly `1080x1920`.
@@ -67,6 +72,6 @@ Unknown or missing template values fall back to `frame`. New URL updates always 
 
 ## Done When
 
-- Story Tube has five new original core designs and three retained designs.
+- Story Tube has three consolidated original core designs and three retained designs.
 - Old links still open a sensible replacement.
-- The full creation, routing, sharing, and export workflow works with all eight templates.
+- The full creation, routing, sharing, and export workflow works with all six templates.

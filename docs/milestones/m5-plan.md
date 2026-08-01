@@ -1,6 +1,6 @@
 # M5 Plan - Template Set
 
-> Post-M9 note: this milestone records the original ten-template implementation. M9 retires the first seven reference-led components, replaces them with five original Story Tube designs, and keeps Chromatic, Split, and Liquid for an eight-template canonical catalog.
+> Post-M9 note: this milestone records the original ten-template implementation. M9 retires the first seven reference-led components, consolidates them into Frame, Headline, and Spotlight, and keeps Chromatic, Split, and Liquid for a six-template canonical catalog.
 
 ## Summary
 

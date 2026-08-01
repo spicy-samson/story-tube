@@ -102,7 +102,7 @@ Done when:
 
 Detailed plan: [m5-plan.md](./m5-plan.md)
 
-Historical note: M5 delivered the original ten-template system. M9 replaces the first seven reference-led designs with five original Story Tube templates and keeps the final three, making eight canonical templates.
+Historical note: M5 delivered the original ten-template system. M9 consolidates the first seven reference-led designs into Frame, Headline, and Spotlight and keeps the final three, making six canonical templates.
 
 Deliverables:
 
@@ -194,15 +194,15 @@ Detailed plan: [m9-plan.md](./m9-plan.md)
 
 Deliverables:
 
-- [x] Five original core templates: Frame, Headline, Spotlight, Bulletin, and Caption
+- [x] Three original core templates: Frame, Headline, and Spotlight
 - [x] Chromatic, Split, and Liquid retained
-- [x] Eight-template desktop picker and mobile carousel
-- [x] Legacy aliases for all seven retired template IDs
+- [x] Six-template desktop picker and mobile carousel
+- [x] Legacy aliases for all retired template IDs
 - [x] Frame default for missing and invalid template values
 - [x] Route compatibility tests
-- [ ] Browser and export QA across all eight templates
+- [ ] Browser and export QA across all six templates
 
 Done when:
 
 - Story Tube has a focused, original template identity without breaking old Home or Share links.
-- All eight designs remain legible and export correctly with clean and QR variants.
+- All six designs remain legible and export correctly with clean and QR variants.

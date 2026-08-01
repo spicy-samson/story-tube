@@ -1,6 +1,6 @@
 # M7 Plan - Mobile Story Carousel and QA
 
-> Post-M9 note: the carousel now cycles through eight canonical templates. Its navigation continues to derive bounds and labels from the shared template catalog.
+> Post-M9 note: the carousel now cycles through six canonical templates. Its navigation continues to derive bounds and labels from the shared template catalog.
 
 ## Summary
 
