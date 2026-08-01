@@ -2,8 +2,6 @@ export type StoryTemplateId =
   | 'frame'
   | 'headline'
   | 'spotlight'
-  | 'bulletin'
-  | 'caption'
   | 'chromatic'
   | 'split'
   | 'liquid'

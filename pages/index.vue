@@ -33,7 +33,7 @@
               type="submit"
               class="min-h-13 rounded-lg bg-[var(--app-accent)] px-5 font-semibold text-[var(--app-accent-text)] transition hover:bg-[var(--app-accent-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--app-accent)] disabled:opacity-50"
               :disabled="isGenerateDisabled"
-            >
+            >  
               {{ pending ? 'Loading...' : 'Generate' }}
             </button>
           </div>
@@ -52,7 +52,7 @@
           <div class="flex flex-wrap items-end justify-between gap-2">
             <div>
               <h2 class="text-sm font-semibold">Choose a template</h2>
-              <p class="mt-1 text-xs text-[var(--app-muted)]">Eight live designs, including thumbnail-matched colorways</p>
+              <p class="mt-1 text-xs text-[var(--app-muted)]">Six live designs, including thumbnail-matched colorways</p>
             </div>
             <span class="text-xs font-semibold text-[var(--app-accent)]">{{ selectedTemplateName }}</span>
           </div>

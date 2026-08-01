@@ -3,10 +3,12 @@ export const LEGACY_STORY_TEMPLATE_ALIASES = Object.freeze({
   centered: 'frame',
   glass: 'frame',
   editorial: 'headline',
+  bulletin: 'headline',
+  caption: 'frame',
   progress: 'spotlight',
   'full-bleed': 'spotlight',
-  'clean-poster': 'bulletin',
-  poster: 'caption'
+  'clean-poster': 'headline',
+  poster: 'frame'
 })
 
 /**

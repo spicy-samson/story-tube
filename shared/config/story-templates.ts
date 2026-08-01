@@ -4,14 +4,14 @@ export const STORY_TEMPLATES: StoryTemplateOption[] = [
   {
     id: 'frame',
     name: 'Frame',
-    description: 'Balanced default',
-    swatchBackground: '#f2f2ef'
+    description: 'White editorial',
+    swatchBackground: '#f7f7f3'
   },
   {
     id: 'headline',
     name: 'Headline',
-    description: 'Type first',
-    swatchBackground: '#111111'
+    description: 'Black glass',
+    swatchBackground: '#101012'
   },
   {
     id: 'spotlight',
@@ -20,21 +20,9 @@ export const STORY_TEMPLATES: StoryTemplateOption[] = [
     swatchBackground: '#31506b'
   },
   {
-    id: 'bulletin',
-    name: 'Bulletin',
-    description: 'Upload notice',
-    swatchBackground: '#e8e8e4'
-  },
-  {
-    id: 'caption',
-    name: 'Caption',
-    description: 'Compact editorial',
-    swatchBackground: '#d9dbd6'
-  },
-  {
     id: 'chromatic',
     name: 'Chromatic',
-    description: 'Color-matched poster',
+    description: 'Soft-focus gallery',
     swatchBackground: 'linear-gradient(135deg, #19364b 0%, #dc7b67 100%)'
   },
   {
