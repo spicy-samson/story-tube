@@ -1,0 +1,189 @@
+# Original Story Template Family Design
+
+## Goal
+
+Replace the first seven screenshot-inspired story templates with three consolidated Story Tube templates. Keep `Chromatic`, `Split`, and `Liquid`, resulting in six templates total.
+
+The new three should feel like one restrained product family rather than unrelated poster designs. They use simple layouts, neutral surfaces, consistent typography and spacing, and one accent sampled from the YouTube thumbnail.
+
+## Template Set
+
+The canonical template catalog becomes:
+
+| ID | Name | Content role |
+|---|---|---|
+| `frame` | Frame | White editorial layout combining a balanced frame and asymmetric caption |
+| `headline` | Headline | Black glass layout combining strong typography and structured upload details |
+| `spotlight` | Spotlight | Full-bleed thumbnail with restrained metadata inside safe margins |
+| `chromatic` | Chromatic | Soft-focus thumbnail Gallery with palette-aware atmosphere |
+| `split` | Split | Existing image and type composition |
+| `liquid` | Liquid | Existing glass color-flow composition |
+
+`Frame` is the default template.
+
+## Shared Visual System
+
+The three new templates share:
+
+- The native sans-serif stack.
+- A neutral black, white, and gray foundation.
+- One accent color from the existing thumbnail palette sampler.
+- Consistent Instagram-safe margins.
+- A common title scale with template-specific limits.
+- Zero negative letter spacing.
+- Small, consistent channel and YouTube attribution.
+- Straight edges or small radii rather than decorative pill shapes.
+- No ornamental gradients, fake playback controls, or copied visual motifs. Headline alone uses restrained backdrop blur to support its black glass surface.
+
+The sampled accent is used sparingly for a line, frame, index, or caption marker. It does not recolor every surface.
+
+## Template Layouts
+
+### Frame
+
+- Small upload label at the top.
+- Framed 16:9 thumbnail near the upper-middle area.
+- Sampled accent appears as an offset edge or compact marker.
+- An asymmetric accent bar introduces the wrapped title and channel below the image.
+- YouTube attribution is anchored to the footer safe area.
+
+### Headline
+
+- A dark, translucent information panel establishes the black glass treatment.
+- Title occupies the primary area and a short sampled-accent rule separates supporting content.
+- A compact thumbnail and upload details provide Bulletin's information-led role without a separate template.
+- Channel and YouTube attribution remain quiet and compact.
+- Long titles wrap and reduce prominence before they can overlap the image.
+
+### Spotlight
+
+- Thumbnail fills the entire story surface with a left-biased `16% 50%` focal crop.
+- Artwork is rendered in monochrome with restrained contrast so Spotlight remains distinct from the color-led templates.
+- A neutral tonal overlay protects readability without replacing the full-bleed image treatment.
+- A small action label sits near the top safe margin.
+- Title and channel are anchored to the lower safe area.
+- No progress bar or simulated media-player chrome is used.
+- No image transition is used because PNG export must capture a deterministic frame.
+
+#### Horizontal crop control
+
+- Spotlight is the only draggable template.
+- A compact icon-only horizontal-crop handle appears in the preview's upper-right corner when Spotlight has loaded metadata.
+- The handle is outside the export canvas, so editing chrome never appears in PNG output.
+- Pointer movement changes only the thumbnail's horizontal `object-position`; vertical position remains fixed at `50%`.
+- The horizontal value is clamped to the inclusive `0` through `100` range and defaults to `16`.
+- Dragging follows the grabbed-image model: moving the pointer left reveals more of the image's right side, and moving right reveals more of its left side.
+- The handle captures the active pointer and supports Left/Right arrow keys in five-point increments.
+- The crop is stored as the validated `spotlightX` route query on Home and Share routes.
+- Home-to-Share, Share refresh, and Back-to-Edit preserve the same crop.
+- Crop changes on the Share route invalidate and regenerate the prepared PNG.
+- Mobile template swipe remains available outside the handle; dragging the handle never changes templates.
+
+## Legacy Route Compatibility
+
+Old share and edit URLs remain valid. The route parser maps legacy template IDs to canonical IDs:
+
+| Legacy ID | Canonical ID |
+|---|---|
+| `centered` | `frame` |
+| `glass` | `frame` |
+| `editorial` | `headline` |
+| `bulletin` | `headline` |
+| `caption` | `frame` |
+| `progress` | `spotlight` |
+| `full-bleed` | `spotlight` |
+| `clean-poster` | `headline` |
+| `poster` | `frame` |
+
+The parser returns only canonical `StoryTemplateId` values. New route updates write canonical IDs, so a legacy URL is normalized the next time template state changes. Unknown values continue to fall back to `frame`.
+
+## Architecture
+
+### Shared catalog
+
+`shared/config/story-templates.ts` contains only the six canonical picker options. It remains the source of truth for picker order, display names, descriptions, and swatches.
+
+`shared/types/story-template.ts` defines canonical IDs only. A separate legacy-ID type or constant may live beside route parsing, because legacy IDs are accepted input rather than active application state.
+
+### Route parsing
+
+`shared/utils/story-route.ts` validates canonical IDs first, then resolves known legacy aliases. Home and Share continue using the same parser, preventing route behavior from drifting.
+
+### Rendering
+
+`StoryPreview.vue` maps the six canonical IDs to six components. Bulletin and Caption are retired after their roles are merged into Headline and Frame.
+
+The current metadata, palette, QR overlay, transition, and export interfaces do not change.
+
+### Picker behavior
+
+Desktop renders six swatches. Mobile carousel controls and position indicators derive their count from `STORY_TEMPLATES`.
+
+## Data Flow
+
+```text
+route template query
+  -> parse canonical ID or legacy alias
+  -> canonical StoryTemplateId
+  -> picker and carousel state
+  -> StoryPreview component lookup
+  -> metadata and sampled palette render
+  -> clean or QR export
+```
+
+Legacy values are accepted only at the route boundary and do not spread through component props or export logic.
+
+## Error Handling
+
+- Unknown template queries fall back to `frame`.
+- Missing metadata keeps the existing placeholder content behavior.
+- Palette sampling failures use the existing neutral fallback palette.
+- Long titles wrap with `overflow-wrap: anywhere` and template-specific maximum regions.
+- QR overlays remain inside safe margins and must not cover titles, thumbnails, or YouTube attribution.
+
+## Testing
+
+### Automated
+
+- Every canonical template ID parses to itself.
+- Every legacy ID maps to the specified canonical ID.
+- Unknown and missing values fall back to `frame`.
+- Picker and preview maps contain the same six canonical IDs.
+- Type checking passes.
+- Cloudflare Pages production build passes.
+
+### Browser and export
+
+- Generate one short-title and one long-title video in all six templates.
+- Verify desktop picker and mobile carousel both expose six templates.
+- Open old Home and Share URLs for every legacy ID and confirm the expected replacement.
+- Return from Share to Home and confirm the canonical template is restored.
+- Export clean and QR variants of all six templates at exactly `1080x1920`.
+- Check all four QR positions against title, thumbnail, and branding safe areas.
+- Confirm sampled accents match between preview and export.
+- Verify light and dark app themes do not recolor exported story artwork.
+
+## Documentation
+
+- Add `docs/milestones/m9-plan.md` for implementation progress.
+- Add M9 to the milestone index as Original Template Family.
+- Update M5 and M7 notes to identify the six-template canonical catalog.
+- Record that the first seven reference-led components were retired in M9.
+
+## Out of Scope
+
+- Redesigning `Split` or `Liquid`.
+- User-editable fonts, colors, spacing, or arbitrary canvas positioning.
+- Animation or video export.
+- Saved projects or database persistence.
+- Replacing YouTube attribution or the existing metadata pipeline.
+- Making legal conclusions about third-party intellectual-property rights.
+
+## Acceptance Criteria
+
+- Story Tube exposes exactly six canonical templates.
+- The three consolidated templates form one original, simple visual family.
+- `Chromatic`, `Split`, and `Liquid` retain their current behavior.
+- All retired template IDs open a sensible replacement.
+- Home, Share, QR, PNG export, mobile carousel, and route restoration continue working.
+- Every exported story remains legible, overlap-free, and exactly `1080x1920`.

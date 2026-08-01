@@ -15,6 +15,7 @@ This file is the build map for the PWA-first version.
 | M6 | Story Link Sharing | Routed creation and sharing workspaces produce clean or QR stories with the canonical YouTube link ready |
 | M7 | Mobile QA | Works on phone-sized viewports and PWA install path is verified |
 | M8 | Demo Ship | Deployed version and short demo are ready |
+| M9 | Original Template Family | Five original core templates replace the seven reference-led designs while old links remain compatible |
 
 ## M0 - Planning
 
@@ -101,6 +102,8 @@ Done when:
 
 Detailed plan: [m5-plan.md](./m5-plan.md)
 
+Historical note: M5 delivered the original ten-template system. M9 consolidates the first seven reference-led designs into Frame, Headline, and Spotlight and keeps the final three, making six canonical templates.
+
 Deliverables:
 
 - [x] Centered media template
@@ -184,3 +187,22 @@ Deliverables:
 Done when:
 
 - Someone can open the deployed app and make a postable story card without explanation.
+
+## M9 - Original Template Family
+
+Detailed plan: [m9-plan.md](./m9-plan.md)
+
+Deliverables:
+
+- [x] Three original core templates: Frame, Headline, and Spotlight
+- [x] Chromatic, Split, and Liquid retained
+- [x] Six-template desktop picker and mobile carousel
+- [x] Legacy aliases for all retired template IDs
+- [x] Frame default for missing and invalid template values
+- [x] Route compatibility tests
+- [ ] Browser and export QA across all six templates
+
+Done when:
+
+- Story Tube has a focused, original template identity without breaking old Home or Share links.
+- All six designs remain legible and export correctly with clean and QR variants.

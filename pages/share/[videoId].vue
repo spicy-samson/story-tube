@@ -13,6 +13,7 @@
     :qr-position="qrPosition"
     :status="shareStatus"
     :status-message="shareStatusMessage"
+    :spotlight-x="spotlightX"
     :supports-native-share="supportsNativeShare"
     :template-id="selectedTemplate"
     :variant="shareVariant"
@@ -20,6 +21,7 @@
     @download="downloadPreparedStory"
     @share="sharePreparedStory"
     @update:qr-position="setQrPosition"
+    @update:spotlight-x="setSpotlightX"
     @update:variant="setShareVariant"
   />
 
@@ -51,6 +53,7 @@
 <script setup lang="ts">
 import type { QrPosition, StoryExportAsset, StoryShareVariant } from '~/shared/types/story-share'
 import type { StoryTemplateId } from '~/shared/types/story-template'
+import { clampSpotlightX, parseSpotlightX } from '~/shared/utils/spotlight-crop.js'
 import {
   makeCanonicalYoutubeUrl,
   parseQrPosition,
@@ -67,6 +70,7 @@ const sourceUrl = computed(() => videoId ? makeCanonicalYoutubeUrl(videoId) : ''
 const selectedTemplate = ref<StoryTemplateId>(parseStoryTemplate(route.query.template))
 const shareVariant = ref<StoryShareVariant>(parseStoryShareVariant(route.query.variant))
 const qrPosition = ref<QrPosition>(parseQrPosition(route.query.qr))
+const spotlightX = ref(parseSpotlightX(route.query.spotlightX))
 const preparedAsset = ref<StoryExportAsset | null>(null)
 const copyMessage = ref('')
 const copyFailed = ref(false)
@@ -76,6 +80,7 @@ const shareWorkspace = useTemplateRef<{
   waitForPalette: () => Promise<void>
 }>('shareWorkspace')
 let preparationId = 0
+let spotlightUpdateTimer: ReturnType<typeof setTimeout> | undefined
 
 const {
   errorMessage,
@@ -101,7 +106,7 @@ const {
 } = useStoryQrCode()
 
 const editUrl = computed(() =>
-  `/?video=${encodeURIComponent(videoId ?? '')}&template=${encodeURIComponent(selectedTemplate.value)}`
+  `/?video=${encodeURIComponent(videoId ?? '')}&template=${encodeURIComponent(selectedTemplate.value)}&spotlightX=${encodeURIComponent(spotlightX.value)}`
 )
 const isPreparingAsset = computed(() =>
   isExporting.value || isGeneratingQrCode.value || exportStatus.value === 'sharing'
@@ -123,7 +128,8 @@ async function normalizeRouteQuery() {
     query: {
       template: selectedTemplate.value,
       variant: shareVariant.value,
-      qr: qrPosition.value
+      qr: qrPosition.value,
+      spotlightX: spotlightX.value
     }
   })
 }
@@ -183,6 +189,20 @@ function setQrPosition(value: QrPosition) {
   if (shareVariant.value === 'qr') void prepareShareAsset()
 }
 
+function setSpotlightX(value: number) {
+  const nextValue = clampSpotlightX(value)
+  if (spotlightX.value === nextValue) return
+
+  spotlightX.value = nextValue
+  preparedAsset.value = null
+  resetExportStatus()
+  clearTimeout(spotlightUpdateTimer)
+  spotlightUpdateTimer = setTimeout(() => {
+    void normalizeRouteQuery()
+    void prepareShareAsset()
+  }, 160)
+}
+
 function downloadPreparedStory() {
   if (preparedAsset.value) downloadAsset(preparedAsset.value)
 }
@@ -198,4 +218,6 @@ onMounted(async () => {
   await normalizeRouteQuery()
   if (metadata.value) await prepareShareAsset()
 })
+
+onBeforeUnmount(() => clearTimeout(spotlightUpdateTimer))
 </script>

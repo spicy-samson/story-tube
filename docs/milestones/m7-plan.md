@@ -1,5 +1,7 @@
 # M7 Plan - Mobile Story Carousel and QA
 
+> Post-M9 note: the carousel now cycles through six canonical templates. Its navigation continues to derive bounds and labels from the shared template catalog.
+
 ## Summary
 
 M7 makes the creation workflow feel designed for a phone. After a YouTube video loads, the generated 9:16 story becomes the mobile template picker: the user swipes the preview or uses previous and next controls to move through the ten designs.

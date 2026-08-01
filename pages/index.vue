@@ -33,7 +33,7 @@
               type="submit"
               class="min-h-13 rounded-lg bg-[var(--app-accent)] px-5 font-semibold text-[var(--app-accent-text)] transition hover:bg-[var(--app-accent-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--app-accent)] disabled:opacity-50"
               :disabled="isGenerateDisabled"
-            >
+            >  
               {{ pending ? 'Loading...' : 'Generate' }}
             </button>
           </div>
@@ -52,7 +52,7 @@
           <div class="flex flex-wrap items-end justify-between gap-2">
             <div>
               <h2 class="text-sm font-semibold">Choose a template</h2>
-              <p class="mt-1 text-xs text-[var(--app-muted)]">Ten live designs, including thumbnail-matched colorways</p>
+              <p class="mt-1 text-xs text-[var(--app-muted)]">Six live designs, including thumbnail-matched colorways</p>
             </div>
             <span class="text-xs font-semibold text-[var(--app-accent)]">{{ selectedTemplateName }}</span>
           </div>
@@ -101,6 +101,7 @@
       >
         <StoryTemplateCarousel
           v-model="selectedTemplate"
+          v-model:spotlight-x="spotlightX"
           :metadata="previewMetadata"
           :is-loading="pending"
           :error-message="errorMessage"
@@ -131,6 +132,7 @@
 <script setup lang="ts">
 import { STORY_TEMPLATES } from '~/shared/config/story-templates'
 import type { StoryTemplateId } from '~/shared/types/story-template'
+import { parseSpotlightX } from '~/shared/utils/spotlight-crop.js'
 import {
   makeCanonicalYoutubeUrl,
   parseRouteVideoId,
@@ -143,6 +145,7 @@ const mobileResultSection = useTemplateRef<HTMLElement>('mobileResultSection')
 const restoredVideoId = parseRouteVideoId(route.query.video)
 const videoUrl = ref(restoredVideoId ? makeCanonicalYoutubeUrl(restoredVideoId) : '')
 const selectedTemplate = ref<StoryTemplateId>(parseStoryTemplate(route.query.template))
+const spotlightX = ref(parseSpotlightX(route.query.spotlightX))
 const trimmedVideoUrl = computed(() => videoUrl.value.trim())
 const {
   errorMessage,
@@ -152,7 +155,7 @@ const {
   previewMetadata
 } = useYoutubeMetadata(trimmedVideoUrl)
 const selectedTemplateName = computed(() =>
-  STORY_TEMPLATES.find(template => template.id === selectedTemplate.value)?.name ?? 'Centered'
+  STORY_TEMPLATES.find(template => template.id === selectedTemplate.value)?.name ?? 'Frame'
 )
 const isGenerateDisabled = computed(() => pending.value || !trimmedVideoUrl.value)
 const statusMessage = computed(() => {
@@ -168,7 +171,8 @@ async function syncEditRoute() {
   await router.replace({
     query: {
       video: metadata.value.videoId,
-      template: selectedTemplate.value
+      template: selectedTemplate.value,
+      spotlightX: spotlightX.value
     }
   })
 }
@@ -205,17 +209,19 @@ async function openSharePage() {
     query: {
       template: selectedTemplate.value,
       variant: 'clean',
-      qr: 'bottom-left'
+      qr: 'bottom-left',
+      spotlightX: spotlightX.value
     }
   })
 }
 
-watch(selectedTemplate, () => {
+watch([selectedTemplate, spotlightX], () => {
   if (metadata.value) void syncEditRoute()
 })
 
-watch(() => [route.query.video, route.query.template], async () => {
+watch(() => [route.query.video, route.query.template, route.query.spotlightX], async () => {
   selectedTemplate.value = parseStoryTemplate(route.query.template)
+  spotlightX.value = parseSpotlightX(route.query.spotlightX)
 
   const nextVideoId = parseRouteVideoId(route.query.video)
   if (!nextVideoId || nextVideoId === metadata.value?.videoId) return

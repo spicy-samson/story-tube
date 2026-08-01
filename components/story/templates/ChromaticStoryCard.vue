@@ -1,33 +1,42 @@
 <template>
   <article
-    class="relative flex h-full w-full flex-col overflow-hidden rounded-[1.3rem] bg-[var(--story-bg)] px-6 py-7 text-[var(--story-fg)]"
+    class="relative flex h-full w-full flex-col overflow-hidden rounded-[1.3rem] bg-[var(--story-bg)] text-white"
     :style="storyPaletteStyle(palette)"
   >
-    <div class="absolute -right-28 -top-20 h-80 w-56 rotate-12 bg-[var(--story-accent)] opacity-25" />
-    <div class="absolute -bottom-24 -left-20 h-72 w-64 -rotate-12 bg-[var(--story-bg-alt)] opacity-75" />
+    <img
+      v-if="metadata"
+      :src="metadata.thumbnailUrl"
+      alt=""
+      class="absolute -inset-6 h-[calc(100%+3rem)] w-[calc(100%+3rem)] scale-110 object-cover opacity-40 blur-[24px] saturate-[0.9]"
+      aria-hidden="true"
+    >
+    <div class="absolute inset-0 bg-[var(--story-bg)] opacity-55" aria-hidden="true" />
+    <div class="absolute inset-0 bg-black/20" aria-hidden="true" />
 
-    <header class="relative z-10 flex items-center justify-between border-b border-white/25 pb-4">
-      <span class="text-[9px] font-black uppercase tracking-[0.32em]">New on YouTube</span>
-      <span class="h-3 w-3 rounded-full bg-[var(--story-accent)]" />
-    </header>
-
-    <div class="relative z-10 mt-6">
-      <p class="mb-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[var(--story-muted)]">{{ channel }}</p>
-      <h2 class="line-clamp-6 break-words text-[clamp(1.35rem,5.8vw,1.95rem)] font-black leading-[1.02] [overflow-wrap:anywhere]">
-        {{ title }}
-      </h2>
-    </div>
-
-    <div class="relative z-10 mt-7 rotate-[-2deg] border-4 border-[var(--story-fg)] bg-[var(--story-bg-alt)] p-2 shadow-[10px_12px_0_var(--story-accent)]">
-      <div class="aspect-video overflow-hidden">
-        <img v-if="metadata" :src="metadata.thumbnailUrl" :alt="`${metadata.title} thumbnail`" class="h-full w-full object-cover">
-        <div v-else class="grid h-full place-items-center"><StoryPlayButton /></div>
+    <section class="relative z-10 mx-7 mt-36">
+      <div data-chromatic-artwork class="border border-white/60 bg-black/35 p-1.5 shadow-[0_18px_45px_rgba(0,0,0,0.22)]">
+        <div class="aspect-video overflow-hidden">
+          <img
+            v-if="metadata"
+            :src="metadata.thumbnailUrl"
+            :alt="`${metadata.title} thumbnail`"
+            class="h-full w-full object-cover"
+          >
+          <div v-else class="grid h-full place-items-center bg-black/30"><StoryPlayButton /></div>
+        </div>
       </div>
-    </div>
 
-    <footer class="relative z-10 mt-auto flex items-end justify-end">
+      <div class="mt-8 max-w-[92%]">
+        <p class="mb-4 text-[9px] font-bold uppercase tracking-[0.16em] text-white/65">{{ channel }}</p>
+        <h2 class="whitespace-normal break-words text-[clamp(1.3rem,5.4vw,1.85rem)] font-bold leading-[1.06] [overflow-wrap:anywhere]">
+          {{ title }}
+        </h2>
+        <span class="mt-6 block h-1 w-12 bg-[var(--story-accent)]" aria-hidden="true" />
+      </div>
+    </section>
 
-      <StoryYoutubeBrand class="text-xl position" />
+    <footer class="relative z-10 mx-7 mb-8 mt-auto flex justify-end">
+      <StoryYoutubeBrand class="text-lg" />
     </footer>
   </article>
 </template>
