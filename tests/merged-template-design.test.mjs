@@ -11,18 +11,23 @@ const frameSource = await readFile(
   'utf8'
 )
 
-test('merges Headline and Bulletin into a black glass upload story', () => {
+test('keeps Headline stable with a fitted title region', () => {
   assert.match(headlineSource, /backdrop-blur-xl/)
   assert.match(headlineSource, /bg-black\/60/)
-  assert.match(headlineSource, />New upload</)
-  assert.match(headlineSource, />Watch on YouTube</)
+  assert.match(headlineSource, /h-36/)
+  assert.match(headlineSource, /headlineTitleClass/)
+  assert.match(headlineSource, /title\.value\.length/)
   assert.match(headlineSource, /\[overflow-wrap:anywhere\]/)
+  assert.doesNotMatch(headlineSource, /New release|New upload|Watch on YouTube/)
 })
 
-test('merges Frame and Caption into a white asymmetric editorial story', () => {
+test('keeps Frame quiet with one subtle artwork border', () => {
   assert.match(frameSource, /bg-\[#f7f7f3\]/)
-  assert.match(frameSource, /grid-cols-\[4px_minmax\(0,1fr\)\]/)
-  assert.match(frameSource, /shadow-\[8px_8px_0_var\(--story-accent\)\]/)
+  assert.match(frameSource, /data-frame-artwork/)
+  assert.match(frameSource, /border-black\/15/)
   assert.match(frameSource, /StoryYoutubeBrand tone="dark"/)
   assert.match(frameSource, /\[overflow-wrap:anywhere\]/)
+  assert.doesNotMatch(frameSource, /shadow-\[8px_8px_0_var/)
+  assert.doesNotMatch(frameSource, /grid-cols-\[4px_minmax/)
+  assert.doesNotMatch(frameSource, /New on YouTube|Selected video/)
 })

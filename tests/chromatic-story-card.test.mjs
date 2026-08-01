@@ -20,9 +20,9 @@ test('uses the thumbnail as a soft-focus full-canvas color wash', () => {
 test('uses a restrained Gallery composition', () => {
   assert.match(chromaticSource, /data-chromatic-artwork/)
   assert.match(chromaticSource, /border-white\/60/)
-  assert.match(chromaticSource, />Chromatic study</)
   assert.match(chromaticSource, /\[overflow-wrap:anywhere\]/)
   assert.doesNotMatch(chromaticSource, /line-clamp-[0-9]/)
   assert.doesNotMatch(chromaticSource, /rotate-/)
   assert.doesNotMatch(chromaticSource, /-right-28|-bottom-24/)
+  assert.doesNotMatch(chromaticSource, /Chromatic study|04 \/ 06|Watch now/)
 })
