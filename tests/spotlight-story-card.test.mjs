@@ -28,6 +28,7 @@ test('renders Spotlight artwork with a reactive horizontal focal crop', () => {
   assert.match(spotlightSource, /grayscale/)
   assert.match(spotlightSource, /contrast-\[1\.1\]/)
   assert.doesNotMatch(spotlightSource, /transition-/)
+  assert.doesNotMatch(spotlightSource, /Play video/)
 })
 
 test('places the Spotlight drag handle outside the exported canvas', () => {

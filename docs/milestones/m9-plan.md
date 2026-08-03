@@ -2,7 +2,7 @@
 
 ## Summary
 
-M9 replaces the first seven screenshot-inspired story templates with three consolidated Story Tube layouts. `Chromatic`, `Split`, and `Liquid` remain, producing a focused catalog of six templates.
+M9 replaces the first seven screenshot-inspired story templates with three consolidated Posterize layouts. `Chromatic`, `Split`, and `Liquid` remain, producing a focused catalog of six templates.
 
 The three new templates share one restrained visual system: neutral surfaces, native sans-serif typography, consistent safe margins, and one accent sampled from the YouTube thumbnail.
 
@@ -72,6 +72,6 @@ Unknown or missing template values fall back to `frame`. New URL updates always 
 
 ## Done When
 
-- Story Tube has three consolidated original core designs and three retained designs.
+- Posterize has three consolidated original core designs and three retained designs.
 - Old links still open a sensible replacement.
 - The full creation, routing, sharing, and export workflow works with all six templates.

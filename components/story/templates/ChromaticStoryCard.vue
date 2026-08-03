@@ -35,7 +35,7 @@
       </div>
     </section>
 
-    <footer class="relative z-10 mx-7 mb-8 mt-auto flex justify-end">
+    <footer class="relative z-10 mx-7 mb-8 mt-auto  flex mt-auto border-t border-white/20 pt-5 justify-end">
       <StoryYoutubeBrand class="text-lg" />
     </footer>
   </article>

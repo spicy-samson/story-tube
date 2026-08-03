@@ -12,22 +12,13 @@ The app should make a YouTube link look intentional, polished, and postable in u
 Paste a YouTube link. Get a beautiful story card.
 ```
 
-## Naming Notes
+## Product Name
 
-Avoid using `YouTube`, `YT`, or close variants in the final product name. The repo can keep its working name for now, but the shipped brand should be independent.
+The public MVP name is **Posterize**.
 
-Candidate names:
+The name is clear and utilitarian: a viewer-ready video link becomes a polished visual poster. Internal repository and Cloudflare identifiers may remain `story-tube` to avoid breaking the existing deployment.
 
-| Name | Notes |
-|---|---|
-| StoryClip | Clear, but may imply video clipping |
-| WatchCard | Strong fit for video sharing |
-| ShareFrame | Broad and brandable |
-| VidCard | Direct and short |
-| LinkFrame | Useful if product expands beyond YouTube |
-| ClipPoster | Good for creator/promo angle |
-
-Current favorite: `WatchCard` or `ShareFrame`.
+Posterize is a working launch name and has not received formal trademark clearance.
 
 ## MVP Requirements
 
@@ -36,7 +27,7 @@ Must have:
 - User can paste a YouTube link.
 - App extracts the video ID.
 - App fetches title, channel, thumbnail, and original link.
-- User can pick from three templates.
+- User can pick from six original templates.
 - User can export a 1080x1920 PNG.
 - User can download the image.
 - UI is mobile-first and PWA-installable.
@@ -55,17 +46,16 @@ Could have:
 - Light/dark variants.
 - Watermark toggle for later Pro planning.
 
-## First Templates
+## Template Family
 
 | Template | Feel | Use Case |
 |---|---|---|
-| Minimal / Centered Media Card | Blurred dark background, centered rounded media card, clean title panel | General v1 default |
-| Full-Bleed Editorial | Big dimmed thumbnail background, uppercase title, strong YouTube footer | Music, boxing, film, podcasts |
-| Blue Poster | Solid editorial color, serif title, framed thumbnail | Music, commentary, curated recommendations |
-| Clean Text Poster | Light background, bold text, metadata list | Tutorials, lectures, sermons, study videos |
-| Progress Card | Full-bleed image, title lower third, progress bar | Music/video share vibe |
-| Image-Forward Full Bleed | Full thumbnail background, top title, bottom attribution | Strong artwork and visual-first videos |
-| Floating Glass Card | Blurred background with translucent card overlay | General creator-friendly shares |
+| Frame | Balanced media and type | General default |
+| Headline | Type-first dark editorial | Long or important titles |
+| Spotlight | Full-bleed image with crop control | Strong visual thumbnails |
+| Chromatic | Thumbnail-derived gallery color | Music and visual releases |
+| Split | Image and type composition | Editorial recommendations |
+| Liquid | Soft glass color flow | Atmospheric artwork |
 
 ## User Flow
 

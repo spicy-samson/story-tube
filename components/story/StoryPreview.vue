@@ -24,6 +24,10 @@
           :spotlight-x="templateId === 'spotlight' ? spotlightX : undefined"
         />
       </Transition>
+      <span
+        data-posterize-watermark
+        class="pointer-events-none absolute left-1/2 top-5 z-20 -translate-x-1/2 rounded-sm border border-white/10 bg-black/35 px-2 py-1 text-[8px] font-semibold uppercase leading-none text-white/75"
+      >POSTERIZE</span>
       <StoryQrSticker
         v-if="shareVariant === 'qr' && qrCodeDataUrl"
         :data-url="qrCodeDataUrl"

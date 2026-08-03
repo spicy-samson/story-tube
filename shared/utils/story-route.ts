@@ -8,8 +8,10 @@ const STORY_TEMPLATE_IDS = STORY_TEMPLATES.map(template => template.id)
 const STORY_SHARE_VARIANTS = new Set<StoryShareVariant>(['clean', 'qr'])
 const QR_POSITIONS = new Set<QrPosition>([
   'top-left',
+  'top-center',
   'top-right',
   'bottom-left',
+  'bottom-center',
   'bottom-right'
 ])
 

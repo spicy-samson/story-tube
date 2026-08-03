@@ -1,16 +1,19 @@
 <template>
   <div class="inline-flex items-center gap-2 font-black" :class="toneClass">
     <span
-      class="grid h-[1.45em] w-[2.15em] place-items-center rounded-[0.38em]"
+      class="grid h-[1.2em] w-[1.78em] place-items-center rounded-[0.26em]"
       :class="markClass"
       aria-hidden="true"
     >
       <span
-        class="h-[0.72em] w-[0.72em] [clip-path:polygon(24%_12%,24%_88%,88%_50%)]"
+        class="h-[0.58em] w-[0.58em] [clip-path:polygon(24%_12%,24%_88%,88%_50%)]"
         :class="playClass"
       />
     </span>
-    <span v-if="showLabel" style="font-stretch: ultra-condensed;" class="leading-none">YouTube</span>
+    <span
+      v-if="showLabel"
+      class="inline-block origin-left scale-x-[0.84] scale-y-[1.12] font-['Arial_Narrow','HelveticaNeue-CondensedBlack','HelveticaNeue-CondensedBold','Arial',sans-serif] text-[1.03em] font-black leading-none [-webkit-text-stroke:0.055em_currentColor]"
+    >YouTube</span>
   </div>
 </template>
 

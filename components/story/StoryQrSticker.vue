@@ -25,8 +25,10 @@ const props = defineProps<{
 
 const positionClass = computed(() => ({
   'top-left': 'left-[6%] top-[14%]',
+  'top-center': 'left-1/2 top-[14%] -translate-x-1/2',
   'top-right': 'right-[6%] top-[14%]',
   'bottom-left': 'bottom-[14%] left-[6%]',
+  'bottom-center': 'bottom-[14%] left-1/2 -translate-x-1/2',
   'bottom-right': 'bottom-[14%] right-[6%]'
 })[props.position])
 </script>

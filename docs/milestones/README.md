@@ -16,6 +16,7 @@ This file is the build map for the PWA-first version.
 | M7 | Mobile QA | Works on phone-sized viewports and PWA install path is verified |
 | M8 | Demo Ship | Deployed version and short demo are ready |
 | M9 | Original Template Family | Five original core templates replace the seven reference-led designs while old links remain compatible |
+| M10 | Posterize MVP Launch | Public branding, tool-first homepage polish, and Cloudflare launch checks are complete |
 
 ## M0 - Planning
 
@@ -180,7 +181,7 @@ Deliverables:
 - [x] Metadata endpoint production hardening
 - [ ] Cloudflare Web Analytics enabled in the Pages dashboard
 - [x] Production deployment at https://story-tube.pages.dev
-- [ ] Updated root README
+- [x] Updated root README
 - [x] Demo link: https://story-tube.pages.dev
 - [ ] Short demo script or clip checklist
 
@@ -204,5 +205,23 @@ Deliverables:
 
 Done when:
 
-- Story Tube has a focused, original template identity without breaking old Home or Share links.
+- Posterize has a focused, original template identity without breaking old Home or Share links.
 - All six designs remain legible and export correctly with clean and QR variants.
+
+## M10 - Posterize MVP Launch
+
+Detailed plan: [m10-plan.md](./m10-plan.md)
+
+Deliverables:
+
+- [x] Posterize public branding and install metadata
+- [x] Tool-first homepage refinement
+- [x] Generated example previews and trust footer
+- [x] Social preview artwork and metadata
+- [ ] Cloudflare production and physical-device launch checks
+
+Done when:
+
+- A visitor can understand and use Posterize immediately from `/`.
+- Browser, PWA, and sharing surfaces use the Posterize name consistently.
+- The existing Cloudflare Pages deployment passes the M10 launch checklist.

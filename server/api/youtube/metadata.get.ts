@@ -129,7 +129,7 @@ function setMetadataResponseHeaders(
   cacheStatus: MetadataCacheStatus,
 ) {
   setHeader(event, "Cache-Control", METADATA_BROWSER_CACHE_CONTROL);
-  setHeader(event, "X-Story-Tube-Cache", cacheStatus);
+  setHeader(event, "X-Posterize-Cache", cacheStatus);
 }
 
 function getCloudflareExecutionContext(context: unknown) {

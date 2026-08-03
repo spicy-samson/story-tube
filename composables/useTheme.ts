@@ -2,7 +2,7 @@ import { isTheme, resolveTheme } from '~/shared/utils/theme.js'
 
 type Theme = 'light' | 'dark'
 
-const STORAGE_KEY = 'story-tube-theme'
+const STORAGE_KEY = 'posterize-theme'
 const THEME_COLORS: Record<Theme, string> = {
   light: '#f6f7f8',
   dark: '#111315'

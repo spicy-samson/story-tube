@@ -2,7 +2,7 @@
 
 ## Summary
 
-Deploy Story Tube to Cloudflare Pages and prepare the metadata pipeline for a
+Deploy Posterize to Cloudflare Pages and prepare the metadata pipeline for a
 small public launch.
 
 The first release should stay simple:
@@ -200,12 +200,12 @@ Use two Cloudflare dashboards because they answer different questions:
 
 After the Pages project is deployed:
 
-1. Open **Cloudflare Dashboard > Workers & Pages > Story Tube > Metrics**.
+1. Open **Cloudflare Dashboard > Workers & Pages > `story-tube` > Metrics**.
 2. Select **Enable** under Web Analytics.
 3. Redeploy the Pages project so Cloudflare can inject its analytics beacon.
-4. Open **Cloudflare Dashboard > Web Analytics** and select Story Tube to see
+4. Open **Cloudflare Dashboard > Web Analytics** and select `story-tube` to see
    visits and page views.
-5. Open **Workers & Pages > Story Tube > Functions Metrics** to see API request
+5. Open **Workers & Pages > `story-tube` > Functions Metrics** to see API request
    volume and runtime errors.
 6. Open the deployment's **View details > Functions** log stream, or run
    `npx wrangler pages deployment tail --project-name story-tube`, and watch
@@ -221,7 +221,7 @@ Successful metadata responses include:
 
 ```txt
 Cache-Control: public, max-age=300, s-maxage=86400
-X-Story-Tube-Cache: HIT | MISS | BYPASS
+X-Posterize-Cache: HIT | MISS | BYPASS
 ```
 
 - `HIT`: metadata came from the local Cloudflare data-center cache.
