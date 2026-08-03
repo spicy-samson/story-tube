@@ -30,7 +30,7 @@
     class="grid min-h-screen place-items-center bg-[var(--app-canvas)] px-4 pb-8 pt-16 text-[var(--app-text)] transition-colors"
   >
     <section class="w-full max-w-lg rounded-lg border border-[var(--app-border)] bg-[var(--app-surface)] p-6 text-center sm:p-10">
-      <p class="text-sm font-semibold text-[var(--app-accent)]">Story Tube</p>
+      <p class="text-sm font-semibold text-[var(--app-accent)]">Posterize</p>
       <h1 class="mt-3 break-words text-2xl font-bold sm:text-3xl">
         {{ invalidVideoId ? 'This story link is not valid.' : errorMessage ? 'We could not load this video.' : 'Preparing your story...' }}
       </h1>
@@ -119,7 +119,7 @@ const shareStatusMessage = computed(() =>
 )
 
 useSeoMeta({
-  title: () => metadata.value ? `Share ${metadata.value.title} - Story Tube` : 'Share Story - Story Tube',
+  title: () => metadata.value ? `Share ${metadata.value.title} - Posterize` : 'Share Story - Posterize',
   description: 'Prepare and export a YouTube story image.'
 })
 

@@ -1,17 +1,16 @@
 <template>
-  <main class="min-h-screen bg-[var(--app-canvas)] px-3 pb-5 pt-16 text-[var(--app-text)] transition-colors sm:px-6 lg:grid lg:place-items-center lg:py-8">
+  <main class="min-h-screen bg-[var(--app-canvas)] px-3 pb-5 pt-20 text-[var(--app-text)] transition-colors sm:px-6 lg:pb-8">
     <section
       class="mx-auto grid w-full max-w-[1240px] min-w-0 gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,0.72fr)]"
       aria-labelledby="workspace-title"
     >
       <div class="flex min-w-0 flex-col gap-5 rounded-lg border border-[var(--app-border)] bg-[var(--app-surface)] p-4 sm:p-6">
         <div class="space-y-3">
-          <p class="text-sm font-semibold text-[var(--app-accent)]">Story Tube</p>
-          <h1 id="workspace-title" class="max-w-[16ch] break-words text-3xl font-bold leading-tight sm:text-4xl">
-            Make a YouTube link beautiful.
+          <h1 id="workspace-title" class="max-w-[20ch] break-words text-3xl font-bold leading-tight sm:text-4xl">
+            Turn a video link into a story worth sharing.
           </h1>
           <p class="max-w-2xl text-sm leading-6 text-[var(--app-muted)] sm:text-base">
-            Paste a video, choose a look, and build a story-native 9:16 card.
+            Paste a YouTube link, choose a look, and export a polished 9:16 image.
           </p>
         </div>
 
@@ -80,19 +79,6 @@
           </div>
         </div>
 
-        <div class="mt-auto hidden gap-2 lg:grid" aria-label="Story sharing actions">
-          <button
-            type="button"
-            class="min-h-13 rounded-lg bg-[var(--app-accent)] px-5 font-semibold text-[var(--app-accent-text)] transition hover:bg-[var(--app-accent-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--app-accent)] disabled:opacity-45"
-            :disabled="!metadata || pending"
-            @click="openSharePage"
-          >
-            Share Story
-          </button>
-          <p class="text-xs leading-5 text-[var(--app-muted)]">
-            Get a clean or QR story, then paste the copied link into Instagram's Link Sticker.
-          </p>
-        </div>
       </div>
 
       <div
@@ -109,27 +95,35 @@
 
         <div
           v-if="metadata"
-          class="grid gap-2 lg:hidden"
+          class="grid justify-items-center gap-2"
           aria-label="Story sharing actions"
         >
           <button
             type="button"
-            class="min-h-13 rounded-lg bg-[var(--app-accent)] px-5 font-semibold text-[var(--app-accent-text)] transition hover:bg-[var(--app-accent-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--app-accent)] disabled:opacity-45"
-            :disabled="pending"
+            class="grid size-14 place-items-center rounded-full bg-[var(--app-accent)] text-[var(--app-accent-text)] transition hover:bg-[var(--app-accent-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--app-accent)] disabled:opacity-45"
+            :disabled="pending || isOpeningShare"
+            aria-label="Share Story"
+            title="Share Story"
             @click="openSharePage"
           >
-            Share Story
+            <LoaderCircle v-if="isOpeningShare" :size="23" class="animate-spin" aria-hidden="true" />
+            <Share2 v-else :size="23" aria-hidden="true" />
           </button>
           <p class="text-center text-xs leading-5 text-[var(--app-muted)]">
-            {{ selectedTemplateName }} is ready to share.
+            {{ isOpeningShare ? 'Preparing share workspace...' : `${selectedTemplateName} is ready to share.` }}
           </p>
         </div>
       </div>
     </section>
+
+    <footer class="mx-auto mt-12 w-full max-w-[1240px] border-t border-[var(--app-border)] pt-5 text-center text-xs leading-5 text-[var(--app-muted)]">
+      <p>No account. We fetch public metadata and never upload or store videos. Not affiliated with YouTube.</p>
+    </footer>
   </main>
 </template>
 
 <script setup lang="ts">
+import { LoaderCircle, Share2 } from '@lucide/vue'
 import { STORY_TEMPLATES } from '~/shared/config/story-templates'
 import type { StoryTemplateId } from '~/shared/types/story-template'
 import { parseSpotlightX } from '~/shared/utils/spotlight-crop.js'
@@ -146,6 +140,7 @@ const restoredVideoId = parseRouteVideoId(route.query.video)
 const videoUrl = ref(restoredVideoId ? makeCanonicalYoutubeUrl(restoredVideoId) : '')
 const selectedTemplate = ref<StoryTemplateId>(parseStoryTemplate(route.query.template))
 const spotlightX = ref(parseSpotlightX(route.query.spotlightX))
+const isOpeningShare = ref(false)
 const trimmedVideoUrl = computed(() => videoUrl.value.trim())
 const {
   errorMessage,
@@ -196,23 +191,28 @@ async function scrollToStoryOnMobile() {
 }
 
 async function openSharePage() {
-  if (!metadata.value) return
+  if (!metadata.value || isOpeningShare.value) return
+  isOpeningShare.value = true
 
   try {
-    await navigator.clipboard.writeText(metadata.value.canonicalUrl)
-  } catch (error) {
-    console.info('Clipboard copy was unavailable before navigation:', error)
-  }
-
-  await navigateTo({
-    path: `/share/${metadata.value.videoId}`,
-    query: {
-      template: selectedTemplate.value,
-      variant: 'clean',
-      qr: 'bottom-left',
-      spotlightX: spotlightX.value
+    try {
+      await navigator.clipboard.writeText(metadata.value.canonicalUrl)
+    } catch (error) {
+      console.info('Clipboard copy was unavailable before navigation:', error)
     }
-  })
+
+    await navigateTo({
+      path: `/share/${metadata.value.videoId}`,
+      query: {
+        template: selectedTemplate.value,
+        variant: 'clean',
+        qr: 'bottom-left',
+        spotlightX: spotlightX.value
+      }
+    })
+  } finally {
+    isOpeningShare.value = false
+  }
 }
 
 watch([selectedTemplate, spotlightX], () => {

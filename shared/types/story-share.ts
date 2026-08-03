@@ -2,8 +2,10 @@ export type StoryShareVariant = 'clean' | 'qr'
 
 export type QrPosition =
   | 'top-left'
+  | 'top-center'
   | 'top-right'
   | 'bottom-left'
+  | 'bottom-center'
   | 'bottom-right'
 
 export interface StoryExportAsset {

@@ -23,7 +23,7 @@
       <div class="flex min-w-0 flex-col p-5 sm:p-8">
         <div class="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <p class="text-sm font-semibold text-[var(--app-accent)]">Story Tube</p>
+            <p class="text-sm font-semibold text-[var(--app-accent)]">Posterize</p>
             <h1 id="share-page-title" class="mt-2 text-2xl font-bold">Ready to share</h1>
             <p class="mt-1 text-sm text-[var(--app-muted)]">High-resolution 1080 x 1920 PNG</p>
           </div>
@@ -173,8 +173,10 @@ const variantOptions: Array<{ label: string, value: StoryShareVariant }> = [
 ]
 const qrPositions: Array<{ label: string, value: QrPosition }> = [
   { label: 'Top left', value: 'top-left' },
+  { label: 'Top center', value: 'top-center' },
   { label: 'Top right', value: 'top-right' },
   { label: 'Bottom left', value: 'bottom-left' },
+  { label: 'Bottom center', value: 'bottom-center' },
   { label: 'Bottom right', value: 'bottom-right' }
 ]
 const sharePreview = useTemplateRef<{
