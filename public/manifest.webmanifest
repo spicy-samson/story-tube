@@ -1,7 +1,7 @@
 {
-  "name": "Story Tube",
-  "short_name": "WatchCard",
-  "description": "Turn a YouTube link into a polished 9:16 story card.",
+  "name": "Posterize",
+  "short_name": "Posterize",
+  "description": "Turn a video link into a story worth sharing.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
