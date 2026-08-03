@@ -12,7 +12,7 @@
     </span>
     <span
       v-if="showLabel"
-      class="inline-block origin-left scale-x-[0.84] scale-y-[1.12] font-['Arial_Narrow','HelveticaNeue-CondensedBlack','HelveticaNeue-CondensedBold','Arial',sans-serif] text-[1.03em] font-black leading-none [-webkit-text-stroke:0.055em_currentColor]"
+      class="inline-block origin-left scale-x-[0.84] scale-y-[1.12] font-['Arial_Narrow','HelveticaNeue-CondensedBlack','HelveticaNeue-CondensedBold','Arial',sans-serif] text-[1.03em] font-black leading-none"
     >YouTube</span>
   </div>
 </template>

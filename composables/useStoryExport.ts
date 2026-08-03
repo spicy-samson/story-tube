@@ -117,6 +117,7 @@ export function useStoryExport() {
         height: artboard.clone.getBoundingClientRect().height,
         pixelRatio: artboard.pixelRatio,
         cacheBust: true,
+        includeQueryParams: true,
         skipAutoScale: true
       })
 
