@@ -48,7 +48,7 @@
     overflow-x: hidden;
     background: var(--app-canvas);
     color: var(--app-text);
-    font-family: ui-sans-serif, system-ui, sans-serif;
+    @apply font-sans;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition: background-color 150ms ease, color 150ms ease;

@@ -2,7 +2,7 @@ const themeScript = `(() => {
   let stored = null
 
   try {
-    stored = localStorage.getItem('story-tube-theme')
+    stored = localStorage.getItem('posterize-theme')
   } catch {}
 
   const prefersDark = typeof matchMedia === 'function'
@@ -31,14 +31,14 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      title: "Story Tube",
+      title: "Posterize",
       htmlAttrs: {
         lang: "en",
       },
       meta: [
         {
           name: "description",
-          content: "Turn a YouTube link into a polished 9:16 story card.",
+          content: "Turn a video link into a story worth sharing.",
         },
         {
           name: "viewport",
@@ -54,15 +54,24 @@ export default defineNuxtConfig({
           name: "apple-mobile-web-app-status-bar-style",
           content: "black-translucent",
         },
-        { name: "apple-mobile-web-app-title", content: "WatchCard" },
-        { property: "og:title", content: "Story Tube" },
+        { name: "apple-mobile-web-app-title", content: "Posterize" },
+        { property: "og:title", content: "Posterize" },
         {
           property: "og:description",
-          content: "Turn a YouTube link into a beautiful vertical story card.",
+          content: "Turn a video link into a story worth sharing.",
         },
         { property: "og:type", content: "website" },
+        { property: "og:url", content: "https://story-tube.pages.dev" },
+        { property: "og:image", content: "https://story-tube.pages.dev/og-posterize.png" },
+        { property: "og:image:width", content: "1200" },
+        { property: "og:image:height", content: "630" },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: "Posterize" },
+        { name: "twitter:description", content: "Turn a video link into a story worth sharing." },
+        { name: "twitter:image", content: "https://story-tube.pages.dev/og-posterize.png" },
       ],
       link: [
+        { rel: "canonical", href: "https://story-tube.pages.dev" },
         { rel: "manifest", href: "/manifest.webmanifest" },
         { rel: "icon", type: "image/svg+xml", href: "/icons/icon.svg" },
         { rel: "apple-touch-icon", href: "/icons/apple-touch-icon.svg" },

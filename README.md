@@ -1,12 +1,12 @@
-# YouTube Story Maker
+# Posterize
 
 Progressive web app for turning a YouTube link into a polished 9:16 story card that can be downloaded and shared to Instagram, Facebook, TikTok, or any story-based social format.
 
-Working name only: avoid using YouTube in the final product name because platform branding rules can restrict app naming. Candidate names live in the product docs.
+> Turn a video link into a story worth sharing.
 
 ## Project Status
 
-M1 scaffold is in progress/completed: Nuxt PWA shell, Cloudflare Pages build output, and install manifest are in place. Build direction remains PWA-first, web-first, mobile-first.
+The MVP is deployed at [story-tube.pages.dev](https://story-tube.pages.dev). It includes YouTube metadata loading, six original story templates, 1080x1920 PNG export, clean and QR variants, native sharing where supported, and a mobile-first PWA interface.
 
 ## Commands
 
@@ -23,6 +23,8 @@ Cloudflare Pages defaults:
 Build command: npm run build
 Build output directory: dist
 ```
+
+The Cloudflare Pages and Wrangler project name remains `story-tube` as an internal deployment identifier.
 
 ## Core Flow
 
@@ -51,6 +53,6 @@ Each major folder owns its own `README.md` so context stays close to the work.
 
 Do not build a social network, video downloader, native mobile app, login system, or payment system first.
 
-Build the missing button:
+Posterize builds the missing button:
 
 > Make this YouTube link beautiful for my story.
