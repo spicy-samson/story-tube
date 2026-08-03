@@ -26,7 +26,7 @@
       </div>
     </section>
 
-    <footer class="mt-auto flex justify-end">
+    <footer class="mt-auto flex justify-end border-t border-black/20 pt-5">
       <StoryYoutubeBrand tone="dark" class="text-lg" />
     </footer>
   </article>
