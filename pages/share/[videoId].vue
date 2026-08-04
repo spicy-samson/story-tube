@@ -152,6 +152,12 @@ async function prepareShareAsset() {
   if (!metadata.value) return
 
   const currentPreparation = ++preparationId
+  console.info('[Posterize share] Preparing asset', {
+    preparationId: currentPreparation,
+    template: selectedTemplate.value,
+    variant: shareVariant.value,
+    videoId
+  })
   preparedAsset.value = null
   resetExportStatus()
 
@@ -170,7 +176,14 @@ async function prepareShareAsset() {
     shareVariant.value
   )
 
-  if (currentPreparation === preparationId) preparedAsset.value = asset
+  if (currentPreparation === preparationId) {
+    preparedAsset.value = asset
+    console.info('[Posterize share] Preparation finished', {
+      bytes: asset?.blob.size ?? 0,
+      preparationId: currentPreparation,
+      ready: Boolean(asset)
+    })
+  }
 }
 
 function setShareVariant(value: StoryShareVariant) {
@@ -204,6 +217,10 @@ function setSpotlightX(value: number) {
 }
 
 function downloadPreparedStory() {
+  console.info('[Posterize share] Download PNG clicked', {
+    bytes: preparedAsset.value?.blob.size ?? 0,
+    ready: Boolean(preparedAsset.value)
+  })
   if (preparedAsset.value) downloadAsset(preparedAsset.value)
 }
 

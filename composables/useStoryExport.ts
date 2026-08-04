@@ -3,9 +3,15 @@ import type { StoryExportAsset, StoryShareVariant } from '~/shared/types/story-s
 
 const EXPORT_WIDTH = 1080
 const EXPORT_HEIGHT = 1920
+const PNG_SIGNATURE = new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10])
+const SRGB_CHUNK = new Uint8Array([0, 0, 0, 1, 115, 82, 71, 66, 0, 174, 206, 28, 233])
 
 type StoryExportStatus = 'idle' | 'rendering' | 'sharing' | 'success' | 'error'
 type ShareResult = 'shared' | 'cancelled' | 'downloaded' | 'failed'
+
+function logExport(stage: string, details?: unknown) {
+  console.info(`[Posterize export] ${stage}`, details ?? '')
+}
 
 function makeFilename(title: string, variant: StoryShareVariant) {
   const slug = title
@@ -29,6 +35,51 @@ async function waitForImages(element: HTMLElement) {
       image.addEventListener('error', () => reject(new Error('A story image could not be loaded.')), { once: true })
     })
   }))
+}
+
+export async function fetchImageAsDataUrl(source: string) {
+  logExport('Fetching image', source)
+  const response = await fetch(source)
+
+  if (!response.ok) throw new Error('A story image could not be loaded.')
+
+  const blob = await response.blob()
+  logExport('Image fetched', { source, bytes: blob.size, type: blob.type })
+  const bytes = new Uint8Array(await blob.arrayBuffer())
+  let binary = ''
+
+  for (let offset = 0; offset < bytes.length; offset += 32_768) {
+    binary += String.fromCharCode(...bytes.subarray(offset, offset + 32_768))
+  }
+
+  return `data:${blob.type || 'application/octet-stream'};base64,${btoa(binary)}`
+}
+
+async function inlineImages(element: HTMLElement) {
+  const images = Array.from(element.querySelectorAll('img'))
+  const sources = [...new Set(images
+    .map(image => image.currentSrc || image.src)
+    .filter(source => !source.startsWith('data:')))]
+  logExport('Inlining images', { imageCount: images.length, sources })
+  const dataUrls = new Map(await Promise.all(
+    sources.map(async source => [source, await fetchImageAsDataUrl(source)] as const)
+  ))
+
+  images.forEach((image) => {
+    const dataUrl = dataUrls.get(image.currentSrc || image.src)
+
+    if (!dataUrl) return
+    image.srcset = ''
+    image.src = dataUrl
+  })
+
+  await waitForImages(element)
+  logExport('Images ready in clone', images.map(image => ({
+    complete: image.complete,
+    height: image.naturalHeight,
+    inlined: image.src.startsWith('data:'),
+    width: image.naturalWidth
+  })))
 }
 
 function createExportArtboard(element: HTMLElement) {
@@ -82,13 +133,45 @@ export async function renderPngWithFallback(
   renderDataUrl: () => Promise<string>
 ) {
   try {
+    logExport('Rendering with toBlob')
     const blob = await renderBlob()
-    if (blob) return blob
-  } catch {
-    // Safari can fail while converting the rendered canvas directly to a Blob.
+    if (blob) {
+      logExport('toBlob succeeded', { bytes: blob.size, type: blob.type })
+      return blob
+    }
+    logExport('toBlob returned null; using toPng fallback')
+  } catch (error) {
+    console.warn('[Posterize export] toBlob failed; using toPng fallback', error)
   }
 
-  return fetch(await renderDataUrl()).then(response => response.blob())
+  const dataUrl = await renderDataUrl()
+  const blob = await fetch(dataUrl).then(response => response.blob())
+  logExport('toPng fallback succeeded', { bytes: blob.size, type: blob.type })
+  return blob
+}
+
+export async function tagPngAsSrgb(blob: Blob) {
+  const png = new Uint8Array(await blob.arrayBuffer())
+
+  if (!PNG_SIGNATURE.every((byte, index) => png[index] === byte)) {
+    throw new Error('The rendered image is not a valid PNG.')
+  }
+
+  for (let offset = 8; offset + 12 <= png.length;) {
+    const chunkLength = new DataView(png.buffer, png.byteOffset + offset, 4).getUint32(0)
+    const chunkType = new TextDecoder().decode(png.subarray(offset + 4, offset + 8))
+
+    if (chunkType === 'sRGB') return blob
+    if (chunkType === 'IDAT') break
+    offset += chunkLength + 12
+  }
+
+  const tagged = new Uint8Array(png.length + SRGB_CHUNK.length)
+  tagged.set(png.subarray(0, 33))
+  tagged.set(SRGB_CHUNK, 33)
+  tagged.set(png.subarray(33), 33 + SRGB_CHUNK.length)
+
+  return new Blob([tagged], { type: 'image/png' })
 }
 
 export function useStoryExport() {
@@ -121,10 +204,19 @@ export function useStoryExport() {
     try {
       const artboard = createExportArtboard(element)
       exportWrapper = artboard.wrapper
+      logExport('Render started', {
+        height: artboard.clone.getBoundingClientRect().height,
+        pixelRatio: artboard.pixelRatio,
+        userAgent: navigator.userAgent,
+        variant,
+        width: artboard.clone.getBoundingClientRect().width
+      })
 
       await document.fonts.ready
-      await waitForImages(artboard.clone)
+      logExport('Fonts ready')
+      await inlineImages(artboard.clone)
       await waitForPaint()
+      logExport('Clone painted')
 
       const renderOptions = {
         width: artboard.clone.getBoundingClientRect().width,
@@ -132,12 +224,17 @@ export function useStoryExport() {
         pixelRatio: artboard.pixelRatio,
         cacheBust: true,
         includeQueryParams: true,
+        onImageErrorHandler: (event: Event | string) => {
+          console.error('[Posterize export] html-to-image rejected an image', event)
+        },
         skipAutoScale: true
       }
-      const blob = await renderPngWithFallback(
+      const renderedBlob = await renderPngWithFallback(
         () => toBlob(artboard.clone, renderOptions),
         () => toPng(artboard.clone, renderOptions)
       )
+      const blob = await tagPngAsSrgb(renderedBlob)
+      logExport('PNG tagged as sRGB', { bytes: blob.size })
 
       if (!blob) throw new Error('The browser could not create the PNG.')
 
@@ -154,9 +251,10 @@ export function useStoryExport() {
 
       status.value = 'success'
       message.value = `${variant === 'qr' ? 'QR' : 'Clean'} story ready in HD.`
+      logExport('Asset ready', { filename, height: EXPORT_HEIGHT, width: EXPORT_WIDTH })
       return asset
     } catch (error) {
-      console.error('Story export failed:', error)
+      console.error('[Posterize export] Render failed', error)
       status.value = 'error'
       message.value = 'Export failed. Reload the video and try again.'
       return null
@@ -166,6 +264,11 @@ export function useStoryExport() {
   }
 
   function downloadAsset(asset: StoryExportAsset) {
+    logExport('Download requested', {
+      bytes: asset.blob.size,
+      filename: asset.filename,
+      type: asset.blob.type
+    })
     const objectUrl = URL.createObjectURL(asset.blob)
     const downloadLink = document.createElement('a')
 
@@ -176,6 +279,7 @@ export function useStoryExport() {
     document.body.appendChild(downloadLink)
     downloadLink.click()
     downloadLink.remove()
+    logExport('Download link clicked', { objectUrl })
     window.setTimeout(() => URL.revokeObjectURL(objectUrl), 30_000)
 
     status.value = 'success'
