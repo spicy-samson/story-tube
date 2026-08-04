@@ -52,7 +52,7 @@ function colorDistance(first: Rgb, second: Rgb) {
   )
 }
 
-function createPalette(data: Uint8ClampedArray): StoryPalette {
+export function createPalette(data: Uint8ClampedArray): StoryPalette {
   const buckets = new Map<string, { color: Rgb; count: number; vibrancy: number }>()
 
   for (let index = 0; index < data.length; index += 16) {
@@ -99,8 +99,8 @@ function createPalette(data: Uint8ClampedArray): StoryPalette {
   const accentSaturation = Math.max(accentHsl.saturation, 0.62)
 
   return {
-    background: hsl(dominantHsl.hue, baseSaturation * 0.78, 0.16),
-    backgroundAlt: hsl(dominantHsl.hue, baseSaturation * 0.9, 0.31),
+    background: hsl(dominantHsl.hue, baseSaturation * 0.9, 0.15),
+    backgroundAlt: hsl(dominantHsl.hue, baseSaturation, 0.3),
     accent: hsl(accentHsl.hue, accentSaturation, 0.62),
     foreground: '#ffffff',
     muted: hsl(dominantHsl.hue, Math.min(baseSaturation * 0.45, 0.34), 0.78)
@@ -117,12 +117,18 @@ async function sampleThumbnail(source: string) {
   const canvas = document.createElement('canvas')
   canvas.width = 64
   canvas.height = 36
-  const context = canvas.getContext('2d', { willReadFrequently: true })
+  const context = canvas.getContext('2d', { colorSpace: 'srgb', willReadFrequently: true })
 
   if (!context) return DEFAULT_PALETTE
 
   context.drawImage(image, 0, 0, canvas.width, canvas.height)
-  return createPalette(context.getImageData(0, 0, canvas.width, canvas.height).data)
+  return createPalette(context.getImageData(
+    0,
+    0,
+    canvas.width,
+    canvas.height,
+    { colorSpace: 'srgb' }
+  ).data)
 }
 
 export function useThumbnailPalette(thumbnailUrl: Ref<string | null>) {

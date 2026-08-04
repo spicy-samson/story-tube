@@ -1,4 +1,4 @@
-import { toBlob } from 'html-to-image'
+import { toBlob, toPng } from 'html-to-image'
 import type { StoryExportAsset, StoryShareVariant } from '~/shared/types/story-share'
 
 const EXPORT_WIDTH = 1080
@@ -77,6 +77,20 @@ function waitForPaint() {
   })
 }
 
+export async function renderPngWithFallback(
+  renderBlob: () => Promise<Blob | null>,
+  renderDataUrl: () => Promise<string>
+) {
+  try {
+    const blob = await renderBlob()
+    if (blob) return blob
+  } catch {
+    // Safari can fail while converting the rendered canvas directly to a Blob.
+  }
+
+  return fetch(await renderDataUrl()).then(response => response.blob())
+}
+
 export function useStoryExport() {
   const status = ref<StoryExportStatus>('idle')
   const message = ref('')
@@ -112,14 +126,18 @@ export function useStoryExport() {
       await waitForImages(artboard.clone)
       await waitForPaint()
 
-      const blob = await toBlob(artboard.clone, {
+      const renderOptions = {
         width: artboard.clone.getBoundingClientRect().width,
         height: artboard.clone.getBoundingClientRect().height,
         pixelRatio: artboard.pixelRatio,
         cacheBust: true,
         includeQueryParams: true,
         skipAutoScale: true
-      })
+      }
+      const blob = await renderPngWithFallback(
+        () => toBlob(artboard.clone, renderOptions),
+        () => toPng(artboard.clone, renderOptions)
+      )
 
       if (!blob) throw new Error('The browser could not create the PNG.')
 
@@ -153,14 +171,15 @@ export function useStoryExport() {
 
     downloadLink.href = objectUrl
     downloadLink.download = asset.filename
-    downloadLink.style.display = 'none'
+    downloadLink.target = '_blank'
+    downloadLink.rel = 'noopener'
     document.body.appendChild(downloadLink)
     downloadLink.click()
     downloadLink.remove()
     window.setTimeout(() => URL.revokeObjectURL(objectUrl), 30_000)
 
     status.value = 'success'
-    message.value = `${asset.variant === 'qr' ? 'QR' : 'Clean'} story downloaded.`
+    message.value = `${asset.variant === 'qr' ? 'QR' : 'Clean'} story downloaded. If Safari opened it, use Share > Save Image.`
   }
 
   async function shareAsset(asset: StoryExportAsset): Promise<ShareResult> {
