@@ -15,7 +15,7 @@
           :qr-position="qrPosition"
           :qr-code-data-url="qrCodeDataUrl"
           :spotlight-x="spotlightX"
-          class="max-h-[76dvh] max-w-[25rem]"
+          class="max-h-[76dvh]"
           @update:spotlight-x="emit('update:spotlightX', $event)"
         />
       </div>
