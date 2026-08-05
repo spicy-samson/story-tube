@@ -2,11 +2,11 @@
 
 Progressive web app for turning a YouTube link into a polished 9:16 story card that can be downloaded and shared to Instagram, Facebook, TikTok, or any story-based social format.
 
-> Turn a video link into a story worth sharing.
+> Make YouTube links worth sharing.
 
 ## Project Status
 
-The MVP is deployed at [story-tube.pages.dev](https://story-tube.pages.dev). It includes YouTube metadata loading, six original story templates, 1080x1920 PNG export, clean and QR variants, native sharing where supported, and a mobile-first PWA interface.
+The MVP is deployed at [posterize.pages.dev](https://posterize.pages.dev). It includes YouTube metadata loading, six original story templates, 1080x1920 PNG export, clean and QR variants, native sharing where supported, and a mobile-first PWA interface.
 
 ## Commands
 

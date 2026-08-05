@@ -43,11 +43,11 @@ test('inlines story images before Safari renders the export', async () => {
   }
 })
 
-test('uses the delayed SVG renderer for Apple WebKit browsers', () => {
-  assert.equal(exportModule.needsWebKitSvgDelay(
+test('uses the multi-draw renderer for Apple WebKit browsers', () => {
+  assert.equal(exportModule.needsWebKitRenderer(
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 Version/18.6 Safari/605.1.15'
   ), true)
-  assert.equal(exportModule.needsWebKitSvgDelay(
+  assert.equal(exportModule.needsWebKitRenderer(
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/138.0.0.0 Safari/537.36'
   ), false)
 })
