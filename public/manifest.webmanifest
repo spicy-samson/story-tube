@@ -1,7 +1,7 @@
 {
   "name": "Posterize",
   "short_name": "Posterize",
-  "description": "Turn a video link into a story worth sharing.",
+  "description": "Turn any public YouTube video into a polished, Instagram-ready story.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
