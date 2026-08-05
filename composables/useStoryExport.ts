@@ -1,4 +1,5 @@
-import { toBlob, toPng, toSvg } from 'html-to-image'
+import { toBlob, toPng } from 'html-to-image'
+import { domToBlob } from 'modern-screenshot'
 import type { StoryExportAsset, StoryShareVariant } from '~/shared/types/story-share'
 
 const EXPORT_WIDTH = 1080
@@ -128,67 +129,26 @@ function waitForPaint() {
   })
 }
 
-function wait(milliseconds: number) {
-  return new Promise<void>(resolve => window.setTimeout(resolve, milliseconds))
-}
-
-export function needsWebKitSvgDelay(userAgent: string) {
+export function needsWebKitRenderer(userAgent: string) {
   return /AppleWebKit/i.test(userAgent) && !/(Chrome|Chromium|Edg|OPR)/i.test(userAgent)
-}
-
-async function loadExportImage(source: string) {
-  const image = new Image()
-  image.decoding = 'async'
-
-  await new Promise<void>((resolve, reject) => {
-    image.addEventListener('load', () => resolve(), { once: true })
-    image.addEventListener('error', () => reject(new Error('Safari could not load the story SVG.')), { once: true })
-    image.src = source
-  })
-
-  try {
-    await image.decode()
-  } catch {
-    // Safari can reject decode() after firing load even though the image is usable.
-  }
-
-  return image
-}
-
-async function canvasToPngBlob(canvas: HTMLCanvasElement) {
-  const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, 'image/png'))
-
-  if (blob) return blob
-
-  return fetch(canvas.toDataURL('image/png')).then(response => response.blob())
 }
 
 async function renderWebKitPng(
   element: HTMLElement,
-  options: Parameters<typeof toSvg>[1]
+  width: number,
+  height: number,
+  scale: number
 ) {
-  logExport('Using WebKit SVG paint workaround')
-  const svgDataUrl = await toSvg(element, options)
-  const image = await loadExportImage(svgDataUrl)
-
-  // ponytail: WebKit can report an SVG loaded before nested images are painted.
-  await wait(300)
-  logExport('WebKit SVG paint delay finished')
-
-  const canvas = document.createElement('canvas')
-  canvas.width = EXPORT_WIDTH
-  canvas.height = EXPORT_HEIGHT
-  const context = canvas.getContext('2d')
-
-  if (!context) throw new Error('Safari could not create the export canvas.')
-
-  context.drawImage(image, 0, 0, EXPORT_WIDTH, EXPORT_HEIGHT)
-  const blob = await canvasToPngBlob(canvas)
-  logExport('WebKit canvas rendered', {
-    bytes: blob.size,
-    height: canvas.height,
-    width: canvas.width
+  logExport('Using WebKit multi-draw renderer')
+  const blob = await domToBlob(element, {
+    drawImageInterval: 150,
+    features: { fixSvgXmlDecode: true },
+    height,
+    scale,
+    type: 'image/png',
+    width
   })
+  logExport('WebKit multi-draw render finished', { bytes: blob.size })
   return blob
 }
 
@@ -293,8 +253,13 @@ export function useStoryExport() {
         },
         skipAutoScale: true
       }
-      const renderedBlob = needsWebKitSvgDelay(navigator.userAgent)
-        ? await renderWebKitPng(artboard.clone, renderOptions)
+      const renderedBlob = needsWebKitRenderer(navigator.userAgent)
+        ? await renderWebKitPng(
+            artboard.clone,
+            renderOptions.width,
+            renderOptions.height,
+            artboard.pixelRatio
+          )
         : await renderPngWithFallback(
             () => toBlob(artboard.clone, renderOptions),
             () => toPng(artboard.clone, renderOptions)
