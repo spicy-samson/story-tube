@@ -43,6 +43,15 @@ test('inlines story images before Safari renders the export', async () => {
   }
 })
 
+test('uses the delayed SVG renderer for Apple WebKit browsers', () => {
+  assert.equal(exportModule.needsWebKitSvgDelay(
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 Version/18.6 Safari/605.1.15'
+  ), true)
+  assert.equal(exportModule.needsWebKitSvgDelay(
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/138.0.0.0 Safari/537.36'
+  ), false)
+})
+
 test('tags every exported PNG with Safari sRGB', async () => {
   const png = Uint8Array.from(Buffer.from(
     'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M/wHwAF/gL+X1WitAAAAABJRU5ErkJggg==',
