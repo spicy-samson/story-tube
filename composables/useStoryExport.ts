@@ -87,9 +87,8 @@ function createExportArtboard(element: HTMLElement) {
   const source = element.firstElementChild instanceof HTMLElement
     ? element.firstElementChild
     : element
-  const sourceRect = source.getBoundingClientRect()
-  const sourceWidth = sourceRect.width
-  const sourceHeight = sourceRect.height
+  const sourceWidth = source.offsetWidth
+  const sourceHeight = source.offsetHeight
   const pixelRatio = EXPORT_WIDTH / sourceWidth
   const wrapper = document.createElement('div')
   const clone = source.cloneNode(true) as HTMLElement
