@@ -97,7 +97,7 @@
           <ol class="mt-3 grid gap-2 text-sm leading-5 text-[var(--app-muted)]">
             <li><strong class="font-semibold text-[var(--app-text)]">1.</strong> Share or download your chosen story copy.</li>
             <li><strong class="font-semibold text-[var(--app-text)]">2.</strong> Add the image to Instagram Stories.</li>
-            <li><strong class="font-semibold text-[var(--app-text)]">3.</strong> Add a Link Sticker and paste the copied YouTube URL.</li>
+            <li><strong class="font-semibold text-[var(--app-text)]">3.</strong> Add a <b>Link Sticker</b> and paste the copied YouTube URL.</li>
           </ol>
         </div>
 
