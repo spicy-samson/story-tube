@@ -28,7 +28,7 @@
 
       <div class="mt-8 max-w-[92%]">
         <p class="mb-4 text-[9px] font-bold uppercase tracking-[0.16em] text-white/65">{{ channel }}</p>
-        <h2 class="whitespace-normal break-words text-[clamp(1.3rem,5.4vw,1.85rem)] font-bold leading-[1.06] [overflow-wrap:anywhere]">
+        <h2 class="whitespace-normal break-words text-[1.1rem] font-bold leading-[1.3] [overflow-wrap:anywhere]">
           {{ title }}
         </h2>
         <span class="mt-6 block h-1 w-12 bg-[var(--story-accent)]" aria-hidden="true" />

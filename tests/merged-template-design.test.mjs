@@ -34,6 +34,7 @@ test('keeps Frame quiet with one subtle artwork border', () => {
   assert.match(frameSource, /border-black\/15/)
   assert.match(frameSource, /StoryYoutubeBrand tone="dark"/)
   assert.match(frameSource, /\[overflow-wrap:anywhere\]/)
+  assert.match(frameSource, /text-\[1\.05rem\]/)
   assert.doesNotMatch(frameSource, /shadow-\[8px_8px_0_var/)
   assert.doesNotMatch(frameSource, /grid-cols-\[4px_minmax/)
   assert.doesNotMatch(frameSource, /New on YouTube|Selected video/)

@@ -19,7 +19,7 @@
       </div>
 
       <div class="mt-10 text-left">
-        <h2 class="whitespace-normal break-words text-[clamp(1.2rem,5.1vw,1.72rem)] font-bold leading-[1.07] [overflow-wrap:anywhere]">
+        <h2 class="whitespace-normal break-words text-[1.05rem] font-bold leading-[1.2] [overflow-wrap:anywhere]">
           {{ title }}
         </h2>
         <p class="mt-4 line-clamp-2 text-sm font-medium text-black/55">{{ channel }}</p>
