@@ -13,9 +13,9 @@
     <section class="relative flex min-h-0 flex-col px-6 pb-7 pt-6">
 
       <p class="line-clamp-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--story-muted)]">{{ channel }}</p>
-<h2 class="mt-7 whitespace-normal break-words font-serif text-[clamp(1.05rem,4.8vw,1.55rem)] font-black italic leading-[1.08] [overflow-wrap:anywhere]">
-  {{ title }}
-</h2>
+      <h2 class="mt-7 whitespace-normal break-words font-serif text-[1.05rem] font-black italic leading-[1.25] [overflow-wrap:anywhere]">
+        {{ title }}
+      </h2>
       <footer class="mt-auto flex items-end justify-end  border-t border-white/20 pt-5">
 
         <StoryYoutubeBrand class="text-lg" />

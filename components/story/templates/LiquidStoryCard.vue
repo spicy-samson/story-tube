@@ -24,7 +24,7 @@
 
     <div class="relative z-10 mx-1 mt-7 rounded-[2rem] border border-white/30 bg-white/16 p-5 shadow-[0_22px_70px_rgba(0,0,0,0.34),inset_0_1px_0_rgba(255,255,255,0.36)] backdrop-blur-xl">
       <p class="mb-4 line-clamp-2 text-[10px] font-black uppercase tracking-[0.22em] text-white/70">{{ channel }}</p>
-      <h2 class="line-clamp-6 break-words text-[clamp(1.2rem,5.3vw,1.8rem)] font-black font-semibold leading-[1.02] text-white [overflow-wrap:anywhere]">
+      <h2 class="line-clamp-6 break-words text-[1.05rem] font-bold leading-[1.3] text-white [overflow-wrap:anywhere]">
         {{ title }}
       </h2>
       <div class="mt-5 h-1.5 overflow-hidden rounded-full bg-white/20">

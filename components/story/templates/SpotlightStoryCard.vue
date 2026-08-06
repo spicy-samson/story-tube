@@ -15,7 +15,7 @@
     <div class="absolute inset-x-0 bottom-0 h-[48%]" />
 
     <section class="relative z-10 mb-[22%] mt-auto text-center">
-      <h2 class="mx-auto line-clamp-5 max-w-[94%] whitespace-normal break-words text-[clamp(1.3rem,5.6vw,1.9rem)] font-bold leading-[1.06] [overflow-wrap:anywhere]">
+      <h2 class="mx-auto line-clamp-5 max-w-[94%] whitespace-normal break-words text-[1.1rem] font-bold leading-[1.35] [overflow-wrap:anywhere]">
         {{ title }}
       </h2>
       <span class="mx-auto mt-5 block h-1 w-10 bg-[var(--story-accent)]" aria-hidden="true" />
