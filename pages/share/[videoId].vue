@@ -27,9 +27,9 @@
 
   <main
     v-else
-    class="grid min-h-screen place-items-center bg-[var(--app-canvas)] px-4 pb-8 pt-16 text-[var(--app-text)] transition-colors"
+    class="grid h-[100dvh] overflow-hidden bg-[var(--app-canvas)] px-4 pt-14 text-[var(--app-text)] transition-colors"
   >
-    <section class="w-full max-w-lg rounded-lg border border-[var(--app-border)] bg-[var(--app-surface)] p-6 text-center sm:p-10">
+    <section class="mx-auto my-5 w-full max-w-lg place-self-center overflow-auto rounded-lg border border-[var(--app-border)] bg-[var(--app-surface)] p-6 text-center sm:p-10">
       <p class="text-sm font-semibold text-[var(--app-accent)]">Posterize</p>
       <h1 class="mt-3 break-words text-2xl font-bold sm:text-3xl">
         {{ invalidVideoId ? 'This story link is not valid.' : errorMessage ? 'We could not load this video.' : 'Preparing your story...' }}

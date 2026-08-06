@@ -13,11 +13,12 @@ export default defineEventHandler(async (event) => {
   }
 
   const candidates = ['maxresdefault.jpg', 'sddefault.jpg', 'hqdefault.jpg']
+  const signal = AbortSignal.timeout(5_000)
   let response: Response | null = null
 
   for (const filename of candidates) {
     try {
-      const candidate = await fetch(`https://i.ytimg.com/vi/${videoId}/${filename}`)
+      const candidate = await fetch(`https://i.ytimg.com/vi/${videoId}/${filename}`, { signal })
 
       if (candidate.ok && candidate.body) {
         response = candidate

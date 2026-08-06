@@ -1,16 +1,19 @@
 <template>
   <main class="min-h-screen bg-[var(--app-canvas)] px-3 pb-5 pt-20 text-[var(--app-text)] transition-colors sm:px-6 lg:pb-8">
     <section
-      class="mx-auto grid w-full max-w-[1240px] min-w-0 gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,0.72fr)]"
+      class="mx-auto my-6 grid w-full max-w-[1240px] min-w-0 gap-4 sm:my-10 md:my-14 lg:my-18 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,0.72fr)]"
       aria-labelledby="workspace-title"
     >
       <div class="flex min-w-0 flex-col gap-5 rounded-lg border border-[var(--app-border)] bg-[var(--app-surface)] p-4 sm:p-6">
         <div class="space-y-3">
+          <p class="text-xs font-semibold uppercase text-[var(--app-accent)]">
+            Say goodbye to boring YouTube shares.
+          </p>
           <h1 id="workspace-title" class="max-w-[20ch] break-words text-3xl font-bold leading-tight sm:text-4xl">
-            Turn a video link into a story worth sharing.
+            Make YouTube links worth sharing.
           </h1>
           <p class="max-w-2xl text-sm leading-6 text-[var(--app-muted)] sm:text-base">
-            Paste a YouTube link, choose a look, and export a polished 9:16 image.
+            Paste a public video, choose a poster, and export an Instagram-ready story in HD.
           </p>
         </div>
 
@@ -33,18 +36,29 @@
               class="min-h-13 rounded-lg bg-[var(--app-accent)] px-5 font-semibold text-[var(--app-accent-text)] transition hover:bg-[var(--app-accent-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--app-accent)] disabled:opacity-50"
               :disabled="isGenerateDisabled"
             >  
-              {{ pending ? 'Loading...' : 'Generate' }}
+              {{ pending ? 'Loading...' : 'Posterize' }}
             </button>
           </div>
-          <p
-            id="metadata-status"
-            class="text-xs leading-5"
-            :class="errorMessage ? 'text-[var(--app-error)]' : metadata ? 'text-[var(--app-success)]' : 'text-[var(--app-muted)]'"
-            role="status"
-            aria-live="polite"
-          >
-            {{ statusMessage }}
-          </p>
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <p
+              id="metadata-status"
+              class="text-xs leading-5"
+              :class="errorMessage ? 'text-[var(--app-error)]' : metadata ? 'text-[var(--app-success)]' : 'text-[var(--app-muted)]'"
+              role="status"
+              aria-live="polite"
+            >
+              {{ statusMessage }}
+            </p>
+            <button
+              v-if="!metadata"
+              type="button"
+              class="text-xs font-semibold text-[var(--app-accent)] underline-offset-4 hover:underline focus:outline-none focus:ring-2 focus:ring-[var(--app-accent)]"
+              :disabled="pending"
+              @click="loadSample"
+            >
+              Try a sample
+            </button>
+          </div>
         </form>
 
         <div class="hidden gap-3 lg:grid" aria-label="Story template picker">
@@ -116,6 +130,15 @@
       </div>
     </section>
 
+    <ol
+      class="mx-auto mt-6 grid w-full max-w-[1240px] grid-cols-3 border-y border-[var(--app-border)] py-4 text-center text-xs font-semibold text-[var(--app-muted)]"
+      aria-label="Posterize workflow"
+    >
+      <li>Paste</li>
+      <li>Pick</li>
+      <li>Share</li>
+    </ol>
+
     <footer class="mx-auto mt-12 w-full max-w-[1240px] border-t border-[var(--app-border)] pt-5 text-center text-xs leading-5 text-[var(--app-muted)]">
       <p>No account. We fetch public metadata and never upload or store videos. Not affiliated with YouTube.</p>
     </footer>
@@ -135,6 +158,7 @@ import {
 
 const route = useRoute()
 const router = useRouter()
+const SAMPLE_VIDEO_URL = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
 const mobileResultSection = useTemplateRef<HTMLElement>('mobileResultSection')
 const restoredVideoId = parseRouteVideoId(route.query.video)
 const videoUrl = ref(restoredVideoId ? makeCanonicalYoutubeUrl(restoredVideoId) : '')
@@ -178,6 +202,11 @@ async function fetchMetadata() {
 
   await syncEditRoute()
   await scrollToStoryOnMobile()
+}
+
+async function loadSample() {
+  videoUrl.value = SAMPLE_VIDEO_URL
+  await fetchMetadata()
 }
 
 async function scrollToStoryOnMobile() {
