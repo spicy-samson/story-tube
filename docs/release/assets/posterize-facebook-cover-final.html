@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Posterize Facebook launch cover final</title>
+    <style>
+      * { box-sizing: border-box; }
+
+      html,
+      body {
+        width: 1080px;
+        height: 1080px;
+        margin: 0;
+        overflow: hidden;
+        background: #f7f7f4;
+        color: #101215;
+        font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        letter-spacing: 0;
+      }
+
+      .poster {
+        position: relative;
+        width: 1080px;
+        height: 1080px;
+        overflow: hidden;
+        background: #f7f7f4;
+      }
+
+      .poster::before {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 446px;
+        height: 930px;
+        background: #eaf2f8;
+        content: "";
+      }
+
+      .brand {
+        position: absolute;
+        top: 62px;
+        left: 68px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 29px;
+        font-weight: 850;
+      }
+
+      .mark {
+        display: grid;
+        width: 38px;
+        height: 38px;
+        place-items: center;
+        border-radius: 8px;
+        background: #1265d6;
+        color: #fff;
+        font-size: 21px;
+        font-weight: 900;
+      }
+
+      .template-badge {
+        position: absolute;
+        top: 65px;
+        right: 60px;
+        padding: 11px 15px;
+        border: 2px solid #afbdc8;
+        background: #fff;
+        color: #233241;
+        font-size: 14px;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .copy {
+        position: absolute;
+        z-index: 4;
+        top: 190px;
+        left: 68px;
+        width: 490px;
+      }
+
+      .eyebrow {
+        margin: 0 0 20px;
+        color: #1265d6;
+        font-size: 17px;
+        font-weight: 850;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 72px;
+        font-weight: 870;
+        line-height: 0.98;
+      }
+
+      .accent-line {
+        width: 82px;
+        height: 8px;
+        margin: 28px 0 25px;
+        background: #5ec8e5;
+      }
+
+      .description {
+        width: 385px;
+        margin: 0;
+        color: #4f565e;
+        font-size: 23px;
+        font-weight: 520;
+        line-height: 1.42;
+      }
+
+      .proof {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 28px;
+        color: #252b31;
+        font-size: 16px;
+        font-weight: 750;
+      }
+
+      .proof-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: #1265d6;
+      }
+
+      .product {
+        position: absolute;
+        z-index: 3;
+        top: 110px;
+        right: 45px;
+        width: 480px;
+        height: 820px;
+      }
+
+      .secondary-iphone {
+        position: absolute;
+        top: 220px;
+        left: 0;
+        width: 270px;
+        height: 587px;
+        padding: 9px;
+        overflow: hidden;
+        border: 4px solid #969ca2;
+        border-radius: 58px;
+        background: #050607;
+        box-shadow: 0 28px 55px rgba(13, 33, 49, 0.22);
+        transform: rotate(-5deg);
+      }
+
+      .secondary-iphone::before,
+      .secondary-iphone::after {
+        position: absolute;
+        right: -8px;
+        width: 5px;
+        border-radius: 0 4px 4px 0;
+        background: #666c72;
+        content: "";
+      }
+
+      .secondary-iphone::before { top: 132px; height: 66px; }
+      .secondary-iphone::after { top: 216px; height: 104px; }
+
+      .secondary-iphone img {
+        width: 100%;
+        height: 100%;
+        border-radius: 45px;
+        object-fit: cover;
+        object-position: center top;
+      }
+
+      .iphone {
+        position: absolute;
+        z-index: 3;
+        top: 50px;
+        right: 0;
+        width: 320px;
+        height: 696px;
+        padding: 10px;
+        border: 4px solid #737980;
+        border-radius: 66px;
+        background: #050607;
+        box-shadow: 0 34px 70px rgba(8, 25, 39, 0.34);
+      }
+
+      .iphone::before,
+      .iphone::after {
+        position: absolute;
+        left: -8px;
+        width: 5px;
+        border-radius: 4px 0 0 4px;
+        background: #53585e;
+        content: "";
+      }
+
+      .iphone::before { top: 144px; height: 76px; }
+      .iphone::after { top: 238px; height: 120px; }
+
+      .phone-screen {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius: 53px;
+        object-fit: cover;
+        object-position: center top;
+      }
+
+      .footer {
+        position: absolute;
+        z-index: 6;
+        inset: 930px 0 0;
+        background: #0c1722;
+        color: #fff;
+      }
+
+      .footer-copy {
+        position: absolute;
+        top: 36px;
+        left: 68px;
+      }
+
+      .footer-title {
+        margin: 0 0 10px;
+        font-size: 28px;
+        font-weight: 850;
+      }
+
+      .footer-note {
+        margin: 0;
+        color: #a8b3bd;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .cta-wrap {
+        position: absolute;
+        top: 28px;
+        right: 60px;
+        text-align: right;
+      }
+
+      .cta-label {
+        display: block;
+        margin-bottom: 9px;
+        color: #6ccbe5;
+        font-size: 13px;
+        font-weight: 850;
+        text-transform: uppercase;
+      }
+
+      .cta {
+        display: block;
+        min-width: 304px;
+        padding: 14px 22px;
+        border: 2px solid #344452;
+        background: #fff;
+        color: #1058bd;
+        font-size: 19px;
+        font-weight: 850;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="poster" aria-label="Posterize Facebook launch poster">
+      <div class="brand"><span class="mark">P</span>Posterize</div>
+      <div class="template-badge">6 original templates</div>
+
+      <section class="copy">
+        <p class="eyebrow">A better way to share YouTube</p>
+        <h1>YouTube links, made worth sharing.</h1>
+        <div class="accent-line"></div>
+        <p class="description">Paste a public video. Choose from 6 original templates. Export an HD story.</p>
+        <div class="proof"><span class="proof-dot"></span>No account. No video upload.</div>
+      </section>
+
+      <section class="product" aria-label="Posterize shown on an iPhone 17">
+        <div class="secondary-iphone">
+          <img src="Simulator Screenshot - iPhone 17 - 2026-08-07 at 12.34.25.png" alt="Posterize start screen on iPhone 17" />
+        </div>
+        <div class="iphone">
+          <img class="phone-screen" src="posterize-iphone17-screen.png" alt="Posterize running on iPhone 17" />
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="footer-copy">
+          <p class="footer-title">Paste. Pick. Posterize.</p>
+          <p class="footer-note">Built with Nuxt + Cloudflare Pages</p>
+        </div>
+        <div class="cta-wrap">
+          <span class="cta-label">Try it now</span>
+          <span class="cta">posterize.pages.dev</span>
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>
