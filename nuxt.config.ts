@@ -15,6 +15,8 @@ const themeScript = `(() => {
   document.documentElement.style.colorScheme = theme
 })()`
 
+const cloudflareWebAnalyticsToken = process.env.CLOUDFLARE_WEB_ANALYTICS_TOKEN?.trim()
+
 export default defineNuxtConfig({
   compatibilityDate: "2026-07-28",
   css: ["~/assets/css/main.css"],
@@ -91,6 +93,18 @@ export default defineNuxtConfig({
           innerHTML: themeScript,
           tagPosition: "head",
         },
+        ...(cloudflareWebAnalyticsToken
+          ? [
+              {
+                defer: true,
+                src: "https://static.cloudflareinsights.com/beacon.min.js",
+                "data-cf-beacon": JSON.stringify({
+                  token: cloudflareWebAnalyticsToken,
+                }),
+                tagPosition: "bodyClose" as const,
+              },
+            ]
+          : []),
       ],
     },
   },
